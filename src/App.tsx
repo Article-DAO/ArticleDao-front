@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Outlet } from "react-router-dom";
+import Header from "./components/header";
+import { styled } from "styled-components";
+import backgroundImage from "./assets/background.jpg";
+import backgroundImage2 from "./assets/background2.jpg";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Wrap>
+      <Header />
+      <StyledBackground>
+        <Outlet />
+      </StyledBackground>
+      {/* <div>footer</div> */}
+    </Wrap>
+  );
 }
 
-export default App
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+`;
+
+const StyledBackground = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url(${backgroundImage2});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+export default App;

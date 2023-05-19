@@ -34,7 +34,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
     "recoil": "^0.7.7",
-    "styled-components": "^6.0.0-rc.1"
+    "styled-components": "^6.0.0-rc.1",
+    "typechain": "^8.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

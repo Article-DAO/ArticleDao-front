@@ -112,6 +112,12 @@ const chains = [
     label: "Avalanche (C-Chain)",
     rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
   },
+  {
+    id: "0x1A4AE",
+    token: "AVAX",
+    label: "local test C-chain",
+    rpcUrl: "http://localhost:9650/ext/bc/C/rpc",
+  },
 ];
 
 const appMetadata = {
