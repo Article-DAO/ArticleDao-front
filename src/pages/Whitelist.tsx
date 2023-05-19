@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import VoteChart from "../components/common/VoteChart";
+import { useSigner } from "../states/wallet.state";
+import ArticleDaoABI from "../abi/Article_DAO.json";
+import { Article_DAO } from "../../types";
+
+import { BigNumber, ethers } from "ethers";
+import { useConnectWallet } from "@web3-onboard/react";
 
 // Define the interface for the customer data
 
@@ -125,7 +131,40 @@ const pendings: Pending[] = [
   },
 ];
 
+let provider;
+
 const Whitelist = () => {
+  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
+    useConnectWallet();
+
+  useEffect(() => {
+    if (!wallet?.provider) {
+      provider = null;
+    } else {
+      provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+    }
+  }, [wallet?.provider]);
+
+  const registerWhiteList = async () => {
+    if (!wallet?.provider) {
+      alert("Connect Wallet");
+      return;
+    }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+    const signer = provider.getUncheckedSigner();
+
+    const contract: Article_DAO = new ethers.Contract(
+      "0x28504b5182FF1944894A0dc684ca139733201783",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    const tx = await contract.writerRegister(BigNumber.from(100));
+    tx.wait();
+
+    alert("Success");
+  };
+
   const customers: Customer[] = [
     {
       id: 1,
@@ -166,9 +205,8 @@ const Whitelist = () => {
     <Container>
       <TitleWrap>
         <Title>Whitelist</Title>
-        <Link to={`/register`}>
-          <StyledButton> 작가 등록</StyledButton>
-        </Link>
+
+        <StyledButton onClick={registerWhiteList}> 작가 등록</StyledButton>
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>

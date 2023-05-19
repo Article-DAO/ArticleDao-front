@@ -28,9 +28,12 @@ function Pending() {
 
 const Wrap = styled.div`
   display: flex;
+  width: 600px;
+  height: 400px;
+  border: 1px solid black;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+  margin: 50px auto;
 `;
 
 const StyledButton = styled.button`
