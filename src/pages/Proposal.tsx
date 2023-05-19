@@ -181,7 +181,7 @@ const Proposal = () => {
                     textDecoration: "none",
                     color: "black",
                   }}
-                  to={`/whitelist/${recruit.id}`}
+                  to={`recruit/${recruit.id}`}
                 >
                   <RecruitBox key={recruit.id} recruit={recruit} />
                 </Link>
@@ -199,7 +199,7 @@ const Proposal = () => {
                     textDecoration: "none",
                     color: "black",
                   }}
-                  to={`/whitelist/${pending.id}`}
+                  to={`pending/${pending.id}`}
                 >
                   <PendingBox key={pending.id} pending={pending} />
                 </Link>
@@ -217,7 +217,7 @@ const Proposal = () => {
                     textDecoration: "none",
                     color: "black",
                   }}
-                  to={`/whitelist/${customer.id}`}
+                  to={`${customer.id}`}
                 >
                   <CustomerItem key={customer.id}>
                     <strong>Name:</strong> {customer.name}
