@@ -159,12 +159,34 @@ const Whitelist = () => {
       ArticleDaoABI,
       signer
     ) as Article_DAO;
-    const tx = await contract.writerRegister(BigNumber.from(100));
+    const tx = await contract.writerRegister(
+      "0x28504b5182FF1944894A0dc684ca139733201783"
+    );
+
     tx.wait();
 
     alert("Success");
   };
+  const getWriterLists = async () => {
+    if (!wallet?.provider) {
+      alert("Connect Wallet");
+      return;
+    }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+    const signer = provider.getUncheckedSigner();
 
+    const contract: Article_DAO = new ethers.Contract(
+      "0x28504b5182FF1944894A0dc684ca139733201783",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    const tx = await contract.writerRegistries(0);
+    console.log(tx);
+    //tx.wait();
+
+    alert("Success");
+  };
   const customers: Customer[] = [
     {
       id: 1,
@@ -206,7 +228,7 @@ const Whitelist = () => {
       <TitleWrap>
         <Title>Whitelist</Title>
 
-        <StyledButton onClick={registerWhiteList}> 작가 등록</StyledButton>
+        <StyledButton onClick={getWriterLists}> 작가 등록</StyledButton>
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>
