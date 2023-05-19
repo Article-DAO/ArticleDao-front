@@ -27,9 +27,9 @@ function Navbar() {
       >
         Proposals
       </StyledLink>
-      <StyledLink to="/challenge" state={location.pathname === "/challenge"}>
+      {/* <StyledLink to="/challenge" state={location.pathname === "/challenge"}>
         Challenge
-      </StyledLink>
+      </StyledLink> */}
       <StyledLink to="/profile" state={location.pathname === "/profile"}>
         MyPage
       </StyledLink>

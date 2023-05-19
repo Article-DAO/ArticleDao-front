@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function WhiteUser() {
@@ -26,6 +26,9 @@ function WhiteUser() {
       <p>
         Twitter: <a href={user.twitter}>{user.twitter}</a>
       </p>
+      <Link to={`/challenge/${user.id}`}>
+        <button>시비걸기</button>
+      </Link>
     </Wrap>
   );
 }
