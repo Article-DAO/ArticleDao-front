@@ -47,25 +47,29 @@ function Pending() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
-    const tx = await contract?.approve(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
-      BigNumber.from("1")
-    );
-    await tx.wait();
-
-    const writerRegistertx = await contract?.writerRegister(
-      BigNumber.from("1")
-    );
-    await writerRegistertx.wait();
-
-    // const tx = await contract?.writerRegister(BigNumber.from("1"));
-    setLoading(false);
-    alert("Success");
+    // const tx = await contract?.approve(
+    //   "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+    //   BigNumber.from("1")
+    // );
+    // await tx.wait();
+    try {
+      const writerRegistertx = await contract?.voteRegister(
+        BigNumber.from("1"),
+        selectedOption
+      );
+      await writerRegistertx.wait();
+      // const tx = await contract?.writerRegister(BigNumber.from("1"));
+      setLoading(false);
+      alert("Success");
+    } catch (e) {
+      setLoading(false);
+      alert("error");
+    }
   };
   const handleOptionSelect = (option: boolean) => {
     setSelectedOption(option);

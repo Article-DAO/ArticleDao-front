@@ -80,18 +80,29 @@ function WhiteUserRegister() {
       signer
     ) as Article_DAO;
     setLoading(true);
-    const tx = await contract?.approve(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
-      BigNumber.from("150")
-    );
-    await tx.wait();
 
-    const writerRegistertx = await contract?.writerRegister(writers.handle);
-    await writerRegistertx.wait();
+    try {
+      const tx = await contract?.approve(
+        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+        BigNumber.from("150")
+      );
+      await tx.wait();
+    } catch (e) {
+      alert("error");
+      setLoading(false);
+      return;
+    }
+    try {
+      const writerRegistertx = await contract?.writerRegister(writers.handle);
+      await writerRegistertx.wait();
 
-    // const tx = await contract?.writerRegister(BigNumber.from("1"));
-    setLoading(false);
-    alert("Success");
+      // const tx = await contract?.writerRegister(BigNumber.from("1"));
+      setLoading(false);
+      alert("Success");
+    } catch (e) {
+      setLoading(false);
+      alert("error");
+    }
   };
   return (
     <Container>

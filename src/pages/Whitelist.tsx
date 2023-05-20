@@ -394,7 +394,7 @@ const Whitelist = () => {
                     textDecoration: "none",
                     color: "black",
                   }}
-                  to={`/whitelist/${customer.id}`}
+                  to={`https://twitter.com/${customer.handle}}`}
                 >
                   <ContentWrapBox>
                     <ContentTextBox>

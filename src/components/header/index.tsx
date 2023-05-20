@@ -64,7 +64,7 @@ function Header() {
     <Wrap>
       <StyledHeaderBox>
         <img src={logoImg} width="100px" height="100px" alt="logo" />
-        <h1>Snownest DAO</h1>
+        <h1>Article DAO</h1>
         {/* {account ? (
           <Button className="btn btn-secondary" onClick={onDisconnect}>
             {ellipsisAddress(account)}
