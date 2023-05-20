@@ -1,12 +1,10 @@
+import { useConnectWallet } from "@web3-onboard/react";
+import { BigNumber, ethers } from "ethers";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Article_DAO } from "../../../types";
+import ArticleDaoABI from "../../abi/Article_DAO.json";
 import type { TokenSymbol } from "@web3-onboard/common";
-import ArticleDaoABI from "../abi/Article_DAO.json";
-import { Article_DAO } from "../../types";
-
-import { BigNumber, ethers } from "ethers";
-import { useConnectWallet } from "@web3-onboard/react";
-import Loading from "../components/common/Loading";
 
 interface Proposal {
   id: number;
@@ -22,15 +20,13 @@ interface Account {
   ens: { name: string | undefined; avatar: string | undefined };
 }
 
-function Registration() {
-  const [loading, setLoading] = useState<boolean>(false);
+function WhiteUserRegister() {
   const [proposals, setProposals] = useState<Proposal>({
     id: 0,
     title: "",
     description: "",
     reward: 0,
   });
-
   const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
     useConnectWallet();
 
@@ -42,6 +38,7 @@ function Registration() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     if (!wallet?.provider) {
       provider = null;
@@ -68,7 +65,6 @@ function Registration() {
       ArticleDaoABI,
       signer
     ) as Article_DAO;
-    setLoading(true);
     const tx = await contract?.approve(
       "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
       BigNumber.from("1")
@@ -81,16 +77,12 @@ function Registration() {
     await writerRegistertx.wait();
 
     // const tx = await contract?.writerRegister(BigNumber.from("1"));
-    setLoading(false);
+
     alert("Success");
   };
-
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <Wrap>
-      <h1>안건 등록</h1>
+      <h1>작가 등록</h1>
       <Description>token submit에 대한 주의사항 및 설명</Description>
 
       <InputWrap>
@@ -183,4 +175,4 @@ const Button = styled.button`
   margin-top: 10px;
 `;
 
-export default Registration;
+export default WhiteUserRegister;

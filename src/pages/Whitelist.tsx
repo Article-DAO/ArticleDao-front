@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import VoteChart from "../components/common/VoteChart";
@@ -8,10 +8,9 @@ import { Article_DAO } from "../../types";
 import { BigNumber, ethers } from "ethers";
 import { useConnectWallet } from "@web3-onboard/react";
 
-import backgroundwhite from "../assets/backgroundwhitelist.jpg";
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
-import logo from "../assets/logo.png";
-import { getContract } from "../states/wallet.state";
+
+import type { TokenSymbol } from "@web3-onboard/common";
 
 // Define the interface for the customer data
 
@@ -189,14 +188,14 @@ const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
         <br />
       </div>
       <div>
-        <strong>Votes:</strong> {pending.votesFor} / {pending.totalVotes}
+        <strong>Votes:</strong> {pending.totalVotes}
       </div>
 
-      <VoteChart
+      {/* <VoteChart
         votesFor={pending.votesFor}
         votesAgainst={pending.votesAgainst}
         totalVotes={pending.totalVotes}
-      />
+      /> */}
     </PendingWrapBox>
   );
 };
@@ -214,40 +213,76 @@ const pendings: Pending[] = [
 
 let provider;
 
+interface Account {
+  address: string;
+  balance: Record<TokenSymbol, string> | null;
+  ens: { name: string | undefined; avatar: string | undefined };
+}
+
 const Whitelist = () => {
   const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
     useConnectWallet();
+  const [ids, setIds] = useState<any[] | null | undefined>([]);
+  const [account, setAccount] = useState<Account | null>(null);
+  const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
+    null
+  );
 
   useEffect(() => {
     if (!wallet?.provider) {
       provider = null;
     } else {
+      const { name, avatar } = wallet?.accounts[0].ens ?? {};
+      setAccount({
+        address: wallet.accounts[0].address,
+        balance: wallet.accounts[0].balance,
+        ens: { name, avatar: avatar?.url },
+      });
       provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+      setSigner(provider.getUncheckedSigner());
     }
   }, [wallet?.provider]);
 
   const registerWhiteList = async () => {
-    if (!wallet?.provider) {
+    if (!wallet?.provider || !account || !signer) {
       alert("Connect Wallet");
       return;
     }
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const provider = new ethers.providers.Web3Provider(wallet.provider, "any");
-    const signer = provider.getUncheckedSigner();
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x28504b5182FF1944894A0dc684ca139733201783",
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
-
-    const tx = await contract?.writerRegister(
-      "0x28504b5182FF1944894A0dc684ca139733201783"
+    const tx = await contract?.approve(
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      BigNumber.from("1")
     );
+    await tx.wait();
 
-    tx.wait();
+    const writerRegistertx = await contract?.writerRegister(
+      BigNumber.from("1")
+    );
+    await writerRegistertx.wait();
+
+    // const tx = await contract?.writerRegister(BigNumber.from("1"));
 
     alert("Success");
+  };
+
+  const getWriterids = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+    const contract: Article_DAO = new ethers.Contract(
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    console.log(contract);
+    const tx = await contract?.wRegisterids(BigNumber.from("2"));
+    alert(tx);
   };
 
   // const getWriterLists = async () => {
@@ -313,7 +348,10 @@ const Whitelist = () => {
       <TitleWrap>
         <Title>Whitelist</Title>
 
-        <StyledButton onClick={registerWhiteList}> 작가 등록</StyledButton>
+        <Link to={"register"}>
+          <StyledButton> 작가 등록</StyledButton>
+        </Link>
+        <StyledButton onClick={getWriterids}> 작가 리스트</StyledButton>
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>

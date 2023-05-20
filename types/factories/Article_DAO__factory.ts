@@ -59,7 +59,59 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "CHALLEGEEXPIRY",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "DECIMALS",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "PARTICIPATIONEXPIRY",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "REGISTERDEPOSIT",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "VOTINGEXPIRY",
     outputs: [
       {
         internalType: "uint256",
@@ -126,19 +178,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "applicationExpiry",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -183,6 +222,45 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "articles",
+    outputs: [
+      {
+        internalType: "address",
+        name: "writerAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "articleid",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "url",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "votedweights",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "account",
         type: "address",
@@ -200,7 +278,31 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "wregisterid",
+        type: "uint256",
+      },
+    ],
+    name: "challenge",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "proposalid",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "articleid",
+        type: "uint256",
+      },
+    ],
     name: "claimRewardA",
     outputs: [],
     stateMutability: "nonpayable",
@@ -230,13 +332,6 @@ const _abi = [
       },
     ],
     stateMutability: "pure",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getETH",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -322,17 +417,12 @@ const _abi = [
       },
       {
         internalType: "uint256",
+        name: "applytime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
         name: "stake",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "p_expiry",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "vstartTime",
         type: "uint256",
       },
       {
@@ -350,6 +440,16 @@ const _abi = [
         name: "totalchallenges",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "totalweights",
+        type: "uint256",
+      },
+      {
+        internalType: "enum Article_DAO.VotingResult",
+        name: "votingResult",
+        type: "uint8",
+      },
     ],
     stateMutability: "view",
     type: "function",
@@ -358,12 +458,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_expiry",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_voteStartTime",
+        name: "stake",
         type: "uint256",
       },
     ],
@@ -515,7 +610,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_expiry",
+        name: "stake",
         type: "uint256",
       },
     ],
@@ -541,12 +636,12 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "stake",
+        name: "applytime",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "p_expiry",
+        name: "stake",
         type: "uint256",
       },
       {

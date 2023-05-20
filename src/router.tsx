@@ -6,6 +6,7 @@ import ProposalRecruit from "./components/proposal/ProposalRecruit";
 import Pending from "./components/Whitelist/Pending";
 import Recruitpage from "./components/Whitelist/Recruitpage";
 import WhiteUser from "./components/Whitelist/WhiteUser";
+import WhiteUserRegister from "./components/Whitelist/WhiteUserRegister";
 import Challenge from "./pages/Challenge";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "whitelist/pending/:userId",
         element: <Pending />,
+      },
+      {
+        path: "whitelist/register",
+        element: <WhiteUserRegister />,
       },
 
       {

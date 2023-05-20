@@ -156,14 +156,14 @@ const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
         <br />
       </div>
       <div>
-        <strong>Votes:</strong> {pending.votesFor} / {pending.totalVotes}
+        <strong>Votes:</strong> {pending.totalVotes}
       </div>
 
-      <VoteChart
+      {/* <VoteChart
         votesFor={pending.votesFor}
         votesAgainst={pending.votesAgainst}
         totalVotes={pending.totalVotes}
-      />
+      /> */}
     </PendingWrapBox>
   );
 };

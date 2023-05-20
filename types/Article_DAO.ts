@@ -30,23 +30,27 @@ import type {
 
 export interface Article_DAOInterface extends utils.Interface {
   functions: {
+    "CHALLEGEEXPIRY()": FunctionFragment;
     "DECIMALS()": FunctionFragment;
+    "PARTICIPATIONEXPIRY()": FunctionFragment;
+    "REGISTERDEPOSIT()": FunctionFragment;
+    "VOTINGEXPIRY()": FunctionFragment;
     "_pi_quorum()": FunctionFragment;
     "aVoteParticipate(uint256,uint256)": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
-    "applicationExpiry()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "articleRegister(uint256,string)": FunctionFragment;
+    "articles(uint256,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "claimRewardA()": FunctionFragment;
+    "challenge(uint256)": FunctionFragment;
+    "claimRewardA(uint256,uint256)": FunctionFragment;
     "claimRewardW(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
-    "getETH()": FunctionFragment;
     "members(address)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "proposalids(uint256)": FunctionFragment;
     "proposals(uint256)": FunctionFragment;
-    "propose(uint256,uint256)": FunctionFragment;
+    "propose(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -61,18 +65,22 @@ export interface Article_DAOInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "CHALLEGEEXPIRY"
       | "DECIMALS"
+      | "PARTICIPATIONEXPIRY"
+      | "REGISTERDEPOSIT"
+      | "VOTINGEXPIRY"
       | "_pi_quorum"
       | "aVoteParticipate"
       | "allowance"
-      | "applicationExpiry"
       | "approve"
       | "articleRegister"
+      | "articles"
       | "balanceOf"
+      | "challenge"
       | "claimRewardA"
       | "claimRewardW"
       | "decimals"
-      | "getETH"
       | "members"
       | "mint"
       | "proposalids"
@@ -90,7 +98,23 @@ export interface Article_DAOInterface extends utils.Interface {
       | "writers"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "CHALLEGEEXPIRY",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "DECIMALS", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "PARTICIPATIONEXPIRY",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "REGISTERDEPOSIT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "VOTINGEXPIRY",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "_pi_quorum",
     values?: undefined
@@ -104,10 +128,6 @@ export interface Article_DAOInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "applicationExpiry",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "approve",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -116,19 +136,26 @@ export interface Article_DAOInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "articles",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "balanceOf",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "challenge",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "claimRewardA",
-    values?: undefined
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "claimRewardW",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(functionFragment: "getETH", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "members",
     values: [PromiseOrValue<string>]
@@ -147,7 +174,7 @@ export interface Article_DAOInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "propose",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -194,23 +221,37 @@ export interface Article_DAOInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "CHALLEGEEXPIRY",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "DECIMALS", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "PARTICIPATIONEXPIRY",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "REGISTERDEPOSIT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "VOTINGEXPIRY",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "_pi_quorum", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "aVoteParticipate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "applicationExpiry",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "articleRegister",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "articles", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "challenge", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "claimRewardA",
     data: BytesLike
@@ -220,7 +261,6 @@ export interface Article_DAOInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getETH", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "members", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
@@ -324,7 +364,15 @@ export interface Article_DAO extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     DECIMALS(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    VOTINGEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _pi_quorum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -340,8 +388,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    applicationExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -354,12 +400,32 @@ export interface Article_DAO extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    articles(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, string, BigNumber] & {
+        writerAddress: string;
+        articleid: BigNumber;
+        url: string;
+        votedweights: BigNumber;
+      }
+    >;
+
     balanceOf(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    challenge(
+      wregisterid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     claimRewardA(
+      proposalid: PromiseOrValue<BigNumberish>,
+      articleid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -369,10 +435,6 @@ export interface Article_DAO extends BaseContract {
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
-
-    getETH(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     members(
       arg0: PromiseOrValue<string>,
@@ -407,21 +469,22 @@ export interface Article_DAO extends BaseContract {
         BigNumber,
         BigNumber,
         BigNumber,
-        BigNumber
+        BigNumber,
+        number
       ] & {
         proposer: string;
+        applytime: BigNumber;
         stake: BigNumber;
-        p_expiry: BigNumber;
-        vstartTime: BigNumber;
         totalstake: BigNumber;
         totalvotes: BigNumber;
         totalchallenges: BigNumber;
+        totalweights: BigNumber;
+        votingResult: number;
       }
     >;
 
     propose(
-      _expiry: PromiseOrValue<BigNumberish>,
-      _voteStartTime: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -464,7 +527,7 @@ export interface Article_DAO extends BaseContract {
     ): Promise<ContractTransaction>;
 
     writerRegister(
-      _expiry: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -486,8 +549,8 @@ export interface Article_DAO extends BaseContract {
         number
       ] & {
         writer: string;
+        applytime: BigNumber;
         stake: BigNumber;
-        p_expiry: BigNumber;
         voteFor: BigNumber;
         voteAgainst: BigNumber;
         voteForstake: BigNumber;
@@ -505,7 +568,15 @@ export interface Article_DAO extends BaseContract {
     ): Promise<[boolean]>;
   };
 
+  CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
   DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
+
+  PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
+  REGISTERDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
+
+  VOTINGEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
   _pi_quorum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -521,8 +592,6 @@ export interface Article_DAO extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  applicationExpiry(overrides?: CallOverrides): Promise<BigNumber>;
-
   approve(
     spender: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -535,12 +604,32 @@ export interface Article_DAO extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  articles(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [string, BigNumber, string, BigNumber] & {
+      writerAddress: string;
+      articleid: BigNumber;
+      url: string;
+      votedweights: BigNumber;
+    }
+  >;
+
   balanceOf(
     account: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  challenge(
+    wregisterid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   claimRewardA(
+    proposalid: PromiseOrValue<BigNumberish>,
+    articleid: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -550,10 +639,6 @@ export interface Article_DAO extends BaseContract {
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
-
-  getETH(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   members(
     arg0: PromiseOrValue<string>,
@@ -588,21 +673,22 @@ export interface Article_DAO extends BaseContract {
       BigNumber,
       BigNumber,
       BigNumber,
-      BigNumber
+      BigNumber,
+      number
     ] & {
       proposer: string;
+      applytime: BigNumber;
       stake: BigNumber;
-      p_expiry: BigNumber;
-      vstartTime: BigNumber;
       totalstake: BigNumber;
       totalvotes: BigNumber;
       totalchallenges: BigNumber;
+      totalweights: BigNumber;
+      votingResult: number;
     }
   >;
 
   propose(
-    _expiry: PromiseOrValue<BigNumberish>,
-    _voteStartTime: PromiseOrValue<BigNumberish>,
+    stake: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -645,7 +731,7 @@ export interface Article_DAO extends BaseContract {
   ): Promise<ContractTransaction>;
 
   writerRegister(
-    _expiry: PromiseOrValue<BigNumberish>,
+    stake: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -667,8 +753,8 @@ export interface Article_DAO extends BaseContract {
       number
     ] & {
       writer: string;
+      applytime: BigNumber;
       stake: BigNumber;
-      p_expiry: BigNumber;
       voteFor: BigNumber;
       voteAgainst: BigNumber;
       voteForstake: BigNumber;
@@ -686,7 +772,15 @@ export interface Article_DAO extends BaseContract {
   ): Promise<boolean>;
 
   callStatic: {
+    CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
     DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
+
+    PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    VOTINGEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
     _pi_quorum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -702,8 +796,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    applicationExpiry(overrides?: CallOverrides): Promise<BigNumber>;
-
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -716,12 +808,34 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    articles(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, string, BigNumber] & {
+        writerAddress: string;
+        articleid: BigNumber;
+        url: string;
+        votedweights: BigNumber;
+      }
+    >;
+
     balanceOf(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    claimRewardA(overrides?: CallOverrides): Promise<void>;
+    challenge(
+      wregisterid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    claimRewardA(
+      proposalid: PromiseOrValue<BigNumberish>,
+      articleid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     claimRewardW(
       wregisterid: PromiseOrValue<BigNumberish>,
@@ -729,8 +843,6 @@ export interface Article_DAO extends BaseContract {
     ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
-
-    getETH(overrides?: CallOverrides): Promise<void>;
 
     members(
       arg0: PromiseOrValue<string>,
@@ -765,21 +877,22 @@ export interface Article_DAO extends BaseContract {
         BigNumber,
         BigNumber,
         BigNumber,
-        BigNumber
+        BigNumber,
+        number
       ] & {
         proposer: string;
+        applytime: BigNumber;
         stake: BigNumber;
-        p_expiry: BigNumber;
-        vstartTime: BigNumber;
         totalstake: BigNumber;
         totalvotes: BigNumber;
         totalchallenges: BigNumber;
+        totalweights: BigNumber;
+        votingResult: number;
       }
     >;
 
     propose(
-      _expiry: PromiseOrValue<BigNumberish>,
-      _voteStartTime: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -822,7 +935,7 @@ export interface Article_DAO extends BaseContract {
     ): Promise<void>;
 
     writerRegister(
-      _expiry: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -844,8 +957,8 @@ export interface Article_DAO extends BaseContract {
         number
       ] & {
         writer: string;
+        applytime: BigNumber;
         stake: BigNumber;
-        p_expiry: BigNumber;
         voteFor: BigNumber;
         voteAgainst: BigNumber;
         voteForstake: BigNumber;
@@ -888,7 +1001,15 @@ export interface Article_DAO extends BaseContract {
   };
 
   estimateGas: {
+    CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
     DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
+
+    PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    VOTINGEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
     _pi_quorum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -904,8 +1025,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    applicationExpiry(overrides?: CallOverrides): Promise<BigNumber>;
-
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -918,12 +1037,25 @@ export interface Article_DAO extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    articles(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     balanceOf(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    challenge(
+      wregisterid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     claimRewardA(
+      proposalid: PromiseOrValue<BigNumberish>,
+      articleid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -933,10 +1065,6 @@ export interface Article_DAO extends BaseContract {
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getETH(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
 
     members(
       arg0: PromiseOrValue<string>,
@@ -960,8 +1088,7 @@ export interface Article_DAO extends BaseContract {
     ): Promise<BigNumber>;
 
     propose(
-      _expiry: PromiseOrValue<BigNumberish>,
-      _voteStartTime: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1004,7 +1131,7 @@ export interface Article_DAO extends BaseContract {
     ): Promise<BigNumber>;
 
     writerRegister(
-      _expiry: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1020,7 +1147,17 @@ export interface Article_DAO extends BaseContract {
   };
 
   populateTransaction: {
+    CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     DECIMALS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    PARTICIPATIONEXPIRY(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    VOTINGEXPIRY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _pi_quorum(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1036,8 +1173,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    applicationExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -1050,12 +1185,25 @@ export interface Article_DAO extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    articles(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    challenge(
+      wregisterid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     claimRewardA(
+      proposalid: PromiseOrValue<BigNumberish>,
+      articleid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1065,10 +1213,6 @@ export interface Article_DAO extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getETH(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     members(
       arg0: PromiseOrValue<string>,
@@ -1092,8 +1236,7 @@ export interface Article_DAO extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     propose(
-      _expiry: PromiseOrValue<BigNumberish>,
-      _voteStartTime: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1136,7 +1279,7 @@ export interface Article_DAO extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     writerRegister(
-      _expiry: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
