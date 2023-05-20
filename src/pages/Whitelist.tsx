@@ -4,6 +4,7 @@ import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import VoteChart from "../components/common/VoteChart";
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
+import Logo from "../assets/tweetbox.jpeg";
 
 import { BigNumber, ethers } from "ethers";
 import { useConnectWallet } from "@web3-onboard/react";
@@ -15,22 +16,11 @@ import type { TokenSymbol } from "@web3-onboard/common";
 // Define the interface for the customer data
 
 interface RecruitBoxProps {
-  recruit: Recruit;
+  recruit: member;
 }
-interface Recruit {
+interface member {
   id: number;
-  name: string;
-  minCount: number;
-  count: number;
-  deadline: string;
-}
-interface Customer {
-  id: number;
-  name: string;
-  postCount: number; // 쓴 글의 개수
-  contribution: number; // 기여도
-  tokenCount: number; // 가지고 있는 토큰의 개수
-  twitter: string;
+  handle: string;
 }
 
 const PercentageBarWrapper = styled.div`
@@ -48,15 +38,21 @@ const PercentageFilled = styled.div<{ percent: number }>`
   width: ${(props) => props.percent}%;
 `;
 
-const RecruitWrapBox = styled.div`
+const ContentWrapBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 400px;
-  height: 120px;
+
+  justify-content: center;
+
+  width: 250px;
+  height: 60px;
+  border-radius: 20px;
   padding: 10px;
   border: 1px solid #ccc;
-
+  background-image: url(${Logo});
+  background-size: 80px; /* 이미지 크기 조정 */
+  background-repeat: no-repeat;
+  background-position: right center; /* 오른쪽 가운데에 위치 */
   margin-bottom: 10px;
   &:hover {
     cursor: pointer;
@@ -64,6 +60,17 @@ const RecruitWrapBox = styled.div`
       0 8px 24px rgb(0 0 0 / 8%);
   }
   background-color: white;
+`;
+const ContentTextBox = styled.div`
+  display: flex;
+  margin-left: 0;
+  p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: #077fb3;
+  }
 `;
 const Percent = styled.div`
   display: flex;
@@ -94,60 +101,35 @@ const PercentageBar: React.FC<PercentageBarProps> = ({
 
 const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   return (
-    <RecruitWrapBox>
-      <div>
-        <strong>Name:</strong> {recruit.name}
-      </div>
-
-      <div>
-        <strong>Dead Line:</strong> {recruit.deadline}
-        <br />
-      </div>
-      <div>
-        <strong>Participant:</strong> {recruit.count} / {recruit.minCount}
-      </div>
-
-      <PercentageBar
-        totalCount={recruit.minCount}
-        participantCount={recruit.count}
-      />
-    </RecruitWrapBox>
+    <ContentWrapBox>
+      <ContentTextBox>
+        <p>Tweet: {recruit.handle}</p>
+      </ContentTextBox>
+    </ContentWrapBox>
   );
 };
 
-const recruits: Recruit[] = [
+const recruits: member[] = [
   {
     id: 1,
-    name: "John Doe",
-    minCount: 10,
-    count: 5,
-    deadline: "2021-10-10",
+    handle: "@John Doe",
   },
   {
     id: 2,
-    name: "John Doe",
-    minCount: 10,
-    count: 0,
-    deadline: "2021-10-10",
+    handle: "@Jane Doe",
   },
   {
-    id: 2,
-    name: "John Doe",
-    minCount: 10,
-    count: 11,
-    deadline: "2021-10-10",
+    id: 3,
+    handle: "@John Smith",
   },
   {
-    id: 2,
-    name: "John Doe",
-    minCount: 10,
-    count: 8,
-    deadline: "2021-10-10",
+    id: 4,
+    handle: "@Jane Smith",
   },
 ];
 
 interface PendingBoxProps {
-  pending: Pending;
+  pending: member;
 }
 interface Pending {
   id: number;
@@ -178,39 +160,55 @@ const PendingWrapBox = styled.div`
 `;
 const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   return (
-    <PendingWrapBox>
-      <div>
-        <strong>Name:</strong> {pending.name}
-        <br />
-      </div>
-      <div>
-        <strong>Dead Line:</strong> {pending.deadline}
-        <br />
-      </div>
-      <div>
-        <strong>Votes:</strong> {pending.totalVotes}
-      </div>
-
-      {/* <VoteChart
-        votesFor={pending.votesFor}
-        votesAgainst={pending.votesAgainst}
-        totalVotes={pending.totalVotes}
-      /> */}
-    </PendingWrapBox>
+    <ContentWrapBox>
+      <ContentTextBox>
+        <p>Tweet: {pending.handle}</p>
+      </ContentTextBox>
+    </ContentWrapBox>
   );
 };
 
-const pendings: Pending[] = [
+const pendings: member[] = [
+  {
+    id: 1,
+    handle: "@John Doe",
+  },
   {
     id: 2,
-    name: "John Doe",
-    deadline: "2021-10-10",
-    votesFor: 3,
-    votesAgainst: 2,
-    totalVotes: 5,
+    handle: "@Jane Doe",
+  },
+  {
+    id: 3,
+    handle: "@John Smith",
+  },
+  {
+    id: 4,
+    handle: "@Jane Smith",
   },
 ];
 
+const whitelists: member[] = [
+  {
+    id: 1,
+    handle: "@John Doe",
+  },
+  {
+    id: 2,
+    handle: "@Jane Doe",
+  },
+  {
+    id: 3,
+    handle: "@John Smith",
+  },
+  {
+    id: 4,
+    handle: "@Jane Smith",
+  },
+  {
+    id: 5,
+    handle: "@John Doe",
+  },
+];
 let provider;
 
 interface Account {
@@ -227,6 +225,7 @@ const Whitelist = () => {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
+  const [reqruitlist, setReqruitlist] = useState<any[] | null | undefined>([]);
 
   useEffect(() => {
     if (!wallet?.provider) {
@@ -240,6 +239,17 @@ const Whitelist = () => {
       });
       provider = new ethers.providers.Web3Provider(wallet.provider, "any");
       setSigner(provider.getUncheckedSigner());
+
+      const contract: Article_DAO = new ethers.Contract(
+        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+        ArticleDaoABI,
+        provider.getUncheckedSigner()
+      ) as Article_DAO;
+
+      const getReqruitlist = async () => {
+        const balance = await contract.balanceOf(wallet.accounts[0].address);
+        setMyToken(balance.toString());
+      };
     }
   }, [wallet?.provider]);
 
@@ -250,12 +260,12 @@ const Whitelist = () => {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     const tx = await contract?.approve(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
       BigNumber.from("1")
     );
     await tx.wait();
@@ -276,7 +286,7 @@ const Whitelist = () => {
       return;
     }
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
@@ -307,32 +317,6 @@ const Whitelist = () => {
 
   //   alert("Success");
   // };
-  const customers: Customer[] = [
-    {
-      id: 1,
-      name: "John Doe",
-      postCount: 10,
-      contribution: 100,
-      tokenCount: 1000,
-      twitter: "https://twitter.com/JohnDoe",
-    },
-    {
-      id: 2,
-      name: "Jane Doe",
-      postCount: 20,
-      contribution: 200,
-      tokenCount: 2000,
-      twitter: "https://twitter.com/JaneDoe",
-    },
-    {
-      id: 3,
-      name: "John Smith",
-      postCount: 30,
-      contribution: 300,
-      tokenCount: 3000,
-      twitter: "https://twitter.com/JohnSmith",
-    },
-  ];
 
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
@@ -393,7 +377,7 @@ const Whitelist = () => {
         <WhitelistWrap>
           <h2>Whitelist</h2>
           <CustomerList>
-            {customers.map((customer) => (
+            {whitelists.map((customer) => (
               <>
                 <Link
                   style={{
@@ -402,24 +386,11 @@ const Whitelist = () => {
                   }}
                   to={`/whitelist/${customer.id}`}
                 >
-                  <WhitelistWrapBox key={customer.id}>
-                    <div>
-                      <strong>Name:</strong> {customer.name}
-                    </div>
-                    <div>
-                      <strong>Posts:</strong> {customer.postCount}
-                    </div>
-                    <div>
-                      <strong>Contribution:</strong> {customer.contribution}
-                    </div>
-                    <div>
-                      <strong>Tokens:</strong> {customer.tokenCount}
-                    </div>
-                    <div>
-                      <strong>Twitter:</strong>
-                      {customer.twitter}
-                    </div>
-                  </WhitelistWrapBox>
+                  <ContentWrapBox>
+                    <ContentTextBox>
+                      <p>Tweet: {customer.handle}</p>
+                    </ContentTextBox>
+                  </ContentWrapBox>
                 </Link>
               </>
             ))}

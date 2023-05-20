@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -28,12 +27,25 @@ import type {
   PromiseOrValue,
 } from "./common";
 
+export declare namespace Article_DAO {
+  export type WriterStruct = {
+    _address: PromiseOrValue<string>;
+    twitterHandle: PromiseOrValue<string>;
+  };
+
+  export type WriterStructOutput = [string, string] & {
+    _address: string;
+    twitterHandle: string;
+  };
+}
+
 export interface Article_DAOInterface extends utils.Interface {
   functions: {
+    "ARTICLEREGISTRATIONEXPIRY()": FunctionFragment;
     "CHALLEGEEXPIRY()": FunctionFragment;
     "DECIMALS()": FunctionFragment;
     "PARTICIPATIONEXPIRY()": FunctionFragment;
-    "REGISTERDEPOSIT()": FunctionFragment;
+    "REGISTRATIONDEPOSIT()": FunctionFragment;
     "VOTINGEXPIRY()": FunctionFragment;
     "_pi_quorum()": FunctionFragment;
     "aVoteParticipate(uint256,uint256)": FunctionFragment;
@@ -56,19 +68,22 @@ export interface Article_DAOInterface extends utils.Interface {
     "transferFrom(address,address,uint256)": FunctionFragment;
     "voteRanking(uint256,uint256)": FunctionFragment;
     "voteRegister(uint256,bool)": FunctionFragment;
+    "votedarticles(address,uint256)": FunctionFragment;
     "wRegisterids(uint256)": FunctionFragment;
     "wVoteParticipate(uint256,uint256)": FunctionFragment;
-    "writerRegister(uint256)": FunctionFragment;
-    "writerRegistries(uint256)": FunctionFragment;
+    "writerRegister(string)": FunctionFragment;
+    "writerRegistrations(uint256)": FunctionFragment;
+    "writermapping(address)": FunctionFragment;
     "writers(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "ARTICLEREGISTRATIONEXPIRY"
       | "CHALLEGEEXPIRY"
       | "DECIMALS"
       | "PARTICIPATIONEXPIRY"
-      | "REGISTERDEPOSIT"
+      | "REGISTRATIONDEPOSIT"
       | "VOTINGEXPIRY"
       | "_pi_quorum"
       | "aVoteParticipate"
@@ -91,13 +106,19 @@ export interface Article_DAOInterface extends utils.Interface {
       | "transferFrom"
       | "voteRanking"
       | "voteRegister"
+      | "votedarticles"
       | "wRegisterids"
       | "wVoteParticipate"
       | "writerRegister"
-      | "writerRegistries"
+      | "writerRegistrations"
+      | "writermapping"
       | "writers"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "ARTICLEREGISTRATIONEXPIRY",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "CHALLEGEEXPIRY",
     values?: undefined
@@ -108,7 +129,7 @@ export interface Article_DAOInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "REGISTERDEPOSIT",
+    functionFragment: "REGISTRATIONDEPOSIT",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -201,6 +222,10 @@ export interface Article_DAOInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "votedarticles",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "wRegisterids",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -210,17 +235,25 @@ export interface Article_DAOInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "writerRegister",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "writerRegistrations",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "writerRegistries",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "writermapping",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "writers",
     values: [PromiseOrValue<string>]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "ARTICLEREGISTRATIONEXPIRY",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "CHALLEGEEXPIRY",
     data: BytesLike
@@ -231,7 +264,7 @@ export interface Article_DAOInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "REGISTERDEPOSIT",
+    functionFragment: "REGISTRATIONDEPOSIT",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -287,6 +320,10 @@ export interface Article_DAOInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "votedarticles",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "wRegisterids",
     data: BytesLike
   ): Result;
@@ -299,7 +336,11 @@ export interface Article_DAOInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "writerRegistries",
+    functionFragment: "writerRegistrations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "writermapping",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "writers", data: BytesLike): Result;
@@ -364,13 +405,15 @@ export interface Article_DAO extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    ARTICLEREGISTRATIONEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     DECIMALS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<[BigNumber]>;
+    REGISTRATIONDEPOSIT(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     VOTINGEXPIRY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -405,8 +448,8 @@ export interface Article_DAO extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, string, BigNumber] & {
-        writerAddress: string;
+      [Article_DAO.WriterStructOutput, BigNumber, string, BigNumber] & {
+        writer: Article_DAO.WriterStructOutput;
         articleid: BigNumber;
         url: string;
         votedweights: BigNumber;
@@ -474,7 +517,7 @@ export interface Article_DAO extends BaseContract {
       ] & {
         proposer: string;
         applytime: BigNumber;
-        stake: BigNumber;
+        proposerstake: BigNumber;
         totalstake: BigNumber;
         totalvotes: BigNumber;
         totalchallenges: BigNumber;
@@ -485,7 +528,7 @@ export interface Article_DAO extends BaseContract {
 
     propose(
       stake: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -515,6 +558,12 @@ export interface Article_DAO extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    votedarticles(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     wRegisterids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -527,17 +576,16 @@ export interface Article_DAO extends BaseContract {
     ): Promise<ContractTransaction>;
 
     writerRegister(
-      stake: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      twitterhandle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    writerRegistries(
+    writerRegistrations(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [
-        string,
-        BigNumber,
+        Article_DAO.WriterStructOutput,
         BigNumber,
         BigNumber,
         BigNumber,
@@ -548,9 +596,8 @@ export interface Article_DAO extends BaseContract {
         BigNumber,
         number
       ] & {
-        writer: string;
+        writer: Article_DAO.WriterStructOutput;
         applytime: BigNumber;
-        stake: BigNumber;
         voteFor: BigNumber;
         voteAgainst: BigNumber;
         voteForstake: BigNumber;
@@ -562,11 +609,18 @@ export interface Article_DAO extends BaseContract {
       }
     >;
 
+    writermapping(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, string] & { _address: string; twitterHandle: string }>;
+
     writers(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
+
+  ARTICLEREGISTRATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
   CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -574,7 +628,7 @@ export interface Article_DAO extends BaseContract {
 
   PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
-  REGISTERDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
+  REGISTRATIONDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
 
   VOTINGEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -609,8 +663,8 @@ export interface Article_DAO extends BaseContract {
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, BigNumber, string, BigNumber] & {
-      writerAddress: string;
+    [Article_DAO.WriterStructOutput, BigNumber, string, BigNumber] & {
+      writer: Article_DAO.WriterStructOutput;
       articleid: BigNumber;
       url: string;
       votedweights: BigNumber;
@@ -678,7 +732,7 @@ export interface Article_DAO extends BaseContract {
     ] & {
       proposer: string;
       applytime: BigNumber;
-      stake: BigNumber;
+      proposerstake: BigNumber;
       totalstake: BigNumber;
       totalvotes: BigNumber;
       totalchallenges: BigNumber;
@@ -689,7 +743,7 @@ export interface Article_DAO extends BaseContract {
 
   propose(
     stake: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -719,6 +773,12 @@ export interface Article_DAO extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  votedarticles(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   wRegisterids(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -731,17 +791,16 @@ export interface Article_DAO extends BaseContract {
   ): Promise<ContractTransaction>;
 
   writerRegister(
-    stake: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    twitterhandle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  writerRegistries(
+  writerRegistrations(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
     [
-      string,
-      BigNumber,
+      Article_DAO.WriterStructOutput,
       BigNumber,
       BigNumber,
       BigNumber,
@@ -752,9 +811,8 @@ export interface Article_DAO extends BaseContract {
       BigNumber,
       number
     ] & {
-      writer: string;
+      writer: Article_DAO.WriterStructOutput;
       applytime: BigNumber;
-      stake: BigNumber;
       voteFor: BigNumber;
       voteAgainst: BigNumber;
       voteForstake: BigNumber;
@@ -766,19 +824,26 @@ export interface Article_DAO extends BaseContract {
     }
   >;
 
+  writermapping(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, string] & { _address: string; twitterHandle: string }>;
+
   writers(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   callStatic: {
+    ARTICLEREGISTRATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
     CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
     DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
     PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
+    REGISTRATIONDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
 
     VOTINGEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -813,8 +878,8 @@ export interface Article_DAO extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, BigNumber, string, BigNumber] & {
-        writerAddress: string;
+      [Article_DAO.WriterStructOutput, BigNumber, string, BigNumber] & {
+        writer: Article_DAO.WriterStructOutput;
         articleid: BigNumber;
         url: string;
         votedweights: BigNumber;
@@ -882,7 +947,7 @@ export interface Article_DAO extends BaseContract {
       ] & {
         proposer: string;
         applytime: BigNumber;
-        stake: BigNumber;
+        proposerstake: BigNumber;
         totalstake: BigNumber;
         totalvotes: BigNumber;
         totalchallenges: BigNumber;
@@ -923,6 +988,12 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    votedarticles(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     wRegisterids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -935,17 +1006,16 @@ export interface Article_DAO extends BaseContract {
     ): Promise<void>;
 
     writerRegister(
-      stake: PromiseOrValue<BigNumberish>,
+      twitterhandle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    writerRegistries(
+    writerRegistrations(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [
-        string,
-        BigNumber,
+        Article_DAO.WriterStructOutput,
         BigNumber,
         BigNumber,
         BigNumber,
@@ -956,9 +1026,8 @@ export interface Article_DAO extends BaseContract {
         BigNumber,
         number
       ] & {
-        writer: string;
+        writer: Article_DAO.WriterStructOutput;
         applytime: BigNumber;
-        stake: BigNumber;
         voteFor: BigNumber;
         voteAgainst: BigNumber;
         voteForstake: BigNumber;
@@ -969,6 +1038,11 @@ export interface Article_DAO extends BaseContract {
         votingResult: number;
       }
     >;
+
+    writermapping(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, string] & { _address: string; twitterHandle: string }>;
 
     writers(
       arg0: PromiseOrValue<string>,
@@ -1001,13 +1075,15 @@ export interface Article_DAO extends BaseContract {
   };
 
   estimateGas: {
+    ARTICLEREGISTRATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
+
     CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
     DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
     PARTICIPATIONEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
+    REGISTRATIONDEPOSIT(overrides?: CallOverrides): Promise<BigNumber>;
 
     VOTINGEXPIRY(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1089,7 +1165,7 @@ export interface Article_DAO extends BaseContract {
 
     propose(
       stake: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1119,6 +1195,12 @@ export interface Article_DAO extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    votedarticles(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     wRegisterids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1131,12 +1213,17 @@ export interface Article_DAO extends BaseContract {
     ): Promise<BigNumber>;
 
     writerRegister(
-      stake: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      twitterhandle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    writerRegistries(
+    writerRegistrations(
       arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    writermapping(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1147,6 +1234,10 @@ export interface Article_DAO extends BaseContract {
   };
 
   populateTransaction: {
+    ARTICLEREGISTRATIONEXPIRY(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     CHALLEGEEXPIRY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     DECIMALS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1155,7 +1246,9 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    REGISTERDEPOSIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    REGISTRATIONDEPOSIT(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     VOTINGEXPIRY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1237,7 +1330,7 @@ export interface Article_DAO extends BaseContract {
 
     propose(
       stake: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1267,6 +1360,12 @@ export interface Article_DAO extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    votedarticles(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     wRegisterids(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1279,12 +1378,17 @@ export interface Article_DAO extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     writerRegister(
-      stake: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      twitterhandle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    writerRegistries(
+    writerRegistrations(
       arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    writermapping(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

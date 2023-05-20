@@ -55,12 +55,12 @@ function Home() {
     // const signer = provider.getUncheckedSigner();
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
 
-    const tx = await contract.mint(account?.address, 1);
+    const tx = await contract.mint(account?.address, 10000);
 
     tx.wait().then((receipt) => {
       alert("Minted");

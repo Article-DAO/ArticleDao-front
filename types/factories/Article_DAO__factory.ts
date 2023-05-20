@@ -59,6 +59,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "ARTICLEREGISTRATIONEXPIRY",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "CHALLEGEEXPIRY",
     outputs: [
       {
@@ -98,7 +111,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "REGISTERDEPOSIT",
+    name: "REGISTRATIONDEPOSIT",
     outputs: [
       {
         internalType: "uint256",
@@ -235,9 +248,21 @@ const _abi = [
     name: "articles",
     outputs: [
       {
-        internalType: "address",
-        name: "writerAddress",
-        type: "address",
+        components: [
+          {
+            internalType: "address",
+            name: "_address",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "twitterHandle",
+            type: "string",
+          },
+        ],
+        internalType: "struct Article_DAO.Writer",
+        name: "writer",
+        type: "tuple",
       },
       {
         internalType: "uint256",
@@ -422,7 +447,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "stake",
+        name: "proposerstake",
         type: "uint256",
       },
       {
@@ -464,7 +489,7 @@ const _abi = [
     ],
     name: "propose",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -572,6 +597,30 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "votedarticles",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "",
         type: "uint256",
@@ -609,14 +658,14 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "stake",
-        type: "uint256",
+        internalType: "string",
+        name: "twitterhandle",
+        type: "string",
       },
     ],
     name: "writerRegister",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -627,21 +676,28 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "writerRegistries",
+    name: "writerRegistrations",
     outputs: [
       {
-        internalType: "address",
+        components: [
+          {
+            internalType: "address",
+            name: "_address",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "twitterHandle",
+            type: "string",
+          },
+        ],
+        internalType: "struct Article_DAO.Writer",
         name: "writer",
-        type: "address",
+        type: "tuple",
       },
       {
         internalType: "uint256",
         name: "applytime",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "stake",
         type: "uint256",
       },
       {
@@ -683,6 +739,30 @@ const _abi = [
         internalType: "enum Article_DAO.VotingResult",
         name: "votingResult",
         type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "writermapping",
+    outputs: [
+      {
+        internalType: "address",
+        name: "_address",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "twitterHandle",
+        type: "string",
       },
     ],
     stateMutability: "view",

@@ -8,11 +8,9 @@ import type { TokenSymbol } from "@web3-onboard/common";
 import Loading from "../common/Loading";
 import backgroundwhite2 from "../../assets/backgroundwhitelist2.jpg";
 
-interface Proposal {
-  id: number;
-  title: string;
-  description: string;
-  reward: number;
+interface Writer {
+  account: string;
+  handle: string;
 }
 let provider;
 
@@ -23,11 +21,9 @@ interface Account {
 }
 
 function WhiteUserRegister() {
-  const [proposals, setProposals] = useState<Proposal>({
-    id: 0,
-    title: "",
-    description: "",
-    reward: 0,
+  const [writers, setWriters] = useState<Writer>({
+    account: "",
+    handle: "",
   });
   const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
     useConnectWallet();
@@ -37,6 +33,8 @@ function WhiteUserRegister() {
     null
   );
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [myToken, setMyToken] = useState<string>("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,8 +50,21 @@ function WhiteUserRegister() {
         balance: wallet.accounts[0].balance,
         ens: { name, avatar: avatar?.url },
       });
+      setWriters({ ...writers, account: wallet.accounts[0].address });
       provider = new ethers.providers.Web3Provider(wallet.provider, "any");
       setSigner(provider.getUncheckedSigner());
+
+      const contract: Article_DAO = new ethers.Contract(
+        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+        ArticleDaoABI,
+        provider.getUncheckedSigner()
+      ) as Article_DAO;
+
+      const getMyToken = async () => {
+        const balance = await contract.balanceOf(wallet.accounts[0].address);
+        setMyToken(balance.toString());
+      };
+      getMyToken();
     }
   }, [wallet?.provider]);
 
@@ -64,20 +75,18 @@ function WhiteUserRegister() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     const tx = await contract?.approve(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
-      BigNumber.from("1")
+      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      BigNumber.from("150")
     );
     await tx.wait();
 
-    const writerRegistertx = await contract?.writerRegister(
-      BigNumber.from("1")
-    );
+    const writerRegistertx = await contract?.writerRegister(writers.handle);
     await writerRegistertx.wait();
 
     // const tx = await contract?.writerRegister(BigNumber.from("1"));
@@ -92,37 +101,23 @@ function WhiteUserRegister() {
         <Description>token submit에 대한 주의사항 및 설명</Description>
 
         <InputWrap>
-          <div>안건 제목: </div>
-          <input
-            type="text"
-            value={proposals?.title}
-            onChange={(e) =>
-              setProposals({ ...proposals, title: e.target.value })
-            }
-          />
+          <div>내 account: {writers.account}</div>
         </InputWrap>
         <InputWrap>
-          <div>안건 설명: </div>
+          <div>tweet handle: </div>
           <input
             type="text"
-            value={proposals?.description}
-            onChange={(e) =>
-              setProposals({ ...proposals, description: e.target.value })
-            }
+            value={writers?.handle}
+            onChange={(e) => setWriters({ ...writers, handle: e.target.value })}
           />
         </InputWrap>
+        <div>내가 보유한 토큰 {myToken}</div>
 
         <InputWrap>
           <div>Reward로 제공할 staking </div>
-          <input
-            type="number"
-            value={proposals?.reward}
-            onChange={(e) =>
-              setProposals({ ...proposals, reward: Number(e.target.value) })
-            }
-          />
+          <div>100Token</div>
         </InputWrap>
-        <div>Used Token : {proposals.reward}</div>
+
         <Button onClick={registerWhiteList}>Submit</Button>
       </Wrap>
     </Container>
