@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "../assets/logo.png";
 import DaoBox from "../components/profile/DaoBox";
 import { useConnectWallet } from "../states/wallet.state";
+import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
 
 interface DaoComponentProps {
   name: string;
@@ -29,39 +30,50 @@ const daos: DaoComponentProps[] = [
 function Profile() {
   const { account, chainId, connect, disconnect } = useConnectWallet();
   return (
-    <Wrap>
-      <ProfileWrap>
-        <h1>Profile</h1>
-        <ProfileImg src={Logo} alt="" />
-        <p>name</p>
-        <p>{account}</p>
-      </ProfileWrap>
+    <Container>
+      <Wrap>
+        <ProfileWrap>
+          <h1>Profile</h1>
+          <ProfileImg src={Logo} alt="" />
+          <p>name</p>
+          <p>{account}</p>
+        </ProfileWrap>
 
-      <RecordWrap>
-        <h1>Contribution record</h1>
+        <RecordWrap>
+          <h1>Contribution record</h1>
 
-        <TableWrap>
-          <Header>
-            <Title>Title</Title>
-            <Title>State</Title>
-            <Title>Deadline</Title>
-            <Title>Votes</Title>
-          </Header>
-          {daos.map((dao, index) => (
-            <DaoBox key={index} dao={dao} />
-          ))}
-        </TableWrap>
-      </RecordWrap>
-    </Wrap>
+          <TableWrap>
+            <Header>
+              <Title>Title</Title>
+              <Title>State</Title>
+              <Title>Deadline</Title>
+              <Title>Votes</Title>
+            </Header>
+            {daos.map((dao, index) => (
+              <DaoBox key={index} dao={dao} />
+            ))}
+          </TableWrap>
+        </RecordWrap>
+      </Wrap>
+    </Container>
   );
 }
 
 export default Profile;
+const Container = styled.div`
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 const Wrap = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 20px;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const ProfileWrap = styled.div`
