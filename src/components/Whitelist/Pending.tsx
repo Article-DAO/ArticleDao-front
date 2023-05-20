@@ -22,7 +22,7 @@ function Pending() {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
-  const [claim, setClaim] = useState<boolean>(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -41,14 +41,14 @@ function Pending() {
     }
   }, [wallet?.provider]);
 
-  const registerWhiteList = async () => {
+  const voteOnPending = async () => {
     if (!wallet?.provider || !account || !signer) {
       alert("Connect Wallet");
       return;
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+      import.meta.env.VITE_APP_ADDRESS,
       ArticleDaoABI,
       signer
     ) as Article_DAO;
@@ -60,8 +60,8 @@ function Pending() {
     // await tx.wait();
     try {
       const writerRegistertx = await contract?.voteRegister(
-        BigNumber.from(param.userId),
-        selectedOption
+        BigNumber.from("6"),
+        true
       );
       await writerRegistertx.wait();
       // const tx = await contract?.writerRegister(BigNumber.from("1"));
@@ -70,6 +70,13 @@ function Pending() {
     } catch (e) {
       setLoading(false);
       alert("error");
+    }
+  };
+
+  const claimToWhiteList = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
     }
   };
   const handleOptionSelect = (option: boolean) => {
@@ -84,27 +91,27 @@ function Pending() {
           <h1>WhiteList Pending</h1>
           <UserName>UserName : {param.userId}</UserName>
           <Description>token submit에 대한 주의사항 및 설명</Description>
-          {claim ? (
+          {/* {claim ? (
             <>
               <div>완료된 투표 입니다</div>
-              <button onClick={registerWhiteList}>Submit</button>
+              <button onClick={voteOnPending}>Submit</button>
             </>
-          ) : (
-            <>
-              <ButtonWrap>
-                <StyledButton onClick={() => handleOptionSelect(true)}>
-                  O
-                </StyledButton>
-                <StyledButton2 onClick={() => handleOptionSelect(false)}>
-                  X
-                </StyledButton2>
-              </ButtonWrap>
-              <Selected isSelected={selectedOption}>
-                {selectedOption === true ? "O" : "X"}
-              </Selected>
-              <button onClick={registerWhiteList}>Submit</button>
-            </>
-          )}
+          ) : ( */}
+          <>
+            <ButtonWrap>
+              <StyledButton onClick={() => handleOptionSelect(true)}>
+                O
+              </StyledButton>
+              <StyledButton2 onClick={() => handleOptionSelect(false)}>
+                X
+              </StyledButton2>
+            </ButtonWrap>
+            <Selected isSelected={selectedOption}>
+              {selectedOption === true ? "O" : "X"}
+            </Selected>
+            <button onClick={voteOnPending}>Submit</button>
+          </>
+          {/* )} */}
         </PendingWrap>
       </Wrap>
     </Container>

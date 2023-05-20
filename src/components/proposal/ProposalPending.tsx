@@ -112,6 +112,7 @@ function ProposalPending() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     if (!wallet?.provider) {
       provider = null;
@@ -126,17 +127,17 @@ function ProposalPending() {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+        import.meta.env.VITE_APP_ADDRESS,
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
 
       const getUsersList = async () => {
-        const max = await contract?.getarticlenum("0");
+        const max = await contract?.getarticlenum(param.userId);
         const maxNum = max.toNumber();
         console.log(maxNum);
         for (let i = 0; i < maxNum; i++) {
-          const url = await contract?.getarticle("0", i);
+          const url = await contract?.getarticle(param.userId, i);
 
           setVotedUserList((prev) => [
             { ...votedUserList, id: i, handle: url },
@@ -153,20 +154,20 @@ function ProposalPending() {
       return;
     }
     const contract: Article_DAO = new ethers.Contract(
-      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+      import.meta.env.VITE_APP_ADDRESS,
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     // const tx = await contract?.approve(
-    //   "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+    //   import.meta.env.VITE_APP_ADDRESS,
     //   BigNumber.from("10")
     // );
     // await tx.wait();
     try {
       const writerRegistertx = await contract?.articleRegister(
-        BigNumber.from("0"),
-        "elon musk"
+        BigNumber.from(param.userId),
+        myhandle
       );
       await writerRegistertx.wait();
 
@@ -186,7 +187,7 @@ function ProposalPending() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+      import.meta.env.VITE_APP_ADDRESS,
       ArticleDaoABI,
       signer
     ) as Article_DAO;
@@ -210,13 +211,13 @@ function ProposalPending() {
   //   }
 
   //   const contract: Article_DAO = new ethers.Contract(
-  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+  //     import.meta.env.VITE_APP_ADDRESS,
   //     ArticleDaoABI,
   //     signer
   //   ) as Article_DAO;
   //   setLoading(true);
   //   const tx = await contract?.approve(
-  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+  //     import.meta.env.VITE_APP_ADDRESS,
   //     BigNumber.from("1")
   //   );
   //   await tx.wait();
@@ -268,7 +269,7 @@ function ProposalPending() {
                       />
                     </>
                   ))}
-                  {pendings.map((pending) => (
+                  {/* {pendings.map((pending) => (
                     <>
                       <PendingBox
                         key={pending.id}
@@ -276,7 +277,7 @@ function ProposalPending() {
                         setSelectedUser={setSelectedUser}
                       />
                     </>
-                  ))}
+                  ))} */}
                 </CustomerList>
                 <MySelectUser> 내가 선택한 유저: {selectedUser}</MySelectUser>
               </PendingWrap>

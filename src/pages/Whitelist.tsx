@@ -11,6 +11,7 @@ import { useConnectWallet } from "@web3-onboard/react";
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
 
 import type { TokenSymbol } from "@web3-onboard/common";
+import Loading from "../components/common/Loading";
 
 // Define the interface for the customer data
 
@@ -183,6 +184,7 @@ const Whitelist = () => {
   const [whiteUserList, setWhiteUserList] = useState<any[] | null | undefined>(
     []
   );
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!wallet?.provider) {
@@ -198,7 +200,7 @@ const Whitelist = () => {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+        import.meta.env.VITE_APP_ADDRESS,
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
@@ -242,29 +244,19 @@ const Whitelist = () => {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+      import.meta.env.VITE_APP_ADDRESS,
       ArticleDaoABI,
       signer
     ) as Article_DAO;
 
+    setLoading(true);
     const getUsersList = async () => {
-      if (!recruitList?.length) {
-        return;
-      }
-      const maxNum = recruitList?.length ? recruitList.length : 0;
-      if (maxNum === 0) {
-        return;
-      }
-      for (let i = 0; i < maxNum; i++) {
-        const refreshed = await contract?.canWvote(recruitList[i].id);
-        if (refreshed) {
-          recruitList[i].state = 1;
-        }
-      }
+      await contract.refreshw();
+      alert("Success");
+      setLoading(false);
     };
     getUsersList();
   };
-
   // const registerWhiteList = async () => {
   //   if (!wallet?.provider || !account || !signer) {
   //     alert("Connect Wallet");
@@ -272,12 +264,12 @@ const Whitelist = () => {
   //   }
 
   //   const contract: Article_DAO = new ethers.Contract(
-  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+  //     import.meta.env.VITE_APP_ADDRESS,
   //     ArticleDaoABI,
   //     signer
   //   ) as Article_DAO;
   //   const tx = await contract?.approve(
-  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+  //     import.meta.env.VITE_APP_ADDRESS,
   //     BigNumber.from("1")
   //   );
   //   await tx.wait();
@@ -332,6 +324,7 @@ const Whitelist = () => {
 
   return (
     <Container>
+      {loading && <Loading />}
       <TitleWrap>
         <Title>Whitelist</Title>
 

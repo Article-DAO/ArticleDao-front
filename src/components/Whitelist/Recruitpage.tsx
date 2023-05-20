@@ -45,14 +45,14 @@ function Recruitpage() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+      import.meta.env.VITE_APP_ADDRESS,
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     try {
       const tx = await contract?.approve(
-        "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+        import.meta.env.VITE_APP_ADDRESS,
         BigNumber.from(usedToken)
       );
       await tx.wait();

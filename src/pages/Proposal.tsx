@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
 
 import Logo from "../assets/articlebox.jpeg";
+
+import ArticleDaoABI from "../abi/Article_DAO.json";
+import { Article_DAO } from "../../types";
+import { ethers } from "ethers";
+import { useConnectWallet } from "@web3-onboard/react";
+import type { TokenSymbol } from "@web3-onboard/common";
+import Loading from "../components/common/Loading";
 
 // Define the interface for the customer data
 
@@ -62,7 +69,7 @@ const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   return (
     <ContentWrapBox>
       <ContentTextBox>
-        <p>Tweet: {recruit.handle}</p>
+        <p>User ID: {recruit.id}</p>
       </ContentTextBox>
     </ContentWrapBox>
   );
@@ -95,7 +102,7 @@ const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   return (
     <ContentWrapBox>
       <ContentTextBox>
-        <p>Tweet: {pending.handle}</p>
+        <p>UserID: {pending.id}</p>
       </ContentTextBox>
     </ContentWrapBox>
   );
@@ -120,7 +127,95 @@ const pendings: member[] = [
   },
 ];
 
+interface Account {
+  address: string;
+  balance: Record<TokenSymbol, string> | null;
+  ens: { name: string | undefined; avatar: string | undefined };
+}
+let provider;
+
 const Proposal = () => {
+  const [{ wallet }] = useConnectWallet();
+  const [maxIndex, setMaxIndex] = useState<number>(0);
+
+  const [account, setAccount] = useState<Account | null>(null);
+  const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
+    null
+  );
+  const [recruitList, setRecruitList] = useState<any[] | null | undefined>([]);
+  const [pendingList, setPendingList] = useState<any[] | null | undefined>([]);
+  const [whiteUserList, setWhiteUserList] = useState<any[] | null | undefined>(
+    []
+  );
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!wallet?.provider) {
+      provider = null;
+    } else {
+      const { name, avatar } = wallet?.accounts[0].ens ?? {};
+      setAccount({
+        address: wallet.accounts[0].address,
+        balance: wallet.accounts[0].balance,
+        ens: { name, avatar: avatar?.url },
+      });
+      provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+      setSigner(provider.getUncheckedSigner());
+
+      const contract: Article_DAO = new ethers.Contract(
+        import.meta.env.VITE_APP_ADDRESS,
+        ArticleDaoABI,
+        provider.getUncheckedSigner()
+      ) as Article_DAO;
+
+      const getUsersList = async () => {
+        const max = await contract?.getproposalnum();
+        const maxNum = max.toNumber();
+        setMaxIndex(maxNum);
+        console.log(maxNum);
+        for (let i = 0; i < maxNum; i++) {
+          const state = await contract?.getProposal(i);
+
+          if (state.toNumber() === 0) {
+            setRecruitList((prev) => [{ ...recruitList, id: i }]);
+          } else if (state.toNumber() === 1) {
+            setPendingList((prev) => [{ ...pendingList, id: i }]);
+          } else if (state.toNumber() === 2) {
+            setWhiteUserList((prev) => [{ ...whiteUserList, id: i }]);
+          }
+        }
+      };
+      getUsersList();
+
+      // const getReqruitlist = async () => {
+      //   const balance = await contract.balanceOf(wallet.accounts[0].address);
+      //   setMyToken(balance.toString());
+      // };
+    }
+  }, [wallet?.provider]);
+
+  const refreshLists = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+
+    const contract: Article_DAO = new ethers.Contract(
+      import.meta.env.VITE_APP_ADDRESS,
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    setLoading(true);
+
+    setLoading(true);
+    const getUsersList = async () => {
+      await contract.refreshA();
+      alert("Success");
+      setLoading(false);
+    };
+    getUsersList();
+  };
+
   const whitelists: member[] = [
     {
       id: 0,
@@ -145,18 +240,20 @@ const Proposal = () => {
 
   return (
     <Container>
+      {loading && <Loading />}
       <TitleWrap>
         <Title>Proposals</Title>
         <Link to={`/register`}>
           <StyledButton> 안건 등록</StyledButton>
         </Link>
+        <StyledButton onClick={refreshLists}> Refresh</StyledButton>
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>
           <h2>Recruit</h2>
           <Descript>현재 등록을 원하는 안건들의 목록입니다.</Descript>
           <CustomerList>
-            {recruits.map((recruit) => (
+            {/* {recruits.map((recruit) => (
               <>
                 <Link
                   style={{
@@ -168,14 +265,28 @@ const Proposal = () => {
                   <RecruitBox key={recruit.id} recruit={recruit} />
                 </Link>
               </>
-            ))}
+            ))} */}
+            {recruitList &&
+              recruitList.map((recruit) => (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={`recruit/${recruit.id}`}
+                  >
+                    <RecruitBox key={recruit.id} recruit={recruit} />
+                  </Link>
+                </>
+              ))}
           </CustomerList>
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
           <Descript>현재 투표가 진행중인 안건들의 목록입니다.</Descript>
           <CustomerList>
-            {pendings.map((pending) => (
+            {/* {pendings.map((pending) => (
               <>
                 <Link
                   style={{
@@ -187,14 +298,28 @@ const Proposal = () => {
                   <PendingBox key={pending.id} pending={pending} />
                 </Link>
               </>
-            ))}
+            ))} */}
+            {pendingList &&
+              pendingList.map((pending) => (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={`pending/${pending.id}`}
+                  >
+                    <PendingBox key={pending.id} pending={pending} />
+                  </Link>
+                </>
+              ))}
           </CustomerList>
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
           <Descript>현재 투표가 완료된 안건들의 목록입니다.</Descript>
           <CustomerList>
-            {whitelists.map((customer) => (
+            {/* {whitelists.map((customer) => (
               <>
                 <Link
                   style={{
@@ -210,7 +335,25 @@ const Proposal = () => {
                   </ContentWrapBox>
                 </Link>
               </>
-            ))}
+            ))} */}
+            {whiteUserList &&
+              whiteUserList.map((whiteUser) => (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={`https://twitter.com/${whiteUser.handle}}`}
+                  >
+                    <ContentWrapBox>
+                      <ContentTextBox>
+                        <p>UserID: {whiteUser.id}</p>
+                      </ContentTextBox>
+                    </ContentWrapBox>
+                  </Link>
+                </>
+              ))}
           </CustomerList>
         </WhitelistWrap>
       </ListWrap>

@@ -54,11 +54,6 @@ export interface Article_DAOInterface extends utils.Interface {
     "articleRegister(uint256,string)": FunctionFragment;
     "articles(uint256,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "canAclaim(uint256)": FunctionFragment;
-    "canAregister(uint256)": FunctionFragment;
-    "canAvote(uint256)": FunctionFragment;
-    "canWclaim(uint256)": FunctionFragment;
-    "canWvote(uint256)": FunctionFragment;
     "challenge(uint256)": FunctionFragment;
     "claimRewardA(uint256,uint256)": FunctionFragment;
     "claimRewardW(uint256)": FunctionFragment;
@@ -77,6 +72,8 @@ export interface Article_DAOInterface extends utils.Interface {
     "r1()": FunctionFragment;
     "r2()": FunctionFragment;
     "r3()": FunctionFragment;
+    "refreshA()": FunctionFragment;
+    "refreshw()": FunctionFragment;
     "registrationnum()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
@@ -106,11 +103,6 @@ export interface Article_DAOInterface extends utils.Interface {
       | "articleRegister"
       | "articles"
       | "balanceOf"
-      | "canAclaim"
-      | "canAregister"
-      | "canAvote"
-      | "canWclaim"
-      | "canWvote"
       | "challenge"
       | "claimRewardA"
       | "claimRewardW"
@@ -129,6 +121,8 @@ export interface Article_DAOInterface extends utils.Interface {
       | "r1"
       | "r2"
       | "r3"
+      | "refreshA"
+      | "refreshw"
       | "registrationnum"
       | "totalSupply"
       | "transfer"
@@ -193,26 +187,6 @@ export interface Article_DAOInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "canAclaim",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canAregister",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canAvote",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canWclaim",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "canWvote",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "challenge",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -272,6 +246,8 @@ export interface Article_DAOInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "r1", values?: undefined): string;
   encodeFunctionData(functionFragment: "r2", values?: undefined): string;
   encodeFunctionData(functionFragment: "r3", values?: undefined): string;
+  encodeFunctionData(functionFragment: "refreshA", values?: undefined): string;
+  encodeFunctionData(functionFragment: "refreshw", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "registrationnum",
     values?: undefined
@@ -359,14 +335,6 @@ export interface Article_DAOInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "articles", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "canAclaim", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "canAregister",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "canAvote", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "canWclaim", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "canWvote", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "challenge", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "claimRewardA",
@@ -409,6 +377,8 @@ export interface Article_DAOInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "r1", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "r2", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "r3", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "refreshA", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "refreshw", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "registrationnum",
     data: BytesLike
@@ -568,31 +538,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    canAclaim(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    canAregister(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    canAvote(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    canWclaim(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    canWvote(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     challenge(
       wregisterid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -692,6 +637,14 @@ export interface Article_DAO extends BaseContract {
     r2(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     r3(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    refreshA(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    refreshw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     registrationnum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -837,31 +790,6 @@ export interface Article_DAO extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  canAclaim(
-    pid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  canAregister(
-    pid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  canAvote(
-    pid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  canWclaim(
-    wid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  canWvote(
-    wid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   challenge(
     wregisterid: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -961,6 +889,14 @@ export interface Article_DAO extends BaseContract {
   r2(overrides?: CallOverrides): Promise<BigNumber>;
 
   r3(overrides?: CallOverrides): Promise<BigNumber>;
+
+  refreshA(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  refreshw(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   registrationnum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1106,31 +1042,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    canAclaim(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    canAregister(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    canAvote(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    canWclaim(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    canWvote(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     challenge(
       wregisterid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1230,6 +1141,10 @@ export interface Article_DAO extends BaseContract {
     r2(overrides?: CallOverrides): Promise<BigNumber>;
 
     r3(overrides?: CallOverrides): Promise<BigNumber>;
+
+    refreshA(overrides?: CallOverrides): Promise<void>;
+
+    refreshw(overrides?: CallOverrides): Promise<void>;
 
     registrationnum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1393,31 +1308,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    canAclaim(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    canAregister(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    canAvote(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    canWclaim(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    canWvote(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     challenge(
       wregisterid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1489,6 +1379,14 @@ export interface Article_DAO extends BaseContract {
     r2(overrides?: CallOverrides): Promise<BigNumber>;
 
     r3(overrides?: CallOverrides): Promise<BigNumber>;
+
+    refreshA(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    refreshw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     registrationnum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1608,31 +1506,6 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    canAclaim(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    canAregister(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    canAvote(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    canWclaim(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    canWvote(
-      wid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     challenge(
       wregisterid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1704,6 +1577,14 @@ export interface Article_DAO extends BaseContract {
     r2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     r3(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    refreshA(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    refreshw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     registrationnum(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

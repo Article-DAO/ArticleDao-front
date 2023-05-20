@@ -306,101 +306,6 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "pid",
-        type: "uint256",
-      },
-    ],
-    name: "canAclaim",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "pid",
-        type: "uint256",
-      },
-    ],
-    name: "canAregister",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "pid",
-        type: "uint256",
-      },
-    ],
-    name: "canAvote",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "wid",
-        type: "uint256",
-      },
-    ],
-    name: "canWclaim",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "wid",
-        type: "uint256",
-      },
-    ],
-    name: "canWvote",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "wregisterid",
         type: "uint256",
       },
@@ -735,6 +640,20 @@ const _abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "refreshA",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "refreshw",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
