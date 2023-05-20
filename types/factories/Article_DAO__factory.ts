@@ -386,12 +386,50 @@ const _abi = [
         type: "uint256",
       },
     ],
+    name: "getAExipry",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "pid",
+        type: "uint256",
+      },
+    ],
     name: "getProposal",
     outputs: [
       {
         internalType: "uint256",
         name: "state",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "wid",
+        type: "uint256",
+      },
+    ],
+    name: "getWExpiry",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",

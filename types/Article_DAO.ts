@@ -59,7 +59,9 @@ export interface Article_DAOInterface extends utils.Interface {
     "claimRewardA(uint256,uint256)": FunctionFragment;
     "claimRewardW(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
+    "getAExipry(uint256)": FunctionFragment;
     "getProposal(uint256)": FunctionFragment;
+    "getWExpiry(uint256)": FunctionFragment;
     "getWregister(uint256)": FunctionFragment;
     "getarticle(uint256,uint256)": FunctionFragment;
     "getarticlenum(uint256)": FunctionFragment;
@@ -104,7 +106,9 @@ export interface Article_DAOInterface extends utils.Interface {
       | "claimRewardA"
       | "claimRewardW"
       | "decimals"
+      | "getAExipry"
       | "getProposal"
+      | "getWExpiry"
       | "getWregister"
       | "getarticle"
       | "getarticlenum"
@@ -196,7 +200,15 @@ export interface Article_DAOInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "getAExipry",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getProposal",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getWExpiry",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -337,10 +349,12 @@ export interface Article_DAOInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getAExipry", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getProposal",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getWExpiry", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getWregister",
     data: BytesLike
@@ -548,10 +562,20 @@ export interface Article_DAO extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
+    getAExipry(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     getProposal(
       pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { state: BigNumber }>;
+
+    getWExpiry(
+      wid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     getWregister(
       wid: PromiseOrValue<BigNumberish>,
@@ -791,10 +815,20 @@ export interface Article_DAO extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
+  getAExipry(
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   getProposal(
     pid: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+
+  getWExpiry(
+    wid: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   getWregister(
     wid: PromiseOrValue<BigNumberish>,
@@ -1034,10 +1068,20 @@ export interface Article_DAO extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
+    getAExipry(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     getProposal(
       pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getWExpiry(
+      wid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     getWregister(
       wid: PromiseOrValue<BigNumberish>,
@@ -1295,8 +1339,18 @@ export interface Article_DAO extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getAExipry(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getProposal(
       pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getWExpiry(
+      wid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1484,8 +1538,18 @@ export interface Article_DAO extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    getAExipry(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getProposal(
       pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getWExpiry(
+      wid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

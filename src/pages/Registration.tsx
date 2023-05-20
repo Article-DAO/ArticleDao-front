@@ -64,20 +64,18 @@ function Registration() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     const tx = await contract?.approve(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
-      BigNumber.from("1")
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+      BigNumber.from("10")
     );
     await tx.wait();
 
-    const writerRegistertx = await contract?.writerRegister(
-      BigNumber.from("1")
-    );
+    const writerRegistertx = await contract?.propose(BigNumber.from("10"));
     await writerRegistertx.wait();
 
     // const tx = await contract?.writerRegister(BigNumber.from("1"));

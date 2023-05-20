@@ -27,7 +27,7 @@ const PendingBox: React.FC<PendingBoxProps> = ({
   return (
     <ContentWrapBox
       onClick={() => {
-        setSelectedUser(pending.handle);
+        setSelectedUser(pending.id.toString());
       }}
     >
       <ContentTextBox>
@@ -88,6 +88,8 @@ function ProposalPending() {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [myhandle, setMyHandle] = useState<string>("");
 
+  const [votedUserList, setVotedUserList] = useState<any[]>([]);
+
   const pendings: member[] = [
     {
       id: 1,
@@ -122,29 +124,77 @@ function ProposalPending() {
       });
       provider = new ethers.providers.Web3Provider(wallet.provider, "any");
       setSigner(provider.getUncheckedSigner());
+
+      const contract: Article_DAO = new ethers.Contract(
+        "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+        ArticleDaoABI,
+        provider.getUncheckedSigner()
+      ) as Article_DAO;
+
+      const getUsersList = async () => {
+        const max = await contract?.getarticlenum("0");
+        const maxNum = max.toNumber();
+        console.log(maxNum);
+        for (let i = 0; i < maxNum; i++) {
+          const url = await contract?.getarticle("0", i);
+
+          setVotedUserList((prev) => [
+            { ...votedUserList, id: i, handle: url },
+          ]);
+        }
+      };
+      getUsersList();
     }
   }, [wallet?.provider]);
 
-  const registerWhiteList = async () => {
+  const writeOnVote = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+    const contract: Article_DAO = new ethers.Contract(
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    setLoading(true);
+    // const tx = await contract?.approve(
+    //   "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+    //   BigNumber.from("10")
+    // );
+    // await tx.wait();
+    try {
+      const writerRegistertx = await contract?.articleRegister(
+        BigNumber.from("0"),
+        "elon musk"
+      );
+      await writerRegistertx.wait();
+
+      // const tx = await contract?.writerRegister(BigNumber.from("1"));
+      setLoading(false);
+      alert("Success");
+    } catch (e) {
+      alert("Fail");
+      setLoading(false);
+    }
+  };
+
+  const voteOnSelectUser = async () => {
     if (!wallet?.provider || !account || !signer) {
       alert("Connect Wallet");
       return;
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
-    const tx = await contract?.approve(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
-      BigNumber.from("1")
-    );
-    await tx.wait();
 
-    const writerRegistertx = await contract?.writerRegister(
-      BigNumber.from("1")
+    const writerRegistertx = await contract?.voteRanking(
+      BigNumber.from("0"),
+      BigNumber.from(selectedUser)
     );
     await writerRegistertx.wait();
 
@@ -152,6 +202,34 @@ function ProposalPending() {
     setLoading(false);
     alert("Success");
   };
+
+  // const registerWhiteList = async () => {
+  //   if (!wallet?.provider || !account || !signer) {
+  //     alert("Connect Wallet");
+  //     return;
+  //   }
+
+  //   const contract: Article_DAO = new ethers.Contract(
+  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     ArticleDaoABI,
+  //     signer
+  //   ) as Article_DAO;
+  //   setLoading(true);
+  //   const tx = await contract?.approve(
+  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     BigNumber.from("1")
+  //   );
+  //   await tx.wait();
+
+  //   const writerRegistertx = await contract?.writerRegister(
+  //     BigNumber.from("1")
+  //   );
+  //   await writerRegistertx.wait();
+
+  //   // const tx = await contract?.writerRegister(BigNumber.from("1"));
+  //   setLoading(false);
+  //   alert("Success");
+  // };
 
   return (
     <Container>
@@ -173,7 +251,7 @@ function ProposalPending() {
                   onChange={(e) => setMyHandle(e.target.value)}
                 />
               </InputWrap>
-              <button>안건에 글쓰고 들어가기</button>
+              <button onClick={writeOnVote}>안건에 글쓰고 들어가기</button>
             </LeftWrap>
 
             <RightWrap>
@@ -181,6 +259,15 @@ function ProposalPending() {
                 <h2>Pending</h2>
                 <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
                 <CustomerList>
+                  {votedUserList.map((votedUser) => (
+                    <>
+                      <PendingBox
+                        key={votedUser.id}
+                        pending={votedUser}
+                        setSelectedUser={setSelectedUser}
+                      />
+                    </>
+                  ))}
                   {pendings.map((pending) => (
                     <>
                       <PendingBox
@@ -194,7 +281,7 @@ function ProposalPending() {
                 <MySelectUser> 내가 선택한 유저: {selectedUser}</MySelectUser>
               </PendingWrap>
 
-              <button onClick={registerWhiteList}>Submit</button>
+              <button onClick={voteOnSelectUser}>Submit</button>
             </RightWrap>
           </RowWrap>
         </PendingWrap>

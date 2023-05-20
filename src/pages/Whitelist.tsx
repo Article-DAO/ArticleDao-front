@@ -198,10 +198,11 @@ const Whitelist = () => {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
+        "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
+
       const getUsersList = async () => {
         const max = await contract?.getregisternum();
         const maxNum = max.toNumber();
@@ -233,32 +234,32 @@ const Whitelist = () => {
     }
   }, [wallet?.provider]);
 
-  const registerWhiteList = async () => {
-    if (!wallet?.provider || !account || !signer) {
-      alert("Connect Wallet");
-      return;
-    }
+  // const registerWhiteList = async () => {
+  //   if (!wallet?.provider || !account || !signer) {
+  //     alert("Connect Wallet");
+  //     return;
+  //   }
 
-    const contract: Article_DAO = new ethers.Contract(
-      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
-      ArticleDaoABI,
-      signer
-    ) as Article_DAO;
-    const tx = await contract?.approve(
-      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
-      BigNumber.from("1")
-    );
-    await tx.wait();
+  //   const contract: Article_DAO = new ethers.Contract(
+  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     ArticleDaoABI,
+  //     signer
+  //   ) as Article_DAO;
+  //   const tx = await contract?.approve(
+  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     BigNumber.from("1")
+  //   );
+  //   await tx.wait();
 
-    const writerRegistertx = await contract?.writerRegister(
-      BigNumber.from("1")
-    );
-    await writerRegistertx.wait();
+  //   const writerRegistertx = await contract?.writerRegister(
+  //     BigNumber.from("1")
+  //   );
+  //   await writerRegistertx.wait();
 
-    // const tx = await contract?.writerRegister(BigNumber.from("1"));
+  //   // const tx = await contract?.writerRegister(BigNumber.from("1"));
 
-    alert("Success");
-  };
+  //   alert("Success");
+  // };
 
   // const getWriterids = async () => {
   //   if (!wallet?.provider || !account || !signer) {

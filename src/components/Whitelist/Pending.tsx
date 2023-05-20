@@ -48,7 +48,7 @@ function Pending() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
       ArticleDaoABI,
       signer
     ) as Article_DAO;

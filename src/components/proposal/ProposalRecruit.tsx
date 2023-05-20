@@ -38,27 +38,29 @@ function ProposalRecruit() {
     }
   }, [wallet?.provider]);
 
-  const registerWhiteList = async () => {
+  const voteRecruit = async () => {
     if (!wallet?.provider || !account || !signer) {
       alert("Connect Wallet");
       return;
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     const tx = await contract?.approve(
-      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
-      BigNumber.from("1")
+      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+      BigNumber.from("10")
     );
     await tx.wait();
 
-    const writerRegistertx = await contract?.writerRegister(
-      BigNumber.from("1")
+    const writerRegistertx = await contract?.aVoteParticipate(
+      BigNumber.from("0"),
+      BigNumber.from("10")
     );
+
     await writerRegistertx.wait();
 
     // const tx = await contract?.writerRegister(BigNumber.from("1"));
@@ -71,16 +73,19 @@ function ProposalRecruit() {
       <Wrap>
         <RecruitWrap>
           <h1>Proposal Recruitpage</h1>
-          <UserName>UserName : {param.userId}</UserName>
+          {/* <UserName>UserName : {param.userId}</UserName> */}
+          <UserName>UserName : John Doe</UserName>
+          <UserName>안건 제목 : 어쩌구 저쩌구</UserName>
+          <UserName>안건 설명 : 어쩌구 저쩌구</UserName>
 
-          <Description>token submit에 대한 주의사항 및 설명</Description>
+          <div> 투표에 얼마나 걸지 선택</div>
           <input
             type="number"
             value={usedToken}
             onChange={(e) => setUsedToken(Number(e.target.value))}
           />
           <div>Used Token : {usedToken}</div>
-          <button onClick={registerWhiteList}>Submit</button>
+          <button onClick={voteRecruit}>Submit</button>
         </RecruitWrap>
       </Wrap>
     </Container>
