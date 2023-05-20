@@ -126,7 +126,7 @@ function ProposalPending() {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+        "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
@@ -153,13 +153,13 @@ function ProposalPending() {
       return;
     }
     const contract: Article_DAO = new ethers.Contract(
-      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     // const tx = await contract?.approve(
-    //   "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+    //   "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
     //   BigNumber.from("10")
     // );
     // await tx.wait();
@@ -186,7 +186,7 @@ function ProposalPending() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
@@ -210,13 +210,13 @@ function ProposalPending() {
   //   }
 
   //   const contract: Article_DAO = new ethers.Contract(
-  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
   //     ArticleDaoABI,
   //     signer
   //   ) as Article_DAO;
   //   setLoading(true);
   //   const tx = await contract?.approve(
-  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
   //     BigNumber.from("1")
   //   );
   //   await tx.wait();

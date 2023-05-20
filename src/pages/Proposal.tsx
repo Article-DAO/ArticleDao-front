@@ -70,19 +70,19 @@ const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
 
 const recruits: member[] = [
   {
-    id: 1,
+    id: 0,
     handle: "@John Doe",
   },
   {
-    id: 2,
+    id: 1,
     handle: "@Jane Doe",
   },
   {
-    id: 3,
+    id: 2,
     handle: "@John Smith",
   },
   {
-    id: 4,
+    id: 3,
     handle: "@Jane Smith",
   },
 ];
@@ -103,19 +103,19 @@ const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
 
 const pendings: member[] = [
   {
-    id: 1,
+    id: 0,
     handle: "@John Doe",
   },
   {
-    id: 2,
+    id: 1,
     handle: "@Jane Doe",
   },
   {
-    id: 3,
+    id: 2,
     handle: "@John Smith",
   },
   {
-    id: 4,
+    id: 3,
     handle: "@Jane Smith",
   },
 ];
@@ -123,19 +123,19 @@ const pendings: member[] = [
 const Proposal = () => {
   const whitelists: member[] = [
     {
-      id: 1,
+      id: 0,
       handle: "@John Doe",
     },
     {
-      id: 2,
+      id: 1,
       handle: "@Jane Doe",
     },
     {
-      id: 3,
+      id: 2,
       handle: "@John Smith",
     },
     {
-      id: 4,
+      id: 3,
       handle: "@Jane Smith",
     },
   ];
@@ -154,7 +154,7 @@ const Proposal = () => {
       <ListWrap>
         <RecruitWrap>
           <h2>Recruit</h2>
-          <Descript>현재 등록을 원하는 글들의 목록입니다.</Descript>
+          <Descript>현재 등록을 원하는 안건들의 목록입니다.</Descript>
           <CustomerList>
             {recruits.map((recruit) => (
               <>
@@ -173,7 +173,7 @@ const Proposal = () => {
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
-          <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
+          <Descript>현재 투표가 진행중인 안건들의 목록입니다.</Descript>
           <CustomerList>
             {pendings.map((pending) => (
               <>
@@ -192,7 +192,7 @@ const Proposal = () => {
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
-          <Descript>현재 투표가 완료된 글들의 목록입니다.</Descript>
+          <Descript>현재 투표가 완료된 안건들의 목록입니다.</Descript>
           <CustomerList>
             {whitelists.map((customer) => (
               <>
@@ -201,7 +201,7 @@ const Proposal = () => {
                     textDecoration: "none",
                     color: "black",
                   }}
-                  to={`${customer.id}`}
+                  to={`https://twitter.com/${customer.handle}}`}
                 >
                   <ContentWrapBox>
                     <ContentTextBox>

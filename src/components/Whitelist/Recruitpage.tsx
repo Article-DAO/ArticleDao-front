@@ -13,7 +13,7 @@ let provider;
 function Recruitpage() {
   const param = useParams<{ userId: string }>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [usedToken, setUsedToken] = useState<number>(0);
+  const [usedToken, setUsedToken] = useState<string>("0");
   const [{ wallet }] = useConnectWallet();
 
   const [account, setAccount] = useState<Account | null>(null);
@@ -45,15 +45,15 @@ function Recruitpage() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     try {
       const tx = await contract?.approve(
-        "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
-        usedToken
+        "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+        BigNumber.from(usedToken)
       );
       await tx.wait();
     } catch (e) {
@@ -63,8 +63,8 @@ function Recruitpage() {
     }
     try {
       const writerRegistertx = await contract?.wVoteParticipate(
-        BigNumber.from("1"),
-        usedToken
+        BigNumber.from(usedToken),
+        BigNumber.from(param.userId)
       );
       await writerRegistertx.wait();
 
@@ -88,7 +88,7 @@ function Recruitpage() {
           <input
             type="number"
             value={usedToken}
-            onChange={(e) => setUsedToken(Number(e.target.value))}
+            onChange={(e) => setUsedToken(e.target.value)}
           />
           <div>Used Token : {usedToken}</div>
           <button onClick={recruitWhiteList}>Submit</button>

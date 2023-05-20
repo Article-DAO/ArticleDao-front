@@ -6,10 +6,7 @@ import {
   useResetRecoilState,
 } from "recoil";
 import { CHAINID } from "../interfaces/config-data.interface";
-import { ethers } from "ethers";
-
 import { connectMetamask } from "./../utils/metamask";
-import { useConnectWallet as getWeb3OnboardWallet } from "@web3-onboard/react";
 
 export const accountAtom = atom<string | null>({
   key: "atom/account",

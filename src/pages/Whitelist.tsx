@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
 import Logo from "../assets/tweetbox.jpeg";
 
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import { useConnectWallet } from "@web3-onboard/react";
 
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
@@ -198,7 +198,7 @@ const Whitelist = () => {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+        "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
@@ -206,6 +206,7 @@ const Whitelist = () => {
       const getUsersList = async () => {
         const max = await contract?.getregisternum();
         const maxNum = max.toNumber();
+        setMaxIndex(maxNum);
         console.log(maxNum);
         for (let i = 0; i < maxNum; i++) {
           const register = await contract?.getWregister(i);
@@ -234,6 +235,36 @@ const Whitelist = () => {
     }
   }, [wallet?.provider]);
 
+  const refreshLists = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+
+    const contract: Article_DAO = new ethers.Contract(
+      "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+
+    const getUsersList = async () => {
+      if (!recruitList?.length) {
+        return;
+      }
+      const maxNum = recruitList?.length ? recruitList.length : 0;
+      if (maxNum === 0) {
+        return;
+      }
+      for (let i = 0; i < maxNum; i++) {
+        const refreshed = await contract?.canWvote(recruitList[i].id);
+        if (refreshed) {
+          recruitList[i].state = 1;
+        }
+      }
+    };
+    getUsersList();
+  };
+
   // const registerWhiteList = async () => {
   //   if (!wallet?.provider || !account || !signer) {
   //     alert("Connect Wallet");
@@ -241,12 +272,12 @@ const Whitelist = () => {
   //   }
 
   //   const contract: Article_DAO = new ethers.Contract(
-  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
   //     ArticleDaoABI,
   //     signer
   //   ) as Article_DAO;
   //   const tx = await contract?.approve(
-  //     "0xa412aE23B3b49B2B68e6A3539F5855cc734cd5B0",
+  //     "0x5F4c16C846dCCE9aF6B7D2D7d6c2c88963d74D10",
   //     BigNumber.from("1")
   //   );
   //   await tx.wait();
@@ -305,8 +336,11 @@ const Whitelist = () => {
         <Title>Whitelist</Title>
 
         <Link to={"register"}>
-          <StyledButton> 작가 등록</StyledButton>
+          <div>
+            <StyledButton> 작가 등록</StyledButton>
+          </div>
         </Link>
+        <StyledButton onClick={refreshLists}> Refresh</StyledButton>
         {/* <StyledButton onClick={getWriterids}> 작가 리스트</StyledButton> */}
       </TitleWrap>
       <ListWrap>
