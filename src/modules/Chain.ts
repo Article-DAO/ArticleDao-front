@@ -1,4 +1,4 @@
-import { Contract, providers } from "ethers";
+import { providers } from "ethers";
 import { ChainData, CHAINID } from "../interfaces/config-data.interface";
 import CHAINS from "./chain.data";
 

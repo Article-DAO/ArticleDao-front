@@ -2,8 +2,6 @@ import Navbar from "../Navbar";
 import styled from "styled-components";
 import bannerImg from "../../assets/banner.jpg";
 import logoImg from "../../assets/logo.png";
-// import { useConnectWallet } from "../../states/wallet.state";
-import { ellipsisAddress } from "../../utils/ellipsisAddress";
 import { useEffect, useState } from "react";
 import { useConnectWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
@@ -40,25 +38,6 @@ function Header() {
       // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     }
   }, [wallet]);
-
-  // const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
-  // const [ethersProvider, setProvider] =
-  //   useState<ethers.providers.Web3Provider | null>();
-
-  // useEffect(() => {
-  //   // If the wallet has a provider than the wallet is connected
-  //   if (wallet?.provider) {
-  //     setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
-  //     // if using ethers v6 this is:
-  //     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-  //   }
-  // }, [wallet]);
-  // // const { account, chainId, connect, disconnect } = useConnectWallet();
-  // // //const chain = Chain.get(chainId);
-
-  // // const onDisconnect = () => {
-  // //   if (confirm("Disconnect Wallet?")) disconnect();
-  // // };
 
   return (
     <Wrap>

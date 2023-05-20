@@ -27,15 +27,6 @@ const StyledButton2 = styled.button`
     background-color: #ab0909;
   }
 `;
-interface ButtonProps {
-  onClick: () => void;
-  children: React.ReactNode;
-}
-
-// Create the Button component
-const Button: React.FC<ButtonProps> = ({ onClick, children }) => {
-  return <StyledButton onClick={onClick}>{children}</StyledButton>;
-};
 
 const ChallengeBoxContainer = styled.div`
   padding: 50px;
@@ -83,21 +74,6 @@ const RightSideContainer = styled.div`
   flex: 3;
 `;
 
-const FutureNFTText = styled.p`
-  color: var(--text-neutral-400);
-  margin-bottom: 3px;
-`;
-
-const TokenChip = styled.span`
-  &.chip-blue {
-    background-color: blue;
-  }
-
-  &.chip-primary {
-    background-color: var(--chip-primary);
-  }
-`;
-
 const InvestmentFundsBox = styled.div`
   background-color: var(--bg-primary-50);
   padding: 4px;
@@ -126,18 +102,6 @@ const WarningBox = styled.div`
   padding: 4px;
   border-radius: 8px;
   margin-top: 4px;
-`;
-
-const InvestButton = styled.button<{ isDisabled: boolean }>`
-  &.btn-lg {
-    font-size: 18px;
-    padding: 8px 16px;
-  }
-
-  &.bg-neutral-300 {
-    background-color: var(--bg-neutral-300);
-    color: white;
-  }
 `;
 
 const ButtonWrap = styled.div`
@@ -214,23 +178,6 @@ const Challenge = () => {
         <Title>Enter the amount of BASE Token you'd like to invest.</Title>
         <hr className="mt-2" />
 
-        {/* <NumberInput
-          className="mt-4"
-          value={totalAmount}
-          onChange={setTotalAmount}
-          left={
-            <div className="flex items-center">
-              <TokenIcon token={baseToken} />
-              <div className="px-4 ml-2 p-1 h-full flex-center border rounded-lg bg-neutral-200">
-                <p className="font-semibold">{baseToken.symbol}</p>
-              </div>
-            </div>
-          }
-          right={
-            <button className="btn btn-primary h-full flex-center">Max</button>
-          }
-        /> */}
-
         <p className="text-right mt-2 pr-1 text-neutral-600">
           {/* Your balance: {baseTokenBalance || "0.0"} */}
         </p>
@@ -238,15 +185,6 @@ const Challenge = () => {
 
       <RightSideContainer>
         <div>
-          {/* <FutureNFTText>FUTURE NFT #{totalSupply + 1}</FutureNFTText>
-          <div className="flex items-center">
-            <TokenChip className="chip chip-blue">Base</TokenChip>
-            <p className="text-2xl mx-3 pt-0.5 font-semibold">
-              {baseToken.symbol} + {farmToken.symbol}
-            </p>
-            <TokenChip className="chip chip-primary">Farm</TokenChip>
-          </div> */}
-
           <hr className="my-4" />
 
           <label
@@ -267,31 +205,9 @@ const Challenge = () => {
             className="rounded-lg overflow-hidden appearance-none bg-primary-100 h-3 w-128"
             type="range"
             step={0.1}
-            // min={MIN_SPOT_PERCENT}
-            // max="100"
-            // value={spotPercent}
-            // onChange={onChangeSpotPercent}
           />
 
-          <InvestmentFundsBox>
-            {/* <p className="leading-[26px] text-lg">
-              Your investment funds of
-              <b className="text-primary-700"> {totalAmount} USDC </b>
-              will be divided as follows:
-              <br />•{" "}
-              <b className="text-primary-700">
-                {spotAmount} {baseToken.symbol}{" "}
-              </b>
-              will be allocated to {dexName} {baseToken.symbol}+
-              {farmToken.symbol}
-              <br />• remaining{" "}
-              <b className="text-primary-700">
-                {(1000 * +totalAmount - spotAmount * 1000) / 1000}{" "}
-                {baseToken.symbol}
-              </b>{" "}
-              will be invested in futures for hedging position.
-            </p> */}
-          </InvestmentFundsBox>
+          <InvestmentFundsBox></InvestmentFundsBox>
 
           <hr className="my-3" />
           <div className="flex flex-col gap-y-1.5">
@@ -343,20 +259,9 @@ const Challenge = () => {
             </p>
           </WarningBox>
 
-          <div className="flex-1 mt-2 flex-center">
-            {/* <InvestButton
-              onClick={openModal}
-              disabled={isDisabled}
-              className={
-                isDisabled ? "bg-neutral-300 text-white" : "btn-primary"
-              }
-            >
-              Start to invest Hedged position 🚀
-            </InvestButton> */}
-          </div>
+          <div className="flex-1 mt-2 flex-center"></div>
         </div>
       </RightSideContainer>
-      {/* {isModalOpen && <HedgeModal close={closeModal} hedges={hedges} />} */}
     </ChallengeBoxContainer>
   );
 };

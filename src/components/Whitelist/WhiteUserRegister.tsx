@@ -25,8 +25,7 @@ function WhiteUserRegister() {
     account: "",
     handle: "",
   });
-  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
-    useConnectWallet();
+  const [{ wallet }] = useConnectWallet();
 
   const [account, setAccount] = useState<Account | null>(null);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(

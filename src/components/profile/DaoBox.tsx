@@ -12,38 +12,6 @@ interface DaoComponentProps {
 interface DaoBoxProps {
   dao: DaoComponentProps;
 }
-const VoteChart = ({
-  votesFor,
-  votesAgainst,
-  totalVotes,
-}: {
-  votesFor: number;
-  votesAgainst: number;
-  totalVotes: number;
-}) => {
-  // Calculate the percentage of votes
-  const percentageFor = (votesFor / totalVotes) * 100;
-  const percentageAgainst = (votesAgainst / totalVotes) * 100;
-
-  return (
-    <VoteChartContainer>
-      <VoteBar width={`${percentageFor}%`} color="green" />
-      <VoteBar width={`${percentageAgainst}%`} color="red" />
-    </VoteChartContainer>
-  );
-};
-
-const VoteChartContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 300px;
-`;
-
-const VoteBar = styled.div<{ width: string; color: string }>`
-  height: 10px;
-  width: ${(props) => props.width};
-  background-color: ${(props) => props.color};
-`;
 
 const DaoBox: React.FC<DaoBoxProps> = ({ dao }) => {
   return (

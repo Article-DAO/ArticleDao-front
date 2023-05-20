@@ -1,6 +1,6 @@
 import { useConnectWallet } from "@web3-onboard/react";
 import { BigNumber, ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Article_DAO } from "../../../types";
@@ -14,8 +14,7 @@ function Recruitpage() {
   const param = useParams<{ userId: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [usedToken, setUsedToken] = useState<number>(0);
-  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
-    useConnectWallet();
+  const [{ wallet }] = useConnectWallet();
 
   const [account, setAccount] = useState<Account | null>(null);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(

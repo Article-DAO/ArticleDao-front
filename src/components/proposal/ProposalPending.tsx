@@ -152,9 +152,6 @@ function ProposalPending() {
     setLoading(false);
     alert("Success");
   };
-  const handleOptionSelect = (option: boolean) => {
-    setSelectedOption(option);
-  };
 
   return (
     <Container>
@@ -216,12 +213,6 @@ const Container = styled.div`
   background-position: center;
 `;
 
-const Selected = styled.div<{ isSelected: boolean }>`
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: ${(props) => (props.isSelected ? "green" : "red")};
-`;
 const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -291,64 +282,11 @@ const RightWrap = styled.div`
   margin: 0 20px;
 `;
 
-const Description = styled.div`
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  font-size: 15px;
-  font-weight: bold;
-  width: 300px;
-  height: 100px;
-  margin-bottom: 20px;
-  background-color: #eee;
-`;
-
 const PendingWrap = styled.div`
   display: flex;
 
   flex-direction: column;
   align-items: center;
-`;
-
-const UserName = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
-
-const StyledButton = styled.button`
-  background-color: #2ff215;
-  color: #fff;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #148604;
-  }
-`;
-const StyledButton2 = styled.button`
-  background-color: #ea0707;
-  color: #fff;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: #ab0909;
-  }
-`;
-const ButtonWrap = styled.div`
-  display: flex;
-  width: 300px;
-  justify-content: space-between;
 `;
 
 export default ProposalPending;
