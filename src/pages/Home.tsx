@@ -475,13 +475,14 @@ const TeamContainer = styled.div`
   justify-content: center;
   background-color: #f3f4f6;
   width: 100vw;
+  height: 600px;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
 `;
 const TeamWrap = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
@@ -493,7 +494,7 @@ const Team = styled.div`
   background-color: #fff;
   border-radius: 0.375rem;
   padding: 20px;
-  margin: 20px;
+  margin: 40px;
   box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
     0 8px 24px rgb(0 0 0 / 8%);
 `;

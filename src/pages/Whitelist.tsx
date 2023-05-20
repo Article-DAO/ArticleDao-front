@@ -351,7 +351,7 @@ const Whitelist = () => {
         <Link to={"register"}>
           <StyledButton> 작가 등록</StyledButton>
         </Link>
-        <StyledButton onClick={getWriterids}> 작가 리스트</StyledButton>
+        {/* <StyledButton onClick={getWriterids}> 작가 리스트</StyledButton> */}
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>
