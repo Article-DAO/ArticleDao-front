@@ -15,6 +15,13 @@ interface member {
   id: number;
   handle: string;
 }
+const Descript = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  color: #236480;
+
+  margin-bottom: 20px;
+`;
 
 const PercentageBarWrapper = styled.div`
   width: 100%;
@@ -55,7 +62,7 @@ const ContentWrapBox = styled.div`
 `;
 const ContentTextBox = styled.div`
   display: flex;
-  margin-left: 0;
+  margin-left: 20px;
   p {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
@@ -123,24 +130,6 @@ interface PendingBoxProps {
   pending: member;
 }
 
-const PendingWrapBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: white;
-
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
-      0 8px 24px rgb(0 0 0 / 8%);
-  }
-`;
 const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   return (
     <ContentWrapBox>
@@ -210,6 +199,7 @@ const Proposal = () => {
       <ListWrap>
         <RecruitWrap>
           <h2>Recruit</h2>
+          <Descript>현재 등록을 원하는 글들의 목록입니다.</Descript>
           <CustomerList>
             {recruits.map((recruit) => (
               <>
@@ -228,6 +218,7 @@ const Proposal = () => {
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
+          <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
           <CustomerList>
             {pendings.map((pending) => (
               <>
@@ -246,6 +237,7 @@ const Proposal = () => {
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
+          <Descript>현재 투표가 완료된 글들의 목록입니다.</Descript>
           <CustomerList>
             {whitelists.map((customer) => (
               <>

@@ -8,6 +8,69 @@ import Loading from "../common/Loading";
 import { useConnectWallet } from "@web3-onboard/react";
 import { BigNumber, ethers } from "ethers";
 import backgroundwhite2 from "../../assets/backgroundwhitelist2.jpg";
+import Logo from "../../assets/articlebox.jpeg";
+
+interface member {
+  id: number;
+  handle: string;
+}
+
+interface PendingBoxProps {
+  pending: member;
+  setSelectedUser: (handle: string | null) => void;
+}
+
+const PendingBox: React.FC<PendingBoxProps> = ({
+  pending,
+  setSelectedUser,
+}) => {
+  return (
+    <ContentWrapBox
+      onClick={() => {
+        setSelectedUser(pending.handle);
+      }}
+    >
+      <ContentTextBox>
+        <p>Tweet: {pending.handle}</p>
+      </ContentTextBox>
+    </ContentWrapBox>
+  );
+};
+const ContentWrapBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  width: 250px;
+  height: 60px;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-image: url(${Logo});
+  background-size: 80px; /* 이미지 크기 조정 */
+  background-repeat: no-repeat;
+  background-position: right center; /* 오른쪽 가운데에 위치 */
+  margin-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
+      0 8px 24px rgb(0 0 0 / 8%);
+  }
+  background-color: white;
+`;
+const ContentTextBox = styled.div`
+  display: flex;
+  margin-left: 20px;
+  p {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: #077fb3;
+  }
+`;
+
 let provider;
 function ProposalPending() {
   const param = useParams<{ userId: string }>();
@@ -21,6 +84,29 @@ function ProposalPending() {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
+
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [myhandle, setMyHandle] = useState<string>("");
+
+  const pendings: member[] = [
+    {
+      id: 1,
+      handle: "@John Doe",
+    },
+    {
+      id: 2,
+      handle: "@Jane Doe",
+    },
+    {
+      id: 3,
+      handle: "@John Smith",
+    },
+    {
+      id: 4,
+      handle: "@Jane Smith",
+    },
+  ];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -75,21 +161,45 @@ function ProposalPending() {
       {loading && <Loading />}
       <Wrap>
         <PendingWrap>
-          <h1>WhiteList Pending</h1>
-          <UserName>UserName : {param.userId}</UserName>
-          <Description>token submit에 대한 주의사항 및 설명</Description>
-          <ButtonWrap>
-            <StyledButton onClick={() => handleOptionSelect(true)}>
-              O
-            </StyledButton>
-            <StyledButton2 onClick={() => handleOptionSelect(false)}>
-              X
-            </StyledButton2>
-          </ButtonWrap>
-          <Selected isSelected={selectedOption}>
-            {selectedOption === true ? "O" : "X"}
-          </Selected>
-          <button onClick={registerWhiteList}>Submit</button>
+          {/* <h1>WhiteList Pending</h1> */}
+          <RowWrap>
+            <LeftWrap>
+              {/* <UserName>UserName : {param.userId}</UserName> */}
+              <h2>투표 참여</h2>
+              <Descript>트윗 헤더를 제출하고 투표에 참가합니다.</Descript>
+              <InputWrap>
+                <MySelectUser>My Tweet Header</MySelectUser>
+
+                <input
+                  type="string"
+                  value={myhandle}
+                  onChange={(e) => setMyHandle(e.target.value)}
+                />
+              </InputWrap>
+              <button>안건에 글쓰고 들어가기</button>
+            </LeftWrap>
+
+            <RightWrap>
+              <PendingWrap>
+                <h2>Pending</h2>
+                <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
+                <CustomerList>
+                  {pendings.map((pending) => (
+                    <>
+                      <PendingBox
+                        key={pending.id}
+                        pending={pending}
+                        setSelectedUser={setSelectedUser}
+                      />
+                    </>
+                  ))}
+                </CustomerList>
+                <MySelectUser> 내가 선택한 유저: {selectedUser}</MySelectUser>
+              </PendingWrap>
+
+              <button onClick={registerWhiteList}>Submit</button>
+            </RightWrap>
+          </RowWrap>
         </PendingWrap>
       </Wrap>
     </Container>
@@ -98,6 +208,8 @@ function ProposalPending() {
 
 const Container = styled.div`
   padding: 20px;
+  width: 100vw;
+
   background-image: url(${backgroundwhite2});
   background-size: cover;
   background-repeat: no-repeat;
@@ -110,11 +222,32 @@ const Selected = styled.div<{ isSelected: boolean }>`
   margin-bottom: 20px;
   color: ${(props) => (props.isSelected ? "green" : "red")};
 `;
+const InputWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  input {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+`;
+const MySelectUser = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 20px;
+`;
 
 const Wrap = styled.div`
   display: flex;
-  width: 600px;
-  height: 500px;
+  width: 900px;
+  height: 800px;
   border: 1px solid #ccc;
   background-color: white;
   flex-direction: column;
@@ -123,16 +256,51 @@ const Wrap = styled.div`
   box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
     0 8px 24px rgb(0 0 0 / 8%);
 `;
+const Descript = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  color: #236480;
+
+  margin-bottom: 20px;
+`;
+
+const CustomerList = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const RowWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const LeftWrap = styled.div`
+  display: flex;
+  height: 800px;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+`;
+
+const RightWrap = styled.div`
+  display: flex;
+  height: 800px;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+`;
 
 const Description = styled.div`
   display: flex;
 
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   font-size: 15px;
   font-weight: bold;
-  width: 500px;
+  width: 300px;
   height: 100px;
   margin-bottom: 20px;
   background-color: #eee;

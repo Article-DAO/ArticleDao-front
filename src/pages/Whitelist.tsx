@@ -22,6 +22,14 @@ interface member {
   handle: string;
 }
 
+const Descript = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  color: #236480;
+
+  margin-bottom: 20px;
+`;
+
 const PercentageBarWrapper = styled.div`
   width: 100%;
   height: 20px;
@@ -62,7 +70,7 @@ const ContentWrapBox = styled.div`
 `;
 const ContentTextBox = styled.div`
   display: flex;
-  margin-left: 0;
+  margin-left: 20px;
   p {
     font-family: "Noto Sans KR", sans-serif;
     font-size: 16px;
@@ -339,6 +347,7 @@ const Whitelist = () => {
       <ListWrap>
         <RecruitWrap>
           <h2>Recruit</h2>
+          <Descript>현재 등록을 원하는 사람들의 리스트입니다.</Descript>
           <CustomerList>
             {recruits.map((recruit) => (
               <>
@@ -357,6 +366,7 @@ const Whitelist = () => {
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
+          <Descript>현재 투표중인 사람들의 리스트입니다.</Descript>
           <CustomerList>
             {pendings.map((pending) => (
               <>
@@ -375,6 +385,7 @@ const Whitelist = () => {
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
+          <Descript>등록이 완료된 사람들의 리스트입니다.</Descript>
           <CustomerList>
             {whitelists.map((customer) => (
               <>
