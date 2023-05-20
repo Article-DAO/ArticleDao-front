@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import VoteChart from "../components/common/VoteChart";
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
 import Logo from "../assets/tweetbox.jpeg";

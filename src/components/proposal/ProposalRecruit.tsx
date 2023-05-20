@@ -90,6 +90,8 @@ function ProposalRecruit() {
 
 const Container = styled.div`
   padding: 20px;
+  width: 100vw;
+  height: 100vh;
   background-image: url(${backgroundwhite2});
   background-size: cover;
   background-repeat: no-repeat;

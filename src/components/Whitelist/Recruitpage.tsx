@@ -91,6 +91,8 @@ function Recruitpage() {
 const Container = styled.div`
   padding: 20px;
   background-image: url(${backgroundwhite2});
+  width: 100vw;
+  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -111,7 +113,7 @@ const Wrap = styled.div`
 
 const RecruitWrap = styled.div`
   display: flex;
-
+  background-color: white;
   flex-direction: column;
   align-items: center;
 `;
@@ -123,10 +125,8 @@ const UserName = styled.div`
 `;
 const Description = styled.div`
   display: flex;
-
   justify-content: center;
   align-items: center;
-
   font-size: 15px;
   font-weight: bold;
   width: 500px;

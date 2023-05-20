@@ -9,6 +9,7 @@ import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
 import { useConnectWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
+import { ellipsisAddress } from "../utils/ellipsisAddress";
 
 interface DaoComponentProps {
   name: string;
@@ -103,7 +104,7 @@ function Profile() {
           <h1>Profile</h1>
           <ProfileImg src={Logo} alt="" />
           <p>name</p>
-          <p>{account?.address}</p>
+          <p> {account ? ellipsisAddress(account?.address) : ""}</p>
         </ProfileWrap>
 
         <RecordWrap>
@@ -144,7 +145,7 @@ const Wrap = styled.div`
   border: 1px solid #ccc;
   background-color: white;
   flex-direction: row;
-  align-items: center;
+
   margin: 20px auto;
   box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
     0 8px 24px rgb(0 0 0 / 8%);
@@ -157,8 +158,8 @@ const ProfileWrap = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   margin-bottom: 20px;
 `;
