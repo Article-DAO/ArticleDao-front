@@ -9,7 +9,8 @@ import character2 from "../assets/character2.jpeg";
 
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
-import { useConnectWallet, useWallet } from "../states/wallet.state";
+
+import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
 import type { TokenSymbol } from "@web3-onboard/common";
 
 let provider;
@@ -161,6 +162,7 @@ function Home() {
             </Problem>
           </ProblemWrap>
         </ProblemContainer>
+
         <SolutionContainer>
           <Title>Solution</Title>
           <SolutionWrap>
@@ -190,6 +192,7 @@ function Home() {
             </Solution>
           </SolutionWrap>
         </SolutionContainer>
+
         <FAQContainer>
           <Title>FAQ</Title>
           <FAQWrap>
@@ -216,6 +219,7 @@ function Home() {
             </FAQ>
           </FAQWrap>
         </FAQContainer>
+
         <TeamContainer>
           <Title>Team</Title>
           <TeamWrap>
@@ -253,12 +257,17 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 const Container2 = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f3f4f6;
+  background-color: white;
   width: 100vw;
   margin: 0 auto;
   padding: 20px;
@@ -347,6 +356,11 @@ const ProblemContainer = styled.div`
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const Problem = styled.div`
@@ -385,7 +399,7 @@ const SolutionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f3f4f6;
+  background-color: white;
   width: 100vw;
   margin: 0 auto;
   padding: 20px;
@@ -434,6 +448,11 @@ const FAQContainer = styled.div`
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 const FAQWrap = styled.div`
   display: flex;
@@ -473,7 +492,7 @@ const TeamContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f3f4f6;
+  background-color: white;
   width: 100vw;
   height: 600px;
   margin: 0 auto;
