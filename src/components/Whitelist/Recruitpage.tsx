@@ -84,7 +84,13 @@ function Recruitpage() {
           <h1>WhiteList Recruitpage</h1>
           <UserName>UserName : {param.userId}</UserName>
 
-          <Description>token submit에 대한 주의사항 및 설명</Description>
+          <Description>
+            Check Fees: When submitting tokens, you should check the fees
+            applicable to that transaction. Some blockchains charge a fee for
+            transaction processing, and tokens may not be transferred if you do
+            not pay enough fees. Make sure you have enough funds for network
+            fees.
+          </Description>
           <input
             type="number"
             value={usedToken}
@@ -111,7 +117,7 @@ const Container = styled.div`
 const Wrap = styled.div`
   display: flex;
   width: 600px;
-  height: 400px;
+  height: 600px;
   border: 1px solid #ccc;
   background-color: white;
   flex-direction: column;
@@ -140,7 +146,7 @@ const Description = styled.div`
   font-size: 15px;
   font-weight: bold;
   width: 500px;
-  height: 100px;
+  height: 200px;
   margin-bottom: 20px;
   background-color: #eee;
 `;

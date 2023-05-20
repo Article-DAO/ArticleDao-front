@@ -244,14 +244,16 @@ const Proposal = () => {
       <TitleWrap>
         <Title>Proposals</Title>
         <Link to={`/register`}>
-          <StyledButton> 안건 등록</StyledButton>
+          <StyledButton>Register</StyledButton>
         </Link>
         <StyledButton onClick={refreshLists}> Refresh</StyledButton>
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>
           <h2>Recruit</h2>
-          <Descript>현재 등록을 원하는 안건들의 목록입니다.</Descript>
+          <Descript>
+            This is a list of items that currently wish to be registered.
+          </Descript>
           <CustomerList>
             {/* {recruits.map((recruit) => (
               <>
@@ -284,7 +286,9 @@ const Proposal = () => {
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
-          <Descript>현재 투표가 진행중인 안건들의 목록입니다.</Descript>
+          <Descript>
+            This is a list of items that are currently being voted on.
+          </Descript>
           <CustomerList>
             {/* {pendings.map((pending) => (
               <>
@@ -317,7 +321,9 @@ const Proposal = () => {
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
-          <Descript>현재 투표가 완료된 안건들의 목록입니다.</Descript>
+          <Descript>
+            This is a list of items that have currently been voted on.
+          </Descript>
           <CustomerList>
             {/* {whitelists.map((customer) => (
               <>

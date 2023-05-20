@@ -74,11 +74,13 @@ function ProposalRecruit() {
         <RecruitWrap>
           <h1>Proposal Recruitpage</h1>
           {/* <UserName>UserName : {param.userId}</UserName> */}
-          <UserName>UserName : John Doe</UserName>
-          <UserName>안건 제목 : 어쩌구 저쩌구</UserName>
-          <UserName>안건 설명 : 어쩌구 저쩌구</UserName>
 
-          <div> 투표에 얼마나 걸지 선택</div>
+          <UserName>Proposal Title : Glitch NFT </UserName>
+          <UserName>
+            Proposal Contents : please Write a Research about Glitch NFT
+          </UserName>
+
+          <div> Reward Staking</div>
           <input
             type="number"
             value={usedToken}

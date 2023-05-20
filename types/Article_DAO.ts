@@ -64,8 +64,8 @@ export interface Article_DAOInterface extends utils.Interface {
     "decimals()": FunctionFragment;
     "getProposal(uint256)": FunctionFragment;
     "getWregister(uint256)": FunctionFragment;
+    "getarticle(uint256,uint256)": FunctionFragment;
     "getarticlenum(uint256)": FunctionFragment;
-    "getartixcle(uint256,uint256)": FunctionFragment;
     "getproposalnum()": FunctionFragment;
     "getregisternum()": FunctionFragment;
     "members(address)": FunctionFragment;
@@ -117,8 +117,8 @@ export interface Article_DAOInterface extends utils.Interface {
       | "decimals"
       | "getProposal"
       | "getWregister"
+      | "getarticle"
       | "getarticlenum"
-      | "getartixcle"
       | "getproposalnum"
       | "getregisternum"
       | "members"
@@ -232,12 +232,12 @@ export interface Article_DAOInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getarticlenum",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "getarticle",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getartixcle",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "getarticlenum",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getproposalnum",
@@ -381,12 +381,9 @@ export interface Article_DAOInterface extends utils.Interface {
     functionFragment: "getWregister",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getarticle", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getarticlenum",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getartixcle",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -617,16 +614,16 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { handle: string; state: BigNumber }>;
 
-    getarticlenum(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    getartixcle(
+    getarticle(
       pid: PromiseOrValue<BigNumberish>,
       aid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string] & { url: string }>;
+
+    getarticlenum(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     getproposalnum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -889,16 +886,16 @@ export interface Article_DAO extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[string, BigNumber] & { handle: string; state: BigNumber }>;
 
-  getarticlenum(
-    pid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  getartixcle(
+  getarticle(
     pid: PromiseOrValue<BigNumberish>,
     aid: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
+
+  getarticlenum(
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getproposalnum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1161,16 +1158,16 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { handle: string; state: BigNumber }>;
 
-    getarticlenum(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getartixcle(
+    getarticle(
       pid: PromiseOrValue<BigNumberish>,
       aid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    getarticlenum(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getproposalnum(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1447,14 +1444,14 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getarticlenum(
+    getarticle(
       pid: PromiseOrValue<BigNumberish>,
+      aid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getartixcle(
+    getarticlenum(
       pid: PromiseOrValue<BigNumberish>,
-      aid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1665,14 +1662,14 @@ export interface Article_DAO extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getarticlenum(
+    getarticle(
       pid: PromiseOrValue<BigNumberish>,
+      aid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getartixcle(
+    getarticlenum(
       pid: PromiseOrValue<BigNumberish>,
-      aid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

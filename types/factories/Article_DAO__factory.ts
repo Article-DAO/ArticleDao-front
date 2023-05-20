@@ -473,13 +473,18 @@ const _abi = [
         name: "pid",
         type: "uint256",
       },
-    ],
-    name: "getarticlenum",
-    outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "aid",
         type: "uint256",
+      },
+    ],
+    name: "getarticle",
+    outputs: [
+      {
+        internalType: "string",
+        name: "url",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -492,18 +497,13 @@ const _abi = [
         name: "pid",
         type: "uint256",
       },
-      {
-        internalType: "uint256",
-        name: "aid",
-        type: "uint256",
-      },
     ],
-    name: "getartixcle",
+    name: "getarticlenum",
     outputs: [
       {
-        internalType: "string",
-        name: "url",
-        type: "string",
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

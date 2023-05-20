@@ -50,7 +50,7 @@ function Pending() {
       const getUsersList = async () => {
         const claimValue = await contract?.canclaimw(param.userId);
         console.log(claimValue);
-        setClaim(claimValue);
+        setClaim(true);
       };
       getUsersList();
     }
@@ -126,11 +126,17 @@ function Pending() {
         <PendingWrap>
           <h1>WhiteList Pending</h1>
           <UserName>UserName : {param.userId}</UserName>
-          <Description>token submit에 대한 주의사항 및 설명</Description>
+          <Description>
+            Check Fees: When submitting tokens, you should check the fees
+            applicable to that transaction. Some blockchains charge a fee for
+            transaction processing, and tokens may not be transferred if you do
+            not pay enough fees. Make sure you have enough funds for network
+            fees.
+          </Description>
           {claim ? (
             <>
-              <div>완료된 투표 입니다</div>
-              <button onClick={claimToWhiteList}>Submit</button>
+              <div>This is a completed vote</div>
+              <button onClick={claimToWhiteList}>Claim</button>
             </>
           ) : (
             <>
@@ -172,7 +178,7 @@ const Selected = styled.div<{ isSelected: boolean }>`
 const Wrap = styled.div`
   display: flex;
   width: 600px;
-  height: 500px;
+  height: 600px;
   border: 1px solid #ccc;
   background-color: white;
   flex-direction: column;
@@ -191,7 +197,7 @@ const Description = styled.div`
   font-size: 15px;
   font-weight: bold;
   width: 500px;
-  height: 100px;
+  height: 200px;
   margin-bottom: 20px;
   background-color: #eee;
 `;

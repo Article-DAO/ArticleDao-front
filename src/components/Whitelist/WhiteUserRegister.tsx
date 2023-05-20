@@ -107,25 +107,29 @@ function WhiteUserRegister() {
     <Container>
       {loading && <Loading />}
       <Wrap>
-        <h1>작가 등록</h1>
-        <Description>token submit에 대한 주의사항 및 설명</Description>
+        <h1>Writer Register</h1>
+        <Description>
+          Check Fees: When submitting tokens, you should check the fees
+          applicable to that transaction. Some blockchains charge a fee for
+          transaction processing, and tokens may not be transferred if you do
+          not pay enough fees. Make sure you have enough funds for network fees.
+        </Description>
 
         <InputWrap>
-          <div>내 account: {writers.account}</div>
+          <div>My Account: {writers.account}</div>
         </InputWrap>
         <InputWrap>
-          <div>tweet handle: </div>
+          <div>Tweet handle: </div>
           <input
             type="text"
             value={writers?.handle}
             onChange={(e) => setWriters({ ...writers, handle: e.target.value })}
           />
         </InputWrap>
-        <div>내가 보유한 토큰 {myToken}</div>
+        <div>My Token : {myToken}</div>
 
         <InputWrap>
-          <div>Reward로 제공할 staking </div>
-          <div>100Token</div>
+          <div>Reward Staking </div>
         </InputWrap>
 
         <Button onClick={registerWhiteList}>Submit</Button>
@@ -144,7 +148,7 @@ const Container = styled.div`
 const Wrap = styled.div`
   display: flex;
   width: 600px;
-  height: 550px;
+  height: 600px;
   border: 1px solid #ccc;
   background-color: white;
   flex-direction: column;
@@ -161,8 +165,8 @@ const Description = styled.div`
 
   font-size: 15px;
   font-weight: bold;
-  width: 500px;
-  height: 100px;
+  width: 600px;
+  height: 150px;
   margin-bottom: 20px;
   background-color: #eee;
 `;

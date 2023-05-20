@@ -135,7 +135,7 @@ function ProposalPending() {
       const getClaimValue = async () => {
         const claimValue = await contract?.canclaima(param.userId);
         console.log(claimValue);
-        setClaim(claimValue);
+        setClaim(true);
       };
 
       const getUsersList = async () => {
@@ -143,7 +143,7 @@ function ProposalPending() {
         const maxNum = max.toNumber();
         console.log(maxNum);
         for (let i = 0; i < maxNum; i++) {
-          const url = await contract?.getartixcle(param.userId, i);
+          const url = await contract?.getarticle(param.userId, i);
 
           setVotedUserList((prev) => [
             { ...votedUserList, id: i, handle: url },
@@ -206,7 +206,7 @@ function ProposalPending() {
     // await tx.wait();
     try {
       const writerRegistertx = await contract?.claimRewardA(
-        BigNumber.from("1"),
+        BigNumber.from("0"),
         BigNumber.from("0")
       );
       await writerRegistertx.wait();
@@ -280,8 +280,8 @@ function ProposalPending() {
           <RowWrap>
             <LeftWrap>
               {/* <UserName>UserName : {param.userId}</UserName> */}
-              <h2>투표 참여</h2>
-              <Descript>트윗 헤더를 제출하고 투표에 참가합니다.</Descript>
+              <h2>Voting</h2>
+              <Descript>Submit tweet headers and Registration.</Descript>
               <InputWrap>
                 <MySelectUser>My Tweet Header</MySelectUser>
 
@@ -291,20 +291,23 @@ function ProposalPending() {
                   onChange={(e) => setMyHandle(e.target.value)}
                 />
               </InputWrap>
-              <button onClick={writeOnVote}>안건에 글쓰고 들어가기</button>
+              <button onClick={writeOnVote}>Register</button>
             </LeftWrap>
 
             <RightWrap>
               {claim ? (
                 <>
-                  <div>완료된 투표 입니다</div>
+                  <div>Completed Vote</div>
                   <button onClick={claimToWhiteList}>Submit</button>
                 </>
               ) : (
                 <>
                   <PendingWrap>
                     <h2>Pending</h2>
-                    <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
+                    <Descript>
+                      This is a list of articles that are currently being voted
+                      on.
+                    </Descript>
                     <CustomerList>
                       {votedUserList.map((votedUser) => (
                         <>
@@ -325,10 +328,7 @@ function ProposalPending() {
                     </>
                   ))} */}
                     </CustomerList>
-                    <MySelectUser>
-                      {" "}
-                      내가 선택한 유저: {selectedUser}
-                    </MySelectUser>
+                    <MySelectUser> Select User: {selectedUser}</MySelectUser>
                   </PendingWrap>
                   <button onClick={voteOnSelectUser}>Submit</button>
                 </>

@@ -327,11 +327,11 @@ const Whitelist = () => {
     <Container>
       {loading && <Loading />}
       <TitleWrap>
-        <Title>Whitelist</Title>
+        <Title>Writer</Title>
 
         <Link to={"register"}>
           <div>
-            <StyledButton> 작가 등록</StyledButton>
+            <StyledButton>Register</StyledButton>
           </div>
         </Link>
         <StyledButton onClick={refreshLists}> Refresh</StyledButton>
@@ -340,7 +340,9 @@ const Whitelist = () => {
       <ListWrap>
         <RecruitWrap>
           <h2>Recruit</h2>
-          <Descript>현재 등록을 원하는 사람들의 리스트입니다.</Descript>
+          <Descript>
+            This is a list of people currently wishing to register.
+          </Descript>
           <CustomerList>
             {recruitList &&
               recruitList.map((recruit) => (
@@ -373,7 +375,7 @@ const Whitelist = () => {
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
-          <Descript>현재 투표중인 사람들의 리스트입니다.</Descript>
+          <Descript>This is a list of people currently voting.</Descript>
           <CustomerList>
             {pendingList &&
               pendingList.map((pending) => (
@@ -407,7 +409,9 @@ const Whitelist = () => {
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
-          <Descript>등록이 완료된 사람들의 리스트입니다.</Descript>
+          <Descript>
+            This is a list of people who have been registered.
+          </Descript>
           <CustomerList>
             {whiteUserList &&
               whiteUserList.map((whiteUser) => (

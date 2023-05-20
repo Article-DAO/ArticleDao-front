@@ -89,11 +89,17 @@ function Registration() {
     <Container>
       {loading && <Loading />}
       <Wrap>
-        <h1>안건 등록</h1>
-        <Description>token submit에 대한 주의사항 및 설명</Description>
+        <h1>Proposal registration</h1>
+        <Description>
+          {" "}
+          Check Fees: When submitting tokens, you should check the fees
+          applicable to that transaction. Some blockchains charge a fee for
+          transaction processing, and tokens may not be transferred if you do
+          not pay enough fees. Make sure you have enough funds for network fees.
+        </Description>
 
         <InputWrap>
-          <div>안건 제목: </div>
+          <div>Proposal Title:</div>
           <input
             type="text"
             value={proposals?.title}
@@ -103,7 +109,7 @@ function Registration() {
           />
         </InputWrap>
         <InputWrap>
-          <div>안건 설명: </div>
+          <div>Proposal Description: </div>
           <input
             type="text"
             value={proposals?.description}
@@ -114,7 +120,7 @@ function Registration() {
         </InputWrap>
 
         <InputWrap>
-          <div>Reward로 제공할 staking </div>
+          <div>Reward Staking </div>
           <input
             type="string"
             value={proposals?.reward}

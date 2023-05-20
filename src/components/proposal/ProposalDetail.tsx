@@ -21,7 +21,7 @@ function ProposalDetail() {
         <DetailWrap>
           <h1>Proposal Detail {userId}</h1>
           <p>ID: {user.id}</p>
-          <p>이름: {user.name}</p>
+          <p>Name: {user.name}</p>
           <p>쓴 글의 개수: {user.postCount}</p>
           <p>기여도: {user.contribution}</p>
           <p>가지고 있는 토큰의 개수: {user.tokenCount}</p>

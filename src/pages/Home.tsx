@@ -89,14 +89,14 @@ function Home() {
         <Container>
           <Content>
             <TextWrap>
-              <Title>
-                Welcome to Our DAO: Empowering Community Contributions
-              </Title>
+              <Title>Welcome to Article DAO</Title>
               <Description>
-                At Our DAO, we believe in the power of community and the
-                collective wisdom it holds. We have built a vibrant and
-                inclusive ecosystem where individuals from all walks of life
-                come together to shape the future of our shared resources.
+                Article DAO is method of curating promotion articles with
+                decentralized reward system, providing opportunities to anyone
+                that desires to participate, and creating a fair, transparent
+                environment. Applies custom arithmetic equation to weigh voting
+                power, and Markov Chain to constantly adjust the standards for
+                vote passing.
               </Description>
             </TextWrap>
             <ButtonWrapper>
@@ -113,107 +113,75 @@ function Home() {
           <Image src={character2} />
           <Content>
             <TextWrap>
-              <Title>What is a Article Dao?</Title>
+              <Title> Problems we have faced:</Title>
               <Description>
-                ~~~
-                <br />
-                <br />
-                ~~~
-                <br />
-                <br />
-                ~~~
+                1. What if a user mints large quantity of tokens and use it to
+                manipulate any vote results?
+                <br /> 2. What if all the recent vote polls have passed, and
+                users render the vote results useless?
               </Description>
             </TextWrap>
           </Content>
         </Container2>
 
         <ProblemContainer>
-          <Title> key metrics we use</Title>
+          <Title> Our DAO Main Functions</Title>
           <ProblemWrap>
             <Problem>
-              <ProblemTitle>Governance Token</ProblemTitle>
+              <ProblemTitle>Custom Arithmetic Equation</ProblemTitle>
               <ProblemDescription>
-                Our governance token is a vital element in our decision-making
-                process. Holding our token grants you the right to participate
-                in important votes and shape the direction of our DAO.
+                Our solution is to create two new variables associated to the
+                voter – the number of votes the voter has won, and the number of
+                challenges the voter had passed. Then these variables would be
+                calculated arithmetically on-chain, creating a new trust-factor
+                variable. The new variable would be used to vote, and the
+                pending result will be based on the comparison of it.
               </ProblemDescription>
             </Problem>
 
             <Problem>
-              <ProblemTitle>Voter Turnout</ProblemTitle>
+              <ProblemTitle>Markov Chain Implementation</ProblemTitle>
               <ProblemDescription>
-                We track the number of participants in each vote. This helps us
-                understand the level of engagement within our community and
-                ensures that decisions are made with a broad representation of
-                opinions.
-              </ProblemDescription>
-            </Problem>
-
-            <Problem>
-              <ProblemTitle>Voting Metrics</ProblemTitle>
-              <ProblemDescription>
-                We go beyond mere voter turnout and delve into the details. We
-                analyze the level of alignment between voters and the DAO's
-                positions, as well as the frequency of voting. This gives us
-                valuable insights into the effectiveness of our decision-making
-                processes.
+                Markov values are able to be used to be the standards because we
+                perceive it as means to measure voting tendencies. When writer
+                registrations consecutively passes, we can assume that the
+                standard for the registry is too low, hence we need to raise the
+                standards (requirements for poll passing are harder).
               </ProblemDescription>
             </Problem>
           </ProblemWrap>
         </ProblemContainer>
 
-        <SolutionContainer>
-          <Title>Solution</Title>
-          <SolutionWrap>
-            <Solution>
-              <SolutionTitle>Addressing Voting Bias</SolutionTitle>
-              <SolutionDescription>
-                To mitigate the problem of votes heavily favoring the last
-                option presented, we have implemented measures to extend voting
-                periods when significant changes in voting patterns occur.
-                Additionally, voters who consistently align with the majority
-                opinion may face penalties to encourage diversity of thought.
-              </SolutionDescription>
-            </Solution>
-            <Solution>
-              <SolutionTitle>Balancing Token Influence</SolutionTitle>
-              <SolutionDescription>
-                While governance tokens are an essential aspect of
-                decision-making, we recognize the need to consider other factors
-                as well. We employ probability-based convergence methods to
-                ensure a more inclusive decision-making process that
-                incorporates a broader range of perspectives.
-              </SolutionDescription>
-            </Solution>
-            <Solution>
-              <SolutionTitle>Solution</SolutionTitle>
-              <SolutionDescription>solution3</SolutionDescription>
-            </Solution>
-          </SolutionWrap>
-        </SolutionContainer>
-
         <FAQContainer>
           <Title>FAQ</Title>
           <FAQWrap>
             <FAQ>
-              <FAQTitle>FAQ</FAQTitle>
+              <FAQTitle>
+                What is the purpose of CAE? (Custom Arithmetic Equation)
+              </FAQTitle>
               <FAQDescription>
-                The value of paired tokens in existing DeFi platforms is subject
-                to volatility, which can lead to diminishing position values.
+                Ans: DAO’s nature is to reflect as many opinions possible to
+                reach a certain value. CAE is used to prevent cases where minor,
+                often times a single person, having too much vote power to a
+                point where the person could manipulate the voting result. CAE
+                allows the balance of weighing vote power using token-only, and
+                weighing power of 1 vote per address.
               </FAQDescription>
             </FAQ>
             <FAQ>
-              <FAQTitle>FAQ</FAQTitle>
+              <FAQTitle>
+                What are the detailed explanation of Markov Chain
+                Implementation?
+              </FAQTitle>
               <FAQDescription>
-                The value of paired tokens in existing DeFi platforms is subject
-                to volatility, which can lead to diminishing position values.
-              </FAQDescription>
-            </FAQ>
-            <FAQ>
-              <FAQTitle>FAQ</FAQTitle>
-              <FAQDescription>
-                The value of paired tokens in existing DeFi platforms is subject
-                to volatility, which can lead to diminishing position values.
+                Markov Chain, which is a model that deduces a probability of
+                each event using data of previous state events. For instance, in
+                a situation where 5 writer registries were accepted in a row,
+                using the Markov transition matrix calculation, we could deduce
+                the fact that the next Boolean value will result to True in a
+                probability of 3/4. This value, will then be used to be a
+                standard for the next vote to pass, meaning 75% of the votes
+                should turn to be true for the poll to be accepted.
               </FAQDescription>
             </FAQ>
           </FAQWrap>
@@ -227,12 +195,12 @@ function Home() {
               <TeamDescription>frontend developer</TeamDescription>
             </Team>
             <Team>
-              <TeamTitle>JIHO</TeamTitle>
-              <TeamDescription>frontend developer</TeamDescription>
+              <TeamTitle>JiHwan</TeamTitle>
+              <TeamDescription>Contract developer</TeamDescription>
             </Team>
             <Team>
-              <TeamTitle>JIHO</TeamTitle>
-              <TeamDescription>frontend developer</TeamDescription>
+              <TeamTitle>Minsu</TeamTitle>
+              <TeamDescription>Contract developer</TeamDescription>
             </Team>
           </TeamWrap>
         </TeamContainer>
@@ -373,8 +341,8 @@ const Problem = styled.div`
   margin: 20px;
   box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
     0 8px 24px rgb(0 0 0 / 8%);
-  width: 300px;
-  height: 400px;
+  width: 600px;
+  height: 600px;
 `;
 const ProblemTitle = styled.h1`
   color: #1f2937;
