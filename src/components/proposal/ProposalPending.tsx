@@ -89,6 +89,7 @@ function ProposalPending() {
   const [myhandle, setMyHandle] = useState<string>("");
 
   const [votedUserList, setVotedUserList] = useState<any[]>([]);
+  const [claim, setClaim] = useState<boolean>(false);
 
   const pendings: member[] = [
     {
@@ -131,19 +132,25 @@ function ProposalPending() {
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
+      const getClaimValue = async () => {
+        const claimValue = await contract?.canclaima(param.userId);
+        console.log(claimValue);
+        setClaim(claimValue);
+      };
 
       const getUsersList = async () => {
         const max = await contract?.getarticlenum(param.userId);
         const maxNum = max.toNumber();
         console.log(maxNum);
         for (let i = 0; i < maxNum; i++) {
-          const url = await contract?.getarticle(param.userId, i);
+          const url = await contract?.getartixcle(param.userId, i);
 
           setVotedUserList((prev) => [
             { ...votedUserList, id: i, handle: url },
           ]);
         }
       };
+      getClaimValue();
       getUsersList();
     }
   }, [wallet?.provider]);
@@ -177,6 +184,38 @@ function ProposalPending() {
     } catch (e) {
       alert("Fail");
       setLoading(false);
+    }
+  };
+
+  const claimToWhiteList = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+
+    const contract: Article_DAO = new ethers.Contract(
+      import.meta.env.VITE_APP_ADDRESS,
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    setLoading(true);
+    // const tx = await contract?.approve(
+    //   "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+    //   BigNumber.from("1")
+    // );
+    // await tx.wait();
+    try {
+      const writerRegistertx = await contract?.claimRewardA(
+        BigNumber.from("1"),
+        BigNumber.from("0")
+      );
+      await writerRegistertx.wait();
+      // const tx = await contract?.writerRegister(BigNumber.from("1"));
+      setLoading(false);
+      alert("Success");
+    } catch (e) {
+      setLoading(false);
+      alert("error");
     }
   };
 
@@ -256,20 +295,27 @@ function ProposalPending() {
             </LeftWrap>
 
             <RightWrap>
-              <PendingWrap>
-                <h2>Pending</h2>
-                <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
-                <CustomerList>
-                  {votedUserList.map((votedUser) => (
-                    <>
-                      <PendingBox
-                        key={votedUser.id}
-                        pending={votedUser}
-                        setSelectedUser={setSelectedUser}
-                      />
-                    </>
-                  ))}
-                  {/* {pendings.map((pending) => (
+              {claim ? (
+                <>
+                  <div>완료된 투표 입니다</div>
+                  <button onClick={claimToWhiteList}>Submit</button>
+                </>
+              ) : (
+                <>
+                  <PendingWrap>
+                    <h2>Pending</h2>
+                    <Descript>현재 투표가 진행중인 글들의 목록입니다.</Descript>
+                    <CustomerList>
+                      {votedUserList.map((votedUser) => (
+                        <>
+                          <PendingBox
+                            key={votedUser.id}
+                            pending={votedUser}
+                            setSelectedUser={setSelectedUser}
+                          />
+                        </>
+                      ))}
+                      {/* {pendings.map((pending) => (
                     <>
                       <PendingBox
                         key={pending.id}
@@ -278,11 +324,15 @@ function ProposalPending() {
                       />
                     </>
                   ))} */}
-                </CustomerList>
-                <MySelectUser> 내가 선택한 유저: {selectedUser}</MySelectUser>
-              </PendingWrap>
-
-              <button onClick={voteOnSelectUser}>Submit</button>
+                    </CustomerList>
+                    <MySelectUser>
+                      {" "}
+                      내가 선택한 유저: {selectedUser}
+                    </MySelectUser>
+                  </PendingWrap>
+                  <button onClick={voteOnSelectUser}>Submit</button>
+                </>
+              )}
             </RightWrap>
           </RowWrap>
         </PendingWrap>

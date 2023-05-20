@@ -180,7 +180,7 @@ const Proposal = () => {
             setRecruitList((prev) => [{ ...recruitList, id: i }]);
           } else if (state.toNumber() === 1) {
             setPendingList((prev) => [{ ...pendingList, id: i }]);
-          } else if (state.toNumber() === 2) {
+          } else if (state.toNumber() === 3) {
             setWhiteUserList((prev) => [{ ...whiteUserList, id: i }]);
           }
         }

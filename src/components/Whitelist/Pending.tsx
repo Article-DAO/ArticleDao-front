@@ -22,6 +22,7 @@ function Pending() {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
+  const [claim, setClaim] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,6 +39,20 @@ function Pending() {
       });
       provider = new ethers.providers.Web3Provider(wallet.provider, "any");
       setSigner(provider.getUncheckedSigner());
+
+      //claim true false 확인 하는 함수 구현 필요
+      const contract: Article_DAO = new ethers.Contract(
+        import.meta.env.VITE_APP_ADDRESS,
+        ArticleDaoABI,
+        provider.getUncheckedSigner()
+      ) as Article_DAO;
+
+      const getUsersList = async () => {
+        const claimValue = await contract?.canclaimw(param.userId);
+        console.log(claimValue);
+        setClaim(claimValue);
+      };
+      getUsersList();
     }
   }, [wallet?.provider]);
 
@@ -59,10 +74,7 @@ function Pending() {
     // );
     // await tx.wait();
     try {
-      const writerRegistertx = await contract?.voteRegister(
-        BigNumber.from("6"),
-        true
-      );
+      const writerRegistertx = await contract?.change(param.userId);
       await writerRegistertx.wait();
       // const tx = await contract?.writerRegister(BigNumber.from("1"));
       setLoading(false);
@@ -78,6 +90,30 @@ function Pending() {
       alert("Connect Wallet");
       return;
     }
+
+    const contract: Article_DAO = new ethers.Contract(
+      import.meta.env.VITE_APP_ADDRESS,
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    setLoading(true);
+    // const tx = await contract?.approve(
+    //   "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+    //   BigNumber.from("1")
+    // );
+    // await tx.wait();
+    try {
+      const writerRegistertx = await contract?.claimW(
+        BigNumber.from(param.userId)
+      );
+      await writerRegistertx.wait();
+      // const tx = await contract?.writerRegister(BigNumber.from("1"));
+      setLoading(false);
+      alert("Success");
+    } catch (e) {
+      setLoading(false);
+      alert("error");
+    }
   };
   const handleOptionSelect = (option: boolean) => {
     setSelectedOption(option);
@@ -91,27 +127,27 @@ function Pending() {
           <h1>WhiteList Pending</h1>
           <UserName>UserName : {param.userId}</UserName>
           <Description>token submit에 대한 주의사항 및 설명</Description>
-          {/* {claim ? (
+          {claim ? (
             <>
               <div>완료된 투표 입니다</div>
+              <button onClick={claimToWhiteList}>Submit</button>
+            </>
+          ) : (
+            <>
+              <ButtonWrap>
+                <StyledButton onClick={() => handleOptionSelect(true)}>
+                  O
+                </StyledButton>
+                <StyledButton2 onClick={() => handleOptionSelect(false)}>
+                  X
+                </StyledButton2>
+              </ButtonWrap>
+              <Selected isSelected={selectedOption}>
+                {selectedOption === true ? "O" : "X"}
+              </Selected>
               <button onClick={voteOnPending}>Submit</button>
             </>
-          ) : ( */}
-          <>
-            <ButtonWrap>
-              <StyledButton onClick={() => handleOptionSelect(true)}>
-                O
-              </StyledButton>
-              <StyledButton2 onClick={() => handleOptionSelect(false)}>
-                X
-              </StyledButton2>
-            </ButtonWrap>
-            <Selected isSelected={selectedOption}>
-              {selectedOption === true ? "O" : "X"}
-            </Selected>
-            <button onClick={voteOnPending}>Submit</button>
-          </>
-          {/* )} */}
+          )}
         </PendingWrap>
       </Wrap>
     </Container>

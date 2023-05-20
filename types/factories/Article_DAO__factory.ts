@@ -306,11 +306,62 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "canclaima",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "can",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "canclaimw",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "can",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "wregisterid",
         type: "uint256",
       },
     ],
     name: "challenge",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "change",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -342,6 +393,19 @@ const _abi = [
       },
     ],
     name: "claimRewardW",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+    ],
+    name: "claimW",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -409,18 +473,13 @@ const _abi = [
         name: "pid",
         type: "uint256",
       },
-      {
-        internalType: "uint256",
-        name: "aid",
-        type: "uint256",
-      },
     ],
-    name: "getarticle",
+    name: "getarticlenum",
     outputs: [
       {
-        internalType: "string",
-        name: "url",
-        type: "string",
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -433,13 +492,18 @@ const _abi = [
         name: "pid",
         type: "uint256",
       },
-    ],
-    name: "getarticlenum",
-    outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "aid",
         type: "uint256",
+      },
+    ],
+    name: "getartixcle",
+    outputs: [
+      {
+        internalType: "string",
+        name: "url",
+        type: "string",
       },
     ],
     stateMutability: "view",

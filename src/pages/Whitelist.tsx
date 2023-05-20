@@ -257,6 +257,7 @@ const Whitelist = () => {
     };
     getUsersList();
   };
+
   // const registerWhiteList = async () => {
   //   if (!wallet?.provider || !account || !signer) {
   //     alert("Connect Wallet");
