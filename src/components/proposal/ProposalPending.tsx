@@ -135,7 +135,7 @@ function ProposalPending() {
       const getClaimValue = async () => {
         const claimValue = await contract?.canclaima(param.userId);
         console.log(claimValue);
-        setClaim(true);
+        setClaim(claimValue);
       };
 
       const getUsersList = async () => {
@@ -318,15 +318,15 @@ function ProposalPending() {
                           />
                         </>
                       ))}
-                      {/* {pendings.map((pending) => (
-                    <>
-                      <PendingBox
-                        key={pending.id}
-                        pending={pending}
-                        setSelectedUser={setSelectedUser}
-                      />
-                    </>
-                  ))} */}
+                      {pendings.map((pending) => (
+                        <>
+                          <PendingBox
+                            key={pending.id}
+                            pending={pending}
+                            setSelectedUser={setSelectedUser}
+                          />
+                        </>
+                      ))}
                     </CustomerList>
                     <MySelectUser> Select User: {selectedUser}</MySelectUser>
                   </PendingWrap>
