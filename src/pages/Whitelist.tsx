@@ -63,6 +63,7 @@ const RecruitWrapBox = styled.div`
     box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
       0 8px 24px rgb(0 0 0 / 8%);
   }
+  background-color: white;
 `;
 const Percent = styled.div`
   display: flex;
@@ -166,6 +167,7 @@ const PendingWrapBox = styled.div`
   height: 120px;
   padding: 10px;
   border: 1px solid #ccc;
+  background-color: white;
 
   margin-bottom: 10px;
   &:hover {
@@ -405,13 +407,16 @@ const WhitelistWrapBox = styled.div`
     box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
       0 8px 24px rgb(0 0 0 / 8%);
   }
+  background-color: white;
 `;
 
 // Styled component for the Whitelist page
 const Container = styled.div`
   padding: 20px;
   background-image: url(${backgroundwhite2});
-  //background: linear-gradient(135deg, #87cefa, #00bfff);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const Title = styled.h1`
