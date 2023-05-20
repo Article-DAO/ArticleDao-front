@@ -7,6 +7,7 @@ import ArticleDaoABI from "../../abi/Article_DAO.json";
 import Loading from "../common/Loading";
 import { useConnectWallet } from "@web3-onboard/react";
 import { BigNumber, ethers } from "ethers";
+import backgroundwhite2 from "../../assets/backgroundwhitelist2.jpg";
 let provider;
 function ProposalPending() {
   const param = useParams<{ userId: string }>();
@@ -70,7 +71,7 @@ function ProposalPending() {
   };
 
   return (
-    <>
+    <Container>
       {loading && <Loading />}
       <Wrap>
         <PendingWrap>
@@ -91,9 +92,17 @@ function ProposalPending() {
           <button onClick={registerWhiteList}>Submit</button>
         </PendingWrap>
       </Wrap>
-    </>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 const Selected = styled.div<{ isSelected: boolean }>`
   font-size: 20px;
@@ -107,6 +116,7 @@ const Wrap = styled.div`
   width: 600px;
   height: 500px;
   border: 1px solid #ccc;
+  background-color: white;
   flex-direction: column;
   align-items: center;
   margin: 50px auto;

@@ -7,6 +7,7 @@ import { Article_DAO } from "../../../types";
 import { Account } from "../../interfaces/account.interface";
 import ArticleDaoABI from "../../abi/Article_DAO.json";
 import Loading from "../common/Loading";
+import backgroundwhite2 from "../../assets/backgroundwhitelist2.jpg";
 
 let provider;
 function ProposalRecruit() {
@@ -66,7 +67,7 @@ function ProposalRecruit() {
     alert("Success");
   };
   return (
-    <>
+    <Container>
       {loading && <Loading />}
       <Wrap>
         <RecruitWrap>
@@ -83,15 +84,24 @@ function ProposalRecruit() {
           <button onClick={registerWhiteList}>Submit</button>
         </RecruitWrap>
       </Wrap>
-    </>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 const Wrap = styled.div`
   display: flex;
   width: 600px;
   height: 400px;
   border: 1px solid #ccc;
+  background-color: white;
   flex-direction: column;
   align-items: center;
   margin: 50px auto;

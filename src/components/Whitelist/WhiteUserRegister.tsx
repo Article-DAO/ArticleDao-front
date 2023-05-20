@@ -6,6 +6,7 @@ import { Article_DAO } from "../../../types";
 import ArticleDaoABI from "../../abi/Article_DAO.json";
 import type { TokenSymbol } from "@web3-onboard/common";
 import Loading from "../common/Loading";
+import backgroundwhite2 from "../../assets/backgroundwhitelist2.jpg";
 
 interface Proposal {
   id: number;
@@ -84,7 +85,7 @@ function WhiteUserRegister() {
     alert("Success");
   };
   return (
-    <>
+    <Container>
       {loading && <Loading />}
       <Wrap>
         <h1>작가 등록</h1>
@@ -124,15 +125,23 @@ function WhiteUserRegister() {
         <div>Used Token : {proposals.reward}</div>
         <Button onClick={registerWhiteList}>Submit</Button>
       </Wrap>
-    </>
+    </Container>
   );
 }
+const Container = styled.div`
+  padding: 20px;
+  background-image: url(${backgroundwhite2});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 const Wrap = styled.div`
   display: flex;
   width: 600px;
   height: 550px;
   border: 1px solid #ccc;
+  background-color: white;
   flex-direction: column;
   align-items: center;
   margin: 50px auto;

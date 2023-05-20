@@ -138,9 +138,16 @@ const Container = styled.div`
 const Wrap = styled.div`
   display: flex;
   justify-content: space-around;
-  padding: 20px;
-  width: 100vw;
-  height: 100vh;
+  width: 800px;
+  height: 500px;
+
+  border: 1px solid #ccc;
+  background-color: white;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px auto;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
+    0 8px 24px rgb(0 0 0 / 8%);
 `;
 
 const ProfileWrap = styled.div`
