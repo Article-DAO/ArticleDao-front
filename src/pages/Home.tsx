@@ -101,7 +101,7 @@ function Home() {
             </TextWrap>
             <ButtonWrapper>
               <div className="rounded-md shadow">
-                <Button onClick={minting}>Get started</Button>
+                <Button onClick={minting}>Mint</Button>
               </div>
               {/* <button onClick={getbalance}></button> */}
             </ButtonWrapper>

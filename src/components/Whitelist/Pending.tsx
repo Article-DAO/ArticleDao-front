@@ -50,7 +50,7 @@ function Pending() {
       const getUsersList = async () => {
         const claimValue = await contract?.canclaimw(param.userId);
         console.log(claimValue);
-        setClaim(true);
+        setClaim(claimValue);
       };
       getUsersList();
     }

@@ -178,6 +178,7 @@ const Whitelist = () => {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
+  const [contract, setContract] = useState<Article_DAO | null>(null);
   const [maxIndex, setMaxIndex] = useState<number>(0);
   const [recruitList, setRecruitList] = useState<any[] | null | undefined>([]);
   const [pendingList, setPendingList] = useState<any[] | null | undefined>([]);
@@ -204,6 +205,7 @@ const Whitelist = () => {
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
+      setContract(contract);
 
       const getUsersList = async () => {
         const max = await contract?.getregisternum();
@@ -239,7 +241,6 @@ const Whitelist = () => {
 
   const refreshLists = async () => {
     if (!wallet?.provider || !account || !signer) {
-      alert("Connect Wallet");
       return;
     }
 
