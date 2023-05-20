@@ -22,6 +22,7 @@ function Pending() {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
+  const [claim, setClaim] = useState<boolean>(true);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -47,7 +48,7 @@ function Pending() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
@@ -83,18 +84,27 @@ function Pending() {
           <h1>WhiteList Pending</h1>
           <UserName>UserName : {param.userId}</UserName>
           <Description>token submit에 대한 주의사항 및 설명</Description>
-          <ButtonWrap>
-            <StyledButton onClick={() => handleOptionSelect(true)}>
-              O
-            </StyledButton>
-            <StyledButton2 onClick={() => handleOptionSelect(false)}>
-              X
-            </StyledButton2>
-          </ButtonWrap>
-          <Selected isSelected={selectedOption}>
-            {selectedOption === true ? "O" : "X"}
-          </Selected>
-          <button onClick={registerWhiteList}>Submit</button>
+          {claim ? (
+            <>
+              <div>완료된 투표 입니다</div>
+              <button onClick={registerWhiteList}>Submit</button>
+            </>
+          ) : (
+            <>
+              <ButtonWrap>
+                <StyledButton onClick={() => handleOptionSelect(true)}>
+                  O
+                </StyledButton>
+                <StyledButton2 onClick={() => handleOptionSelect(false)}>
+                  X
+                </StyledButton2>
+              </ButtonWrap>
+              <Selected isSelected={selectedOption}>
+                {selectedOption === true ? "O" : "X"}
+              </Selected>
+              <button onClick={registerWhiteList}>Submit</button>
+            </>
+          )}
         </PendingWrap>
       </Wrap>
     </Container>

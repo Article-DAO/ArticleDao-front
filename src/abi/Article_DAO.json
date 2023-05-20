@@ -230,6 +230,25 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "name": "articlenum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -354,6 +373,118 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      }
+    ],
+    "name": "getProposal",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "state",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "wid",
+        "type": "uint256"
+      }
+    ],
+    "name": "getWregister",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "handle",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "state",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "aid",
+        "type": "uint256"
+      }
+    ],
+    "name": "getarticle",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "url",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "pid",
+        "type": "uint256"
+      }
+    ],
+    "name": "getarticlenum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getproposalnum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getregisternum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -399,14 +530,8 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "proposalids",
+    "inputs": [],
+    "name": "proposalnum",
     "outputs": [
       {
         "internalType": "uint256",
@@ -431,6 +556,11 @@
         "internalType": "address",
         "name": "proposer",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "proposalid",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -463,9 +593,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum Article_DAO.VotingResult",
-        "name": "votingResult",
-        "type": "uint8"
+        "internalType": "uint256",
+        "name": "votingState",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -482,6 +612,19 @@
     "name": "propose",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registrationnum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -614,25 +757,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "wRegisterids",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "wregisterid",
         "type": "uint256"
       },
@@ -689,6 +813,11 @@
       },
       {
         "internalType": "uint256",
+        "name": "wregistraionid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "applytime",
         "type": "uint256"
       },
@@ -728,9 +857,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum Article_DAO.VotingResult",
-        "name": "votingResult",
-        "type": "uint8"
+        "internalType": "uint256",
+        "name": "votingstate",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

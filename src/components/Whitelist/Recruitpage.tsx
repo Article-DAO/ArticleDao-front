@@ -38,22 +38,22 @@ function Recruitpage() {
     }
   }, [wallet?.provider]);
 
-  const registerWhiteList = async () => {
+  const recruitWhiteList = async () => {
     if (!wallet?.provider || !account || !signer) {
       alert("Connect Wallet");
       return;
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     setLoading(true);
     try {
       const tx = await contract?.approve(
-        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
-        BigNumber.from({ usedToken })
+        "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
+        usedToken
       );
       await tx.wait();
     } catch (e) {
@@ -63,8 +63,8 @@ function Recruitpage() {
     }
     try {
       const writerRegistertx = await contract?.wVoteParticipate(
-        BigNumber.from({ usedToken }),
-        BigNumber.from("1")
+        BigNumber.from("1"),
+        usedToken
       );
       await writerRegistertx.wait();
 
@@ -91,7 +91,7 @@ function Recruitpage() {
             onChange={(e) => setUsedToken(Number(e.target.value))}
           />
           <div>Used Token : {usedToken}</div>
-          <button onClick={registerWhiteList}>Submit</button>
+          <button onClick={recruitWhiteList}>Submit</button>
         </RecruitWrap>
       </Wrap>
     </Container>

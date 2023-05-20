@@ -54,7 +54,7 @@ function WhiteUserRegister() {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+        "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
@@ -74,7 +74,7 @@ function WhiteUserRegister() {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
@@ -82,8 +82,8 @@ function WhiteUserRegister() {
 
     try {
       const tx = await contract?.approve(
-        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
-        BigNumber.from("150")
+        "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
+        BigNumber.from("110")
       );
       await tx.wait();
     } catch (e) {

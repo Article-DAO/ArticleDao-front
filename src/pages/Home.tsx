@@ -54,7 +54,7 @@ function Home() {
     // const signer = provider.getUncheckedSigner();
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
       ArticleDaoABI,
       signer
     ) as Article_DAO;

@@ -75,24 +75,28 @@ const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   );
 };
 
-const recruits: member[] = [
-  {
-    id: 1,
-    handle: "@John Doe",
-  },
-  {
-    id: 2,
-    handle: "@Jane Doe",
-  },
-  {
-    id: 3,
-    handle: "@John Smith",
-  },
-  {
-    id: 4,
-    handle: "@Jane Smith",
-  },
-];
+// const recruits: member[] = [
+//   {
+//     id: 1,
+//     handle: "@John Doe",
+//     state: 0,
+//   },
+//   {
+//     id: 2,
+//     handle: "@Jane Doe",
+//     state: 0,
+//   },
+//   {
+//     id: 3,
+//     handle: "@John Smith",
+//     state: 0,
+//   },
+//   {
+//     id: 4,
+//     handle: "@Jane Smith",
+//     state: 0,
+//   },
+// ];
 
 interface PendingBoxProps {
   pending: member;
@@ -108,47 +112,56 @@ const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   );
 };
 
-const pendings: member[] = [
-  {
-    id: 1,
-    handle: "@John Doe",
-  },
-  {
-    id: 2,
-    handle: "@Jane Doe",
-  },
-  {
-    id: 3,
-    handle: "@John Smith",
-  },
-  {
-    id: 4,
-    handle: "@Jane Smith",
-  },
-];
+// const pendings: member[] = [
+//   {
+//     id: 1,
+//     handle: "@John Doe",
+//     state: 0,
+//   },
+//   {
+//     id: 2,
+//     handle: "@Jane Doe",
+//     state: 0,
+//   },
+//   {
+//     id: 3,
+//     handle: "@John Smith",
+//     state: 0,
+//   },
+//   {
+//     id: 4,
+//     handle: "@Jane Smith",
+//     state: 0,
+//   },
+// ];
 
-const whitelists: member[] = [
-  {
-    id: 1,
-    handle: "@John Doe",
-  },
-  {
-    id: 2,
-    handle: "@Jane Doe",
-  },
-  {
-    id: 3,
-    handle: "@John Smith",
-  },
-  {
-    id: 4,
-    handle: "@Jane Smith",
-  },
-  {
-    id: 5,
-    handle: "@John Doe",
-  },
-];
+// const whitelists: member[] = [
+//   {
+//     id: 1,
+//     handle: "@John Doe",
+//     state: 0,
+//   },
+//   {
+//     id: 2,
+//     handle: "@Jane Doe",
+//     state: 0,
+//   },
+//   {
+//     id: 3,
+//     handle: "@John Smith",
+//     state: 0,
+//   },
+//   {
+//     id: 4,
+//     handle: "@Jane Smith",
+//     state: 0,
+//   },
+//   {
+//     id: 5,
+//     handle: "@John Doe",
+//     state: 0,
+//   },
+// ];
 let provider;
 
 interface Account {
@@ -163,6 +176,12 @@ const Whitelist = () => {
   const [account, setAccount] = useState<Account | null>(null);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
+  );
+  const [maxIndex, setMaxIndex] = useState<number>(0);
+  const [recruitList, setRecruitList] = useState<any[] | null | undefined>([]);
+  const [pendingList, setPendingList] = useState<any[] | null | undefined>([]);
+  const [whiteUserList, setWhiteUserList] = useState<any[] | null | undefined>(
+    []
   );
 
   useEffect(() => {
@@ -179,15 +198,38 @@ const Whitelist = () => {
       setSigner(provider.getUncheckedSigner());
 
       const contract: Article_DAO = new ethers.Contract(
-        "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+        "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
         ArticleDaoABI,
         provider.getUncheckedSigner()
       ) as Article_DAO;
-
-      const getReqruitlist = async () => {
-        const balance = await contract.balanceOf(wallet.accounts[0].address);
-        setMyToken(balance.toString());
+      const getUsersList = async () => {
+        const max = await contract?.getregisternum();
+        const maxNum = max.toNumber();
+        console.log(maxNum);
+        for (let i = 0; i < maxNum; i++) {
+          const register = await contract?.getWregister(i);
+          console.log(register);
+          if (register.state.toNumber() === 0) {
+            setRecruitList((prev) => [
+              { ...recruitList, id: i, handle: register.handle },
+            ]);
+          } else if (register.state.toNumber() === 1) {
+            setPendingList((prev) => [
+              { ...prev, id: i, handle: register.handle },
+            ]);
+          } else if (register.state.toNumber() === 4) {
+            setWhiteUserList((prev) => [
+              { ...prev, id: i, handle: register.handle },
+            ]);
+          }
+        }
       };
+      getUsersList();
+
+      // const getReqruitlist = async () => {
+      //   const balance = await contract.balanceOf(wallet.accounts[0].address);
+      //   setMyToken(balance.toString());
+      // };
     }
   }, [wallet?.provider]);
 
@@ -198,12 +240,12 @@ const Whitelist = () => {
     }
 
     const contract: Article_DAO = new ethers.Contract(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
       ArticleDaoABI,
       signer
     ) as Article_DAO;
     const tx = await contract?.approve(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+      "0x086816a482b1A1b69b26904CF64E545e1BB015A2",
       BigNumber.from("1")
     );
     await tx.wait();
@@ -218,20 +260,20 @@ const Whitelist = () => {
     alert("Success");
   };
 
-  const getWriterids = async () => {
-    if (!wallet?.provider || !account || !signer) {
-      alert("Connect Wallet");
-      return;
-    }
-    const contract: Article_DAO = new ethers.Contract(
-      "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
-      ArticleDaoABI,
-      signer
-    ) as Article_DAO;
-    console.log(contract);
-    const tx = await contract?.wRegisterids(BigNumber.from("2"));
-    alert(tx);
-  };
+  // const getWriterids = async () => {
+  //   if (!wallet?.provider || !account || !signer) {
+  //     alert("Connect Wallet");
+  //     return;
+  //   }
+  //   const contract: Article_DAO = new ethers.Contract(
+  //     "0x6F810f01cdFA86bEA4F4ad8c96be278d98B73D79",
+  //     ArticleDaoABI,
+  //     signer
+  //   ) as Article_DAO;
+  //   console.log(contract);
+  //   const tx = await contract?.wRegisterids(BigNumber.from("2"));
+  //   alert(tx);
+  // };
 
   // const getWriterLists = async () => {
   //   if (!wallet?.provider) {
@@ -271,7 +313,21 @@ const Whitelist = () => {
           <h2>Recruit</h2>
           <Descript>현재 등록을 원하는 사람들의 리스트입니다.</Descript>
           <CustomerList>
-            {recruits.map((recruit) => (
+            {recruitList &&
+              recruitList.map((recruit) => (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={`recruit/${recruit.id}`}
+                  >
+                    <RecruitBox key={recruit.id} recruit={recruit} />
+                  </Link>
+                </>
+              ))}
+            {/* {recruits.map((recruit) => (
               <>
                 <Link
                   style={{
@@ -283,14 +339,29 @@ const Whitelist = () => {
                   <RecruitBox key={recruit.id} recruit={recruit} />
                 </Link>
               </>
-            ))}
+            ))} */}
           </CustomerList>
         </RecruitWrap>
         <PendingWrap>
           <h2>Pending</h2>
           <Descript>현재 투표중인 사람들의 리스트입니다.</Descript>
           <CustomerList>
-            {pendings.map((pending) => (
+            {pendingList &&
+              pendingList.map((pending) => (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={`pending/${pending.id}`}
+                  >
+                    <PendingBox key={pending.id} pending={pending} />
+                  </Link>
+                </>
+              ))}
+
+            {/* {pendings.map((pending) => (
               <>
                 <Link
                   style={{
@@ -302,14 +373,33 @@ const Whitelist = () => {
                   <PendingBox key={pending.id} pending={pending} />
                 </Link>
               </>
-            ))}
+            ))} */}
           </CustomerList>
         </PendingWrap>
         <WhitelistWrap>
           <h2>Whitelist</h2>
           <Descript>등록이 완료된 사람들의 리스트입니다.</Descript>
           <CustomerList>
-            {whitelists.map((customer) => (
+            {whiteUserList &&
+              whiteUserList.map((whiteUser) => (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={`https://twitter.com/${whiteUser.handle}}`}
+                  >
+                    <ContentWrapBox>
+                      <ContentTextBox>
+                        <p>Tweet: {whiteUser.handle}</p>
+                      </ContentTextBox>
+                    </ContentWrapBox>
+                  </Link>
+                </>
+              ))}
+
+            {/* {whitelists.map((customer) => (
               <>
                 <Link
                   style={{
@@ -325,7 +415,7 @@ const Whitelist = () => {
                   </ContentWrapBox>
                 </Link>
               </>
-            ))}
+            ))} */}
           </CustomerList>
         </WhitelistWrap>
       </ListWrap>
