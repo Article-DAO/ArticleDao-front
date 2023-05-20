@@ -68,23 +68,23 @@ export const useConnectWallet = () => {
   };
 };
 
-export const useSigner = async () => {
-  const account = useRecoilValue(accountAtom);
-  const getSignerfromProvider = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
+// export const useSigner = async () => {
+//   const account = useRecoilValue(accountAtom);
+//   const getSignerfromProvider = async () => {
+//     const provider = new ethers.providers.Web3Provider(window.ethereum);
+//     await provider.send("eth_requestAccounts", []);
 
-    const signer = provider.getSigner();
+//     const signer = provider.getSigner();
 
-    return signer;
-  };
-  const signer = await getSignerfromProvider();
-  return {
-    signer:
-      account && window.ethereum
-        ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          signer
-        : null,
-    account,
-  };
-};
+//     return signer;
+//   };
+//   const signer = await getSignerfromProvider();
+//   return {
+//     signer:
+//       account && window.ethereum
+//         ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+//           signer
+//         : null,
+//     account,
+//   };
+// };

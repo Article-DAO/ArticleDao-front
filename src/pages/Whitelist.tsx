@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import VoteChart from "../components/common/VoteChart";
-import { useSigner } from "../states/wallet.state";
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
 
 import { BigNumber, ethers } from "ethers";
 import { useConnectWallet } from "@web3-onboard/react";
+
+import backgroundwhite from "../assets/backgroundwhitelist.jpg";
+import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
+import logo from "../assets/logo.png";
 
 // Define the interface for the customer data
 
@@ -34,6 +37,7 @@ const PercentageBarWrapper = styled.div`
   width: 100%;
   height: 20px;
   background-color: #f0f0f0;
+  margin-top: 5px;
   border-radius: 10px;
 `;
 
@@ -43,6 +47,30 @@ const PercentageFilled = styled.div<{ percent: number }>`
   border-radius: 10px;
   width: ${(props) => props.percent}%;
 `;
+
+const RecruitWrapBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  margin-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
+      0 8px 24px rgb(0 0 0 / 8%);
+  }
+`;
+const Percent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`;
+
 interface PercentageBarProps {
   totalCount: number;
   participantCount: number;
@@ -58,25 +86,31 @@ const PercentageBar: React.FC<PercentageBarProps> = ({
       <PercentageFilled
         percent={participantCount >= totalCount ? 100 : percent}
       />
-      <div>{percent}%</div>
+      <Percent>{percent}%</Percent>
     </PercentageBarWrapper>
   );
 };
 
 const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   return (
-    <CustomerItem>
-      <strong>Name:</strong> {recruit.name}
-      <br />
-      <strong>Dead Line:</strong> {recruit.deadline}
-      <br />
-      <strong>Participant:</strong> {recruit.count} / {recruit.minCount}
-      <br />
+    <RecruitWrapBox>
+      <div>
+        <strong>Name:</strong> {recruit.name}
+      </div>
+
+      <div>
+        <strong>Dead Line:</strong> {recruit.deadline}
+        <br />
+      </div>
+      <div>
+        <strong>Participant:</strong> {recruit.count} / {recruit.minCount}
+      </div>
+
       <PercentageBar
         totalCount={recruit.minCount}
         participantCount={recruit.count}
       />
-    </CustomerItem>
+    </RecruitWrapBox>
   );
 };
 
@@ -86,6 +120,27 @@ const recruits: Recruit[] = [
     name: "John Doe",
     minCount: 10,
     count: 5,
+    deadline: "2021-10-10",
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    minCount: 10,
+    count: 0,
+    deadline: "2021-10-10",
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    minCount: 10,
+    count: 11,
+    deadline: "2021-10-10",
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    minCount: 10,
+    count: 8,
     deadline: "2021-10-10",
   },
 ];
@@ -101,22 +156,45 @@ interface Pending {
   votesAgainst: number;
   totalVotes: number;
 }
+
+const PendingWrapBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  margin-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
+      0 8px 24px rgb(0 0 0 / 8%);
+  }
+`;
 const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   return (
-    <CustomerItem>
-      <strong>Name:</strong> {pending.name}
-      <br />
-      <strong>Dead Line:</strong> {pending.deadline}
-      <br />
-      <strong>Votes:</strong>
-      {pending.votesFor} / {pending.totalVotes}
-      <br />
+    <PendingWrapBox>
+      <div>
+        <strong>Name:</strong> {pending.name}
+        <br />
+      </div>
+      <div>
+        <strong>Dead Line:</strong> {pending.deadline}
+        <br />
+      </div>
+      <div>
+        <strong>Votes:</strong> {pending.votesFor} / {pending.totalVotes}
+      </div>
+
       <VoteChart
         votesFor={pending.votesFor}
         votesAgainst={pending.votesAgainst}
         totalVotes={pending.totalVotes}
       />
-    </CustomerItem>
+    </PendingWrapBox>
   );
 };
 
@@ -181,9 +259,11 @@ const Whitelist = () => {
       ArticleDaoABI,
       signer
     ) as Article_DAO;
-    const tx = await contract.writerRegistries(0);
-    console.log(tx);
-    //tx.wait();
+    const tx = await contract.writerRegister(
+      "0x28504b5182FF1944894A0dc684ca139733201783"
+    );
+
+    tx.wait();
 
     alert("Success");
   };
@@ -228,7 +308,7 @@ const Whitelist = () => {
       <TitleWrap>
         <Title>Whitelist</Title>
 
-        <StyledButton onClick={getWriterLists}> 작가 등록</StyledButton>
+        <StyledButton onClick={registerWhiteList}> 작가 등록</StyledButton>
       </TitleWrap>
       <ListWrap>
         <RecruitWrap>
@@ -279,18 +359,24 @@ const Whitelist = () => {
                   }}
                   to={`/whitelist/${customer.id}`}
                 >
-                  <CustomerItem key={customer.id}>
-                    <strong>Name:</strong> {customer.name}
-                    <br />
-                    <strong>Posts:</strong> {customer.postCount}
-                    <br />
-                    <strong>Contribution:</strong> {customer.contribution}
-                    <br />
-                    <strong>Tokens:</strong> {customer.tokenCount}
-                    <br />
-                    <strong>Twitter:</strong>
-                    {customer.twitter}
-                  </CustomerItem>
+                  <WhitelistWrapBox key={customer.id}>
+                    <div>
+                      <strong>Name:</strong> {customer.name}
+                    </div>
+                    <div>
+                      <strong>Posts:</strong> {customer.postCount}
+                    </div>
+                    <div>
+                      <strong>Contribution:</strong> {customer.contribution}
+                    </div>
+                    <div>
+                      <strong>Tokens:</strong> {customer.tokenCount}
+                    </div>
+                    <div>
+                      <strong>Twitter:</strong>
+                      {customer.twitter}
+                    </div>
+                  </WhitelistWrapBox>
                 </Link>
               </>
             ))}
@@ -303,9 +389,29 @@ const Whitelist = () => {
 
 export default Whitelist;
 
+const WhitelistWrapBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  margin-bottom: 10px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
+      0 8px 24px rgb(0 0 0 / 8%);
+  }
+`;
+
 // Styled component for the Whitelist page
 const Container = styled.div`
   padding: 20px;
+  background-image: url(${backgroundwhite2});
+  //background: linear-gradient(135deg, #87cefa, #00bfff);
 `;
 
 const Title = styled.h1`

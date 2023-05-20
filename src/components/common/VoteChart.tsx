@@ -4,6 +4,7 @@ const VoteChartContainer = styled.div`
   display: flex;
   align-items: center;
   width: 300px;
+  margin-top: 10px;
 `;
 
 const VoteBar = styled.div<{ width: string; color: string }>`
