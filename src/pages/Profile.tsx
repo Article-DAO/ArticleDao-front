@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.png";
 import DaoBox from "../components/profile/DaoBox";
@@ -36,8 +36,7 @@ const daos: DaoComponentProps[] = [
 let provider;
 
 function Profile() {
-  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
-    useConnectWallet();
+  const [{ wallet }] = useConnectWallet();
   const [account, setAccount] = useState<Account | null>(null);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null

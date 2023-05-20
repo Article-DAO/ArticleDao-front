@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import VoteChart from "../components/common/VoteChart";
+import { Link, useLocation } from "react-router-dom";
+
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
 
 import Logo from "../assets/articlebox.jpeg";
@@ -23,20 +23,6 @@ const Descript = styled.div`
   margin-bottom: 20px;
 `;
 
-const PercentageBarWrapper = styled.div`
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  margin-top: 5px;
-  border-radius: 10px;
-`;
-
-const PercentageFilled = styled.div<{ percent: number }>`
-  height: 100%;
-  background-color: #007bff;
-  border-radius: 10px;
-  width: ${(props) => props.percent}%;
-`;
 const ContentWrapBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,31 +57,6 @@ const ContentTextBox = styled.div`
     color: #077fb3;
   }
 `;
-const Percent = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-`;
-interface PercentageBarProps {
-  totalCount: number;
-  participantCount: number;
-}
-const PercentageBar: React.FC<PercentageBarProps> = ({
-  totalCount,
-  participantCount,
-}) => {
-  const percent = Math.floor((participantCount / totalCount) * 100);
-
-  return (
-    <PercentageBarWrapper>
-      <PercentageFilled
-        percent={participantCount >= totalCount ? 100 : percent}
-      />
-      <Percent>{percent}%</Percent>
-    </PercentageBarWrapper>
-  );
-};
 
 const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   return (
@@ -179,12 +140,6 @@ const Proposal = () => {
     },
   ];
 
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
   const location = useLocation();
   const userId = location.pathname.split("/")[2];
 
@@ -265,25 +220,6 @@ const Proposal = () => {
 
 export default Proposal;
 
-const WhitelistWrapBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #ccc;
-
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
-      0 8px 24px rgb(0 0 0 / 8%);
-  }
-  background-color: white;
-`;
-
 const Container = styled.div`
   padding: 20px;
   background-image: url(${backgroundwhite2});
@@ -338,42 +274,6 @@ const CustomerList = styled.ul`
   list-style-type: none;
   margin: 0;
   padding: 0;
-`;
-
-const CustomerItem = styled.li`
-  width: 400px;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #ccc;
-
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
-      0 8px 24px rgb(0 0 0 / 8%);
-  }
-`;
-
-const ModalDiv = styled.div`
-  &:hover {
-    cursor: pointer;
-    color: red;
-  }
-`;
-const ModalBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background-color: transparent;
-  margin-left: 10px;
-  &:hover {
-    cursor: pointer;
-    color: red;
-  }
 `;
 
 const TitleWrap = styled.div`

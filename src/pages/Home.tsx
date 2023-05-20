@@ -1,9 +1,9 @@
 import { useConnectWallet as useWeb3onboardWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+
 import styled from "styled-components";
-import Logo from "../assets/logo.png";
+
 import character1 from "../assets/character1.jpeg";
 import character2 from "../assets/character2.jpeg";
 
@@ -22,8 +22,7 @@ interface Account {
 }
 
 function Home() {
-  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
-    useWeb3onboardWallet();
+  const [{ wallet }] = useWeb3onboardWallet();
   const [account, setAccount] = useState<Account | null>(null);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null

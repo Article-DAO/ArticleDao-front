@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./components/header";
 import { styled } from "styled-components";
-import backgroundImage from "./assets/background.jpg";
+
 import backgroundImage2 from "./assets/background2.jpg";
 
 function App() {

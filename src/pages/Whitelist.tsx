@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
 import Logo from "../assets/tweetbox.jpeg";
@@ -28,21 +28,6 @@ const Descript = styled.div`
   color: #236480;
 
   margin-bottom: 20px;
-`;
-
-const PercentageBarWrapper = styled.div`
-  width: 100%;
-  height: 20px;
-  background-color: #f0f0f0;
-  margin-top: 5px;
-  border-radius: 10px;
-`;
-
-const PercentageFilled = styled.div<{ percent: number }>`
-  height: 100%;
-  background-color: #007bff;
-  border-radius: 10px;
-  width: ${(props) => props.percent}%;
 `;
 
 const ContentWrapBox = styled.div`
@@ -79,32 +64,6 @@ const ContentTextBox = styled.div`
     color: #077fb3;
   }
 `;
-const Percent = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-`;
-
-interface PercentageBarProps {
-  totalCount: number;
-  participantCount: number;
-}
-const PercentageBar: React.FC<PercentageBarProps> = ({
-  totalCount,
-  participantCount,
-}) => {
-  const percent = Math.floor((participantCount / totalCount) * 100);
-
-  return (
-    <PercentageBarWrapper>
-      <PercentageFilled
-        percent={participantCount >= totalCount ? 100 : percent}
-      />
-      <Percent>{percent}%</Percent>
-    </PercentageBarWrapper>
-  );
-};
 
 const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   return (
@@ -138,33 +97,7 @@ const recruits: member[] = [
 interface PendingBoxProps {
   pending: member;
 }
-interface Pending {
-  id: number;
-  name: string;
-  deadline: string;
-  votesFor: number;
-  votesAgainst: number;
-  totalVotes: number;
-}
 
-const PendingWrapBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: white;
-
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
-      0 8px 24px rgb(0 0 0 / 8%);
-  }
-`;
 const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   return (
     <ContentWrapBox>
@@ -225,14 +158,12 @@ interface Account {
 }
 
 const Whitelist = () => {
-  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
-    useConnectWallet();
+  const [{ wallet }] = useConnectWallet();
   const [ids, setIds] = useState<any[] | null | undefined>([]);
   const [account, setAccount] = useState<Account | null>(null);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
-  const [reqruitlist, setReqruitlist] = useState<any[] | null | undefined>([]);
 
   useEffect(() => {
     if (!wallet?.provider) {
@@ -325,15 +256,6 @@ const Whitelist = () => {
   //   alert("Success");
   // };
 
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const location = useLocation();
-  const userId = location.pathname.split("/")[2];
-
   return (
     <Container>
       <TitleWrap>
@@ -413,25 +335,6 @@ const Whitelist = () => {
 
 export default Whitelist;
 
-const WhitelistWrapBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #ccc;
-
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
-      0 8px 24px rgb(0 0 0 / 8%);
-  }
-  background-color: white;
-`;
-
 // Styled component for the Whitelist page
 const Container = styled.div`
   padding: 20px;
@@ -487,42 +390,6 @@ const CustomerList = styled.ul`
   list-style-type: none;
   margin: 0;
   padding: 0;
-`;
-
-const CustomerItem = styled.li`
-  width: 400px;
-  height: 120px;
-  padding: 10px;
-  border: 1px solid #ccc;
-
-  margin-bottom: 10px;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
-      0 8px 24px rgb(0 0 0 / 8%);
-  }
-`;
-
-const ModalDiv = styled.div`
-  &:hover {
-    cursor: pointer;
-    color: red;
-  }
-`;
-const ModalBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background-color: transparent;
-  margin-left: 10px;
-  &:hover {
-    cursor: pointer;
-    color: red;
-  }
 `;
 
 const TitleWrap = styled.div`

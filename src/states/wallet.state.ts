@@ -6,11 +6,10 @@ import {
   useResetRecoilState,
 } from "recoil";
 import { CHAINID } from "../interfaces/config-data.interface";
-import { ethers, providers, Signer } from "ethers";
+import { ethers } from "ethers";
 
 import { connectMetamask } from "./../utils/metamask";
 import { useConnectWallet as getWeb3OnboardWallet } from "@web3-onboard/react";
-import { useEffect } from "react";
 
 export const accountAtom = atom<string | null>({
   key: "atom/account",
@@ -70,21 +69,21 @@ export const useConnectWallet = () => {
   };
 };
 
-export const getContract = async ({
-  address,
-  abi,
-  signer,
-}: {
-  address: any;
-  abi: any;
-  signer: any;
-}) => {
-  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
-    getWeb3OnboardWallet();
+// export const getContract = async ({
+//   address,
+//   abi,
+//   signer,
+// }: {
+//   address: any;
+//   abi: any;
+//   signer: any;
+// }) => {
+//   const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
+//     getWeb3OnboardWallet();
 
-  const contract = new ethers.Contract(address, abi, signer);
-  return contract;
-};
+//   const contract = new ethers.Contract(address, abi, signer);
+//   return contract;
+// };
 
 // export const useSigner = async () => {
 //   const account = useRecoilValue(accountAtom);
