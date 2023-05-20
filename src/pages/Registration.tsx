@@ -85,48 +85,48 @@ function Registration() {
     alert("Success");
   };
 
-  if (loading) {
-    return <Loading />;
-  }
   return (
-    <Wrap>
-      <h1>안건 등록</h1>
-      <Description>token submit에 대한 주의사항 및 설명</Description>
+    <>
+      {loading && <Loading />}
+      <Wrap>
+        <h1>안건 등록</h1>
+        <Description>token submit에 대한 주의사항 및 설명</Description>
 
-      <InputWrap>
-        <div>안건 제목: </div>
-        <input
-          type="text"
-          value={proposals?.title}
-          onChange={(e) =>
-            setProposals({ ...proposals, title: e.target.value })
-          }
-        />
-      </InputWrap>
-      <InputWrap>
-        <div>안건 설명: </div>
-        <input
-          type="text"
-          value={proposals?.description}
-          onChange={(e) =>
-            setProposals({ ...proposals, description: e.target.value })
-          }
-        />
-      </InputWrap>
+        <InputWrap>
+          <div>안건 제목: </div>
+          <input
+            type="text"
+            value={proposals?.title}
+            onChange={(e) =>
+              setProposals({ ...proposals, title: e.target.value })
+            }
+          />
+        </InputWrap>
+        <InputWrap>
+          <div>안건 설명: </div>
+          <input
+            type="text"
+            value={proposals?.description}
+            onChange={(e) =>
+              setProposals({ ...proposals, description: e.target.value })
+            }
+          />
+        </InputWrap>
 
-      <InputWrap>
-        <div>Reward로 제공할 staking </div>
-        <input
-          type="number"
-          value={proposals?.reward}
-          onChange={(e) =>
-            setProposals({ ...proposals, reward: Number(e.target.value) })
-          }
-        />
-      </InputWrap>
-      <div>Used Token : {proposals.reward}</div>
-      <Button onClick={registerWhiteList}>Submit</Button>
-    </Wrap>
+        <InputWrap>
+          <div>Reward로 제공할 staking </div>
+          <input
+            type="number"
+            value={proposals?.reward}
+            onChange={(e) =>
+              setProposals({ ...proposals, reward: Number(e.target.value) })
+            }
+          />
+        </InputWrap>
+        <div>Used Token : {proposals.reward}</div>
+        <Button onClick={registerWhiteList}>Submit</Button>
+      </Wrap>
+    </>
   );
 }
 
