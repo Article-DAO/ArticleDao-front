@@ -1,19 +1,77 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
+import { Article_DAO } from "../../../types";
+import { Account } from "../../interfaces/account.interface";
+import ArticleDaoABI from "../../abi/Article_DAO.json";
+import Loading from "../common/Loading";
+import { useConnectWallet } from "@web3-onboard/react";
+import { BigNumber, ethers } from "ethers";
+let provider;
 function Pending() {
   const param = useParams<{ userId: string }>();
   const [selectedOption, setSelectedOption] = useState<boolean>(true);
-  const handleOptionSelect = (option: boolean) => {
-    setSelectedOption(option);
-  };
+  const [loading, setLoading] = useState<boolean>(false);
+  const [usedToken, setUsedToken] = useState<number>(0);
+  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
+    useConnectWallet();
+
+  const [account, setAccount] = useState<Account | null>(null);
+  const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
+    null
+  );
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    if (!wallet?.provider) {
+      provider = null;
+    } else {
+      const { name, avatar } = wallet?.accounts[0].ens ?? {};
+      setAccount({
+        address: wallet.accounts[0].address,
+        balance: wallet.accounts[0].balance,
+        ens: { name, avatar: avatar?.url },
+      });
+      provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+      setSigner(provider.getUncheckedSigner());
+    }
+  }, [wallet?.provider]);
+
+  const registerWhiteList = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+
+    const contract: Article_DAO = new ethers.Contract(
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    setLoading(true);
+    const tx = await contract?.approve(
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      BigNumber.from("1")
+    );
+    await tx.wait();
+
+    const writerRegistertx = await contract?.writerRegister(
+      BigNumber.from("1")
+    );
+    await writerRegistertx.wait();
+
+    // const tx = await contract?.writerRegister(BigNumber.from("1"));
+    setLoading(false);
+    alert("Success");
+  };
+  const handleOptionSelect = (option: boolean) => {
+    setSelectedOption(option);
+  };
 
   return (
     <>
+      {loading && <Loading />}
       <Wrap>
         <PendingWrap>
           <h1>WhiteList Pending</h1>
@@ -30,7 +88,7 @@ function Pending() {
           <Selected isSelected={selectedOption}>
             {selectedOption === true ? "O" : "X"}
           </Selected>
-          <button>Submit</button>
+          <button onClick={registerWhiteList}>Submit</button>
         </PendingWrap>
       </Wrap>
     </>

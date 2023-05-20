@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.png";
 import character1 from "../assets/character1.jpeg";
+import character2 from "../assets/character2.jpeg";
 
 import ArticleDaoABI from "../abi/Article_DAO.json";
 import { Article_DAO } from "../../types";
@@ -109,7 +110,7 @@ function Home() {
         </Container>
 
         <Container2>
-          <Image src={Logo} />
+          <Image src={character2} />
           <Content>
             <TextWrap>
               <Title>What is a Article Dao?</Title>

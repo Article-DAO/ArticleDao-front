@@ -17,18 +17,20 @@ function ProposalDetail() {
 
   return (
     <Wrap>
-      <h1>Proposal Detail {userId}</h1>
-      <p>ID: {user.id}</p>
-      <p>이름: {user.name}</p>
-      <p>쓴 글의 개수: {user.postCount}</p>
-      <p>기여도: {user.contribution}</p>
-      <p>가지고 있는 토큰의 개수: {user.tokenCount}</p>
-      <p>
-        Twitter: <a href={user.twitter}>{user.twitter}</a>
-      </p>
-      <Link to={`/challenge/${user.id}`}>
-        <button>시비걸기</button>
-      </Link>
+      <DetailWrap>
+        <h1>Proposal Detail {userId}</h1>
+        <p>ID: {user.id}</p>
+        <p>이름: {user.name}</p>
+        <p>쓴 글의 개수: {user.postCount}</p>
+        <p>기여도: {user.contribution}</p>
+        <p>가지고 있는 토큰의 개수: {user.tokenCount}</p>
+        <p>
+          Twitter: <a href={user.twitter}>{user.twitter}</a>
+        </p>
+        <Link to={`/challenge/${user.id}`}>
+          <button>시비걸기</button>
+        </Link>
+      </DetailWrap>
     </Wrap>
   );
 }
@@ -36,8 +38,20 @@ function ProposalDetail() {
 export default ProposalDetail;
 
 const Wrap = styled.div`
-  padding: 20px;
-  background-color: #fff;
-  margin: 20px auto;
-  max-width: 800px;
+  display: flex;
+  width: 600px;
+  height: 550px;
+  border: 1px solid #ccc;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 4%), 0 2px 4px rgb(0 0 0 / 4%),
+    0 8px 24px rgb(0 0 0 / 8%);
+`;
+
+const DetailWrap = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
 `;

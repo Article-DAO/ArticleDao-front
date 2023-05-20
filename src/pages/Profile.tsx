@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/logo.png";
 import DaoBox from "../components/profile/DaoBox";
-import { useConnectWallet } from "../states/wallet.state";
+
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
+import { Account } from "../interfaces/account.interface";
+import ArticleDaoABI from "../abi/Article_DAO.json";
+import { Article_DAO } from "../../types";
+import { useConnectWallet } from "@web3-onboard/react";
+import { ethers } from "ethers";
 
 interface DaoComponentProps {
   name: string;
@@ -27,8 +32,70 @@ const daos: DaoComponentProps[] = [
   },
 ];
 
+let provider;
+
 function Profile() {
-  const { account, chainId, connect, disconnect } = useConnectWallet();
+  const [{ wallet }, connect, disconnect, updateBalance, setWalletModules] =
+    useConnectWallet();
+  const [account, setAccount] = useState<Account | null>(null);
+  const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (!wallet?.provider) {
+      provider = null;
+    } else {
+      const { name, avatar } = wallet?.accounts[0].ens ?? {};
+      setAccount({
+        address: wallet.accounts[0].address,
+        balance: wallet.accounts[0].balance,
+        ens: { name, avatar: avatar?.url },
+      });
+      provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+      setSigner(provider.getUncheckedSigner());
+    }
+  }, [wallet?.provider]);
+
+  const minting = async () => {
+    console.log(account);
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // const provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+    // const signer = provider.getUncheckedSigner();
+
+    const contract: Article_DAO = new ethers.Contract(
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+
+    const tx = await contract.mint(account?.address, 1);
+
+    tx.wait().then((receipt) => {
+      alert("Minted");
+    });
+  };
+
+  const getbalance = async () => {
+    if (!wallet?.provider || !account || !signer) {
+      alert("Connect Wallet");
+      return;
+    }
+    // const provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+    // const signer = provider.getUncheckedSigner();
+    const contract: Article_DAO = new ethers.Contract(
+      "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
+      ArticleDaoABI,
+      signer
+    ) as Article_DAO;
+    console.log(contract);
+    const tx = await contract.totalSupply();
+    alert(tx);
+  };
   return (
     <Container>
       <Wrap>
@@ -36,7 +103,7 @@ function Profile() {
           <h1>Profile</h1>
           <ProfileImg src={Logo} alt="" />
           <p>name</p>
-          <p>{account}</p>
+          <p>{account?.address}</p>
         </ProfileWrap>
 
         <RecordWrap>

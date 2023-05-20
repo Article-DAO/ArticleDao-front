@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Article_DAO } from "../../../types";
 import ArticleDaoABI from "../../abi/Article_DAO.json";
 import type { TokenSymbol } from "@web3-onboard/common";
+import Loading from "../common/Loading";
 
 interface Proposal {
   id: number;
@@ -34,6 +35,7 @@ function WhiteUserRegister() {
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   );
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -65,6 +67,7 @@ function WhiteUserRegister() {
       ArticleDaoABI,
       signer
     ) as Article_DAO;
+    setLoading(true);
     const tx = await contract?.approve(
       "0xa334b3B9eBcbdac00bEC120fB17d25367018662e",
       BigNumber.from("1")
@@ -77,48 +80,51 @@ function WhiteUserRegister() {
     await writerRegistertx.wait();
 
     // const tx = await contract?.writerRegister(BigNumber.from("1"));
-
+    setLoading(false);
     alert("Success");
   };
   return (
-    <Wrap>
-      <h1>작가 등록</h1>
-      <Description>token submit에 대한 주의사항 및 설명</Description>
+    <>
+      {loading && <Loading />}
+      <Wrap>
+        <h1>작가 등록</h1>
+        <Description>token submit에 대한 주의사항 및 설명</Description>
 
-      <InputWrap>
-        <div>안건 제목: </div>
-        <input
-          type="text"
-          value={proposals?.title}
-          onChange={(e) =>
-            setProposals({ ...proposals, title: e.target.value })
-          }
-        />
-      </InputWrap>
-      <InputWrap>
-        <div>안건 설명: </div>
-        <input
-          type="text"
-          value={proposals?.description}
-          onChange={(e) =>
-            setProposals({ ...proposals, description: e.target.value })
-          }
-        />
-      </InputWrap>
+        <InputWrap>
+          <div>안건 제목: </div>
+          <input
+            type="text"
+            value={proposals?.title}
+            onChange={(e) =>
+              setProposals({ ...proposals, title: e.target.value })
+            }
+          />
+        </InputWrap>
+        <InputWrap>
+          <div>안건 설명: </div>
+          <input
+            type="text"
+            value={proposals?.description}
+            onChange={(e) =>
+              setProposals({ ...proposals, description: e.target.value })
+            }
+          />
+        </InputWrap>
 
-      <InputWrap>
-        <div>Reward로 제공할 staking </div>
-        <input
-          type="number"
-          value={proposals?.reward}
-          onChange={(e) =>
-            setProposals({ ...proposals, reward: Number(e.target.value) })
-          }
-        />
-      </InputWrap>
-      <div>Used Token : {proposals.reward}</div>
-      <Button onClick={registerWhiteList}>Submit</Button>
-    </Wrap>
+        <InputWrap>
+          <div>Reward로 제공할 staking </div>
+          <input
+            type="number"
+            value={proposals?.reward}
+            onChange={(e) =>
+              setProposals({ ...proposals, reward: Number(e.target.value) })
+            }
+          />
+        </InputWrap>
+        <div>Used Token : {proposals.reward}</div>
+        <Button onClick={registerWhiteList}>Submit</Button>
+      </Wrap>
+    </>
   );
 }
 
