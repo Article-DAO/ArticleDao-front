@@ -84,14 +84,6 @@ const recruits: member[] = [
     id: 1,
     handle: "@Jane Doe",
   },
-  {
-    id: 2,
-    handle: "@John Smith",
-  },
-  {
-    id: 3,
-    handle: "@Jane Smith",
-  },
 ];
 
 interface PendingBoxProps {
@@ -229,10 +221,6 @@ const Proposal = () => {
       id: 2,
       handle: "@John Smith",
     },
-    {
-      id: 3,
-      handle: "@Jane Smith",
-    },
   ];
 
   const location = useLocation();
@@ -255,7 +243,8 @@ const Proposal = () => {
             This is a list of items that currently wish to be registered.
           </Descript>
           <CustomerList>
-            {/* {recruits.map((recruit) => (
+            {/* 더미데이터 */}
+            {recruits.map((recruit) => (
               <>
                 <Link
                   style={{
@@ -267,7 +256,7 @@ const Proposal = () => {
                   <RecruitBox key={recruit.id} recruit={recruit} />
                 </Link>
               </>
-            ))} */}
+            ))}
             {recruitList &&
               recruitList.map((recruit) => (
                 <>
@@ -290,7 +279,8 @@ const Proposal = () => {
             This is a list of items that are currently being voted on.
           </Descript>
           <CustomerList>
-            {/* {pendings.map((pending) => (
+            {/* 더미데이터 */}
+            {pendings.map((pending) => (
               <>
                 <Link
                   style={{
@@ -302,7 +292,7 @@ const Proposal = () => {
                   <PendingBox key={pending.id} pending={pending} />
                 </Link>
               </>
-            ))} */}
+            ))}
             {pendingList &&
               pendingList.map((pending) => (
                 <>
@@ -325,7 +315,8 @@ const Proposal = () => {
             This is a list of items that have currently been voted on.
           </Descript>
           <CustomerList>
-            {/* {whitelists.map((customer) => (
+            {/* 더미데이터 */}
+            {whitelists.map((customer) => (
               <>
                 <Link
                   style={{
@@ -341,7 +332,7 @@ const Proposal = () => {
                   </ContentWrapBox>
                 </Link>
               </>
-            ))} */}
+            ))}
             {whiteUserList &&
               whiteUserList.map((whiteUser) => (
                 <>

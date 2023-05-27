@@ -76,28 +76,24 @@ const RecruitBox: React.FC<RecruitBoxProps> = ({ recruit }) => {
   );
 };
 
-// const recruits: member[] = [
-//   {
-//     id: 1,
-//     handle: "@John Doe",
-//     state: 0,
-//   },
-//   {
-//     id: 2,
-//     handle: "@Jane Doe",
-//     state: 0,
-//   },
-//   {
-//     id: 3,
-//     handle: "@John Smith",
-//     state: 0,
-//   },
-//   {
-//     id: 4,
-//     handle: "@Jane Smith",
-//     state: 0,
-//   },
-// ];
+const recruits: member[] = [
+  {
+    id: 1,
+    handle: "@John Doe",
+  },
+  {
+    id: 2,
+    handle: "@Jane Doe",
+  },
+  {
+    id: 3,
+    handle: "@John Smith",
+  },
+  {
+    id: 4,
+    handle: "@Jane Smith",
+  },
+];
 
 interface PendingBoxProps {
   pending: member;
@@ -113,56 +109,43 @@ const PendingBox: React.FC<PendingBoxProps> = ({ pending }) => {
   );
 };
 
-// const pendings: member[] = [
-//   {
-//     id: 1,
-//     handle: "@John Doe",
-//     state: 0,
-//   },
-//   {
-//     id: 2,
-//     handle: "@Jane Doe",
-//     state: 0,
-//   },
-//   {
-//     id: 3,
-//     handle: "@John Smith",
-//     state: 0,
-//   },
-//   {
-//     id: 4,
-//     handle: "@Jane Smith",
-//     state: 0,
-//   },
-// ];
+const pendings: member[] = [
+  {
+    id: 1,
+    handle: "@John Doe",
+  },
+  {
+    id: 2,
+    handle: "@Jane Doe",
+  },
+  {
+    id: 3,
+    handle: "@John Smith",
+  },
+];
 
-// const whitelists: member[] = [
-//   {
-//     id: 1,
-//     handle: "@John Doe",
-//     state: 0,
-//   },
-//   {
-//     id: 2,
-//     handle: "@Jane Doe",
-//     state: 0,
-//   },
-//   {
-//     id: 3,
-//     handle: "@John Smith",
-//     state: 0,
-//   },
-//   {
-//     id: 4,
-//     handle: "@Jane Smith",
-//     state: 0,
-//   },
-//   {
-//     id: 5,
-//     handle: "@John Doe",
-//     state: 0,
-//   },
-// ];
+const whitelists: member[] = [
+  {
+    id: 1,
+    handle: "@John Doe",
+  },
+  {
+    id: 2,
+    handle: "@Jane Doe",
+  },
+  {
+    id: 3,
+    handle: "@John Smith",
+  },
+  {
+    id: 4,
+    handle: "@Jane Smith",
+  },
+  {
+    id: 5,
+    handle: "@John Doe",
+  },
+];
 let provider;
 
 interface Account {
@@ -359,7 +342,8 @@ const Whitelist = () => {
                   </Link>
                 </>
               ))}
-            {/* {recruits.map((recruit) => (
+            {/* 더미데이터 */}
+            {recruits.map((recruit) => (
               <>
                 <Link
                   style={{
@@ -371,7 +355,7 @@ const Whitelist = () => {
                   <RecruitBox key={recruit.id} recruit={recruit} />
                 </Link>
               </>
-            ))} */}
+            ))}
           </CustomerList>
         </RecruitWrap>
         <PendingWrap>
@@ -392,8 +376,8 @@ const Whitelist = () => {
                   </Link>
                 </>
               ))}
-
-            {/* {pendings.map((pending) => (
+            {/* 더미데이터 */}
+            {pendings.map((pending) => (
               <>
                 <Link
                   style={{
@@ -405,7 +389,7 @@ const Whitelist = () => {
                   <PendingBox key={pending.id} pending={pending} />
                 </Link>
               </>
-            ))} */}
+            ))}
           </CustomerList>
         </PendingWrap>
         <WhitelistWrap>
@@ -432,8 +416,8 @@ const Whitelist = () => {
                   </Link>
                 </>
               ))}
-
-            {/* {whitelists.map((customer) => (
+            {/* 더미데이터 */}
+            {whitelists.map((customer) => (
               <>
                 <Link
                   style={{
@@ -449,7 +433,7 @@ const Whitelist = () => {
                   </ContentWrapBox>
                 </Link>
               </>
-            ))} */}
+            ))}
           </CustomerList>
         </WhitelistWrap>
       </ListWrap>
