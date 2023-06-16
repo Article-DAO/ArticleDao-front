@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+
+import { ethers } from "ethers";
 import {
   atom,
   useRecoilState,
@@ -7,6 +9,8 @@ import {
 } from "recoil";
 import { CHAINID } from "../interfaces/config-data.interface";
 import { connectMetamask } from "./../utils/metamask";
+import { providers } from "ethers";
+import { WalletState } from "@web3-onboard/core";
 
 export const accountAtom = atom<string | null>({
   key: "atom/account",
@@ -17,19 +21,26 @@ export const chainIdAtom = atom<number>({
   // TODO: CHANGE DEFAULT CHAIN ID
   default: CHAINID.Linea,
 });
+export const signerAtom = atom<ethers.Signer | null>({
+  key: "atom/signer",
+  default: null,
+});
 
 export const useWallet = () => {
   const account = useRecoilValue(accountAtom);
   const chainId = useRecoilValue(chainIdAtom);
+  const signer = useRecoilValue(signerAtom);
   return {
     account,
     chainId,
+    signer,
   };
 };
 
-export const useConnectWallet = () => {
+export const useConnectWalletbyMetamask = () => {
   const [account, setAccount] = useRecoilState(accountAtom);
   const [chainId, setChainId] = useRecoilState(chainIdAtom);
+
   const resetChainId = useResetRecoilState(chainIdAtom);
   const nav = useNavigate();
 
@@ -61,6 +72,7 @@ export const useConnectWallet = () => {
   return {
     account,
     chainId,
+
     connect,
     disconnect,
   };
@@ -82,23 +94,13 @@ export const useConnectWallet = () => {
 //   return contract;
 // };
 
-// export const useSigner = async () => {
-//   const account = useRecoilValue(accountAtom);
-//   const getSignerfromProvider = async () => {
-//     const provider = new ethers.providers.Web3Provider(window.ethereum);
-//     await provider.send("eth_requestAccounts", []);
-
-//     const signer = provider.getSigner();
-
-//     return signer;
-//   };
-//   const signer = await getSignerfromProvider();
-//   return {
-//     signer:
-//       account && window.ethereum
-//         ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-//           signer
-//         : null,
-//     account,
-//   };
-// };
+export const useSigner = () => {
+  const account = useRecoilValue(accountAtom);
+  return {
+    signer:
+      account && window.ethereum
+        ? // @ts-ignore
+          new providers.Web3Provider(window.ethereum!).getSigner()
+        : null,
+  };
+};

@@ -2,10 +2,10 @@ import Navbar from "../Navbar";
 import styled from "styled-components";
 import bannerImg from "../../assets/banner.jpg";
 import logoImg from "../../assets/logo.png";
-import { useConnectWalletbyMetamask } from "../../states/wallet.state";
+
 import { ellipsisAddress } from "../../utils/ellipsisAddress";
 import { useEffect, useState } from "react";
-//import { useConnectWallet } from "@web3-onboard/react";
+import { useConnectWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
 import type { TokenSymbol } from "@web3-onboard/common";
 
@@ -15,25 +15,38 @@ interface Account {
   ens: { name: string | undefined; avatar: string | undefined };
 }
 
-function Header() {
-  //const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+function Header2() {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [ethersProvider, setProvider] =
     useState<ethers.providers.Web3Provider | null>();
+  const [account, setAccount] = useState<Account | null>(null);
 
-  const { account, chainId, connect, disconnect } =
-    useConnectWalletbyMetamask();
-  //const chain = Chain.get(chainId);
+  useEffect(() => {
+    if (wallet?.provider) {
+      const { name, avatar } = wallet?.accounts[0].ens ?? {};
+      setAccount({
+        address: wallet.accounts[0].address,
+        balance: wallet.accounts[0].balance,
+        ens: { name, avatar: avatar?.url },
+      });
+    }
+  }, [wallet]);
 
-  const onDisconnect = () => {
-    if (confirm("Disconnect Wallet?")) disconnect();
-  };
+  useEffect(() => {
+    // If the wallet has a provider than the wallet is connected
+    if (wallet?.provider) {
+      setProvider(new ethers.providers.Web3Provider(wallet.provider, "any"));
+      // if using ethers v6 this is:
+      // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+    }
+  }, [wallet]);
 
   return (
     <Wrap>
       <StyledHeaderBox>
         <img src={logoImg} width="100px" height="100px" alt="logo" />
         <h1>ServiceName</h1>
-        {account ? (
+        {/* {account ? (
           <Button className="btn btn-secondary" onClick={onDisconnect}>
             {ellipsisAddress(account)}
           </Button>
@@ -41,14 +54,14 @@ function Header() {
           <Button className="btn btn-primary" onClick={connect}>
             Connect
           </Button>
-        )}
-        {/* {wallet?.provider && account ? (
+        )} */}
+        {wallet?.provider && account ? (
           <div>
-            {account.ens?.avatar ? (
+            {/* {account.ens?.avatar ? (
               <img src={account.ens?.avatar} alt="ENS Avatar" />
             ) : null}
-            {/* <div>{account.ens?.name ? account.ens.name : account.address}</div>
-            <div>Connected to {wallet.label}</div> 
+            <div>{account.ens?.name ? account.ens.name : account.address}</div>
+            <div>Connected to {wallet.label}</div> */}
             <Button
               onClick={() => {
                 disconnect({ label: wallet.label });
@@ -63,7 +76,7 @@ function Header() {
               Connect
             </Button>
           </div>
-        )} */}
+        )}
       </StyledHeaderBox>
       <Navbar />
     </Wrap>
@@ -110,4 +123,4 @@ const Button = styled.button`
   }
 `;
 
-export default Header;
+export default Header2;

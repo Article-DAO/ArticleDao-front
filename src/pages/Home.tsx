@@ -12,6 +12,7 @@ import { Article_DAO } from "../../types";
 
 import backgroundwhite2 from "../assets/backgroundwhitelist2.jpg";
 import type { TokenSymbol } from "@web3-onboard/common";
+import { useSigner, useWallet } from "../states/wallet.state";
 
 let provider;
 
@@ -23,29 +24,33 @@ interface Account {
 
 function Home() {
   const [{ wallet }] = useWeb3onboardWallet();
-  const [account, setAccount] = useState<Account | null>(null);
-  const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
-    null
-  );
+  // const [account, setAccount] = useState<Account | null>(null);
+  // const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
+  //   null
+  // );
+  const { account, chainId } = useWallet();
+  const { signer } = useSigner();
 
   useEffect(() => {
     if (!wallet?.provider) {
       provider = null;
     } else {
-      const { name, avatar } = wallet?.accounts[0].ens ?? {};
-      setAccount({
-        address: wallet.accounts[0].address,
-        balance: wallet.accounts[0].balance,
-        ens: { name, avatar: avatar?.url },
-      });
-      provider = new ethers.providers.Web3Provider(wallet.provider, "any");
-      setSigner(provider.getUncheckedSigner());
+      console.log(signer);
+      // const { name, avatar } = wallet?.accounts[0].ens ?? {};
+      // setAccount({
+      //   address: wallet.accounts[0].address,
+      //   balance: wallet.accounts[0].balance,
+      //   ens: { name, avatar: avatar?.url },
+      // });
+      // provider = new ethers.providers.Web3Provider(wallet.provider, "any");
+      // setSigner(provider.getUncheckedSigner());
     }
   }, [wallet?.provider]);
 
   const minting = async () => {
     console.log(account);
-    if (!wallet?.provider || !account || !signer) {
+    console.log(signer);
+    if (!account || !signer) {
       alert("Connect Wallet");
       return;
     }
@@ -59,7 +64,7 @@ function Home() {
       signer
     ) as Article_DAO;
 
-    const tx = await contract.mint(account?.address, 10000);
+    const tx = await contract.mint(account, 10000);
 
     tx.wait().then((receipt) => {
       alert("Minted");
